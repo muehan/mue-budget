@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - 8
+branches:
+  only:
+  - master
+  - development
+before_script:
+  - npm install
+script:
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then ng build --prod --aot=false; fi
+  - if [ "$TRAVIS_BRANCH" = "development" ]; then ng build --environment=test; fi
+after_success:
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then firebase use production; fi
+  - if [ "$TRAVIS_BRANCH" = "master" ]; then firebase deploy --token $FIREBASE_TOKEN --non-interactive; fi
+  - if [ "$TRAVIS_BRANCH" = "development" ]; then firebase use development; fi
+  - if [ "$TRAVIS_BRANCH" = "development" ]; then firebase deploy --token $FIREBASE_TOKEN --non-interactive; fi

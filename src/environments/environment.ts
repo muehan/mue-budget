@@ -3,8 +3,20 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  test: false,
+  envName: 'dev',
+  version: '0.0.1',
+  firebaseConfig: {
+    apiKey: 'AIzaSyB0W6WKbzsNbpZFgoF8wpAq-GyjrekhT-I',
+    authDomain: 'mue-budget-dev.firebaseapp.com',
+    databaseURL: 'https://mue-budget-dev.firebaseio.com',
+    projectId: "mue-budget-dev",
+    storageBucket: "mue-budget-dev.appspot.com",
+    messagingSenderId: "647383931297"
+  }
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
