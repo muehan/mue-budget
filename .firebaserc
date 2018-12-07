@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "production": "mue-budget",
+    "development": "mue-budget-dev",
+    "default": "mue-budget-dev"
+  }
+}
