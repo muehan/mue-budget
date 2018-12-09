@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -10,10 +10,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  public password: string;
   public errorMessage: string;
-
-  public mailFormControl: FormControl = new FormControl();
+  public loginFormGroup: FormGroup;
 
   constructor(
     private authService: AuthService,
@@ -21,9 +19,10 @@ export class LoginComponent implements OnInit {
   ) {
     let storedMail = localStorage.getItem('mail');
 
-    if (storedMail || storedMail !== undefined) {
-      this.mailFormControl.setValue(storedMail);
-    }
+    this.loginFormGroup = new FormGroup({
+      mail: new FormControl(storedMail, [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+    });
 
     this.authService.loading$.subscribe((value) => {
       if (!value) {
@@ -37,8 +36,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() { }
 
   login() {
-    localStorage.setItem('mail', this.mailFormControl.value);
-    this.authService.emailLogin(this.mailFormControl.value, this.password)
+    const mail = this.loginFormGroup.get('mail').value;
+    const password = this.loginFormGroup.get('password').value;
+
+    localStorage.setItem('mail', mail);
+    this.authService.emailLogin(mail, password)
       .then((_) => {
         this.router.navigate(['list']);
       })

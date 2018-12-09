@@ -9,10 +9,12 @@ import { SharedModule } from './+shared/shared.module';
 import { AuthModule } from './+auth/auth.module';
 import { TransactionModule } from './+transaction/transaction.module';
 import { ReportingModule } from './+reporting/reporting.module';
+import { SiteTemplateComponent } from './template/site-template/site-template.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SiteTemplateComponent
   ],
   imports: [
     BrowserModule,
