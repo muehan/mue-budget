@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/state';
+import { AuthActions } from '../actions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +16,16 @@ export class AuthService {
 
   constructor(
     private firebaseAuth: AngularFireAuth,
+    private store: Store<AppState>,
   ) {
     this.firebaseAuth.authState.subscribe(user => {
       if (user) {
-        this.authState = user;
+        this.store.dispatch(new AuthActions.LoginSuccess(user))
       }
       this.isLoading$.next(false);
     });
-
-    this.isLoading$.subscribe(x => console.log(x));
   }
-  
+
   public get loading$(): Observable<Boolean> {
     return this.isLoading$.asObservable();
   }
@@ -48,7 +50,7 @@ export class AuthService {
 
   public resetPassword(newPassword: string, oldPassword: string): Promise<any> {
     return this.reautenticate(oldPassword)
-          .then((_) => this.authState.updatePassword(newPassword));
+      .then((_) => this.authState.updatePassword(newPassword));
   }
 
   private reautenticate(oldPassword: string): Promise<any> {

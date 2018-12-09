@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { FireBaseLoginModel } from '../models/firebase.models';
+import { User } from 'firebase';
 
 export enum ActionTypes {
     Login = '[Auth] Login',
@@ -16,7 +17,7 @@ export class Login implements Action {
 export class LoginSuccess implements Action {
     readonly type = ActionTypes.LoginSuccess;
 
-    constructor(public payload: firebase.auth.UserCredential) { }
+    constructor(public payload: User) { }
 }
 
 export class LoginFailer implements Action {

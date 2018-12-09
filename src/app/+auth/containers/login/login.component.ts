@@ -6,8 +6,7 @@ import { AppState } from '../../../store/state';
 import { AuthActions } from '../../actions';
 import { getLoggingInProgress, getIsAuthenticated, getLoginErrors } from '../../reducers';
 import { filter } from 'rxjs/internal/operators/filter';
-import { switchMap, map, take, withLatestFrom } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    public router: Router
+    public router: Router,
   ) {
     let storedMail = localStorage.getItem('mail');
 
@@ -30,19 +29,16 @@ export class LoginComponent implements OnInit {
       mail: new FormControl(storedMail, [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
+
+    this.store.select(getIsAuthenticated)
+    .pipe(
+      filter(x => x === true),
+    ).subscribe(_ =>{
+      this.router.navigate(['list']);
+    });
   }
 
-  ngOnInit() {
-    this.store.select(getIsAuthenticated)
-      .pipe(
-        take(1),
-        map(x => {
-          if (x) {
-            this.router.navigate(['list']);
-          }
-        })
-      )
-  }
+  ngOnInit() { }
 
   login() {
     const mail = this.loginFormGroup.get('mail').value;
@@ -55,23 +51,23 @@ export class LoginComponent implements OnInit {
       password: password,
     }));
 
-    this.waitUntilLoginComplete()
-      .subscribe(_ => {
-        this.router.navigate(['list']);
-      })
+    // this.waitUntilLoginComplete()
+    //   .subscribe(_ => {
+    //     this.router.navigate(['list']);
+    //   })
   }
 
-  private waitUntilLoginComplete(): Observable<boolean> {
-    return this.store.select(getLoggingInProgress).pipe(
-      withLatestFrom(this.store.select(getLoginErrors)),
-      filter(([inProgress]) => !inProgress),
-      switchMap(([, errors]) => {
-        if (!errors) {
-          return of(undefined);
-        } else {
-          return throwError(errors);
-        }
-      })
-    );
-  }
+  // private waitUntilLoginComplete(): Observable<boolean> {
+  //   return this.store.select(getLoggingInProgress).pipe(
+  //     withLatestFrom(this.store.select(getLoginErrors)),
+  //     filter(([inProgress]) => !inProgress),
+  //     switchMap(([, errors]) => {
+  //       if (!errors) {
+  //         return of(undefined);
+  //       } else {
+  //         return throwError(errors);
+  //       }
+  //     })
+  //   );
+  // }
 }
