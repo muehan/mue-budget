@@ -23,8 +23,8 @@ export class AuthService {
       if (user) {
         this.store.dispatch(new AuthActions.LoginSuccess(user))
       } else {
-      this.store.dispatch(new AuthActions.LoginFailer(''))
-    }
+        this.store.dispatch(new AuthActions.LoginFailer(''))
+      }
     });
   }
 

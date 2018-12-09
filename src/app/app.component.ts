@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class AppComponent {
 
-  public isLoggingIn: Observable<boolean> = this.store.select(getLoggingInProgress);
+  public isLoggingIn$: Observable<boolean> = this.store.select(getLoggingInProgress);
 
   constructor(
     private store: Store<AppState>,
