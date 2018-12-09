@@ -6,9 +6,9 @@
         <mat-form-field class="input-form">
             <input type="password" matInput placeholder="password" formControlName="password">
         </mat-form-field>
-        <button (click)="login()" class="btn-login" mat-raised-button>Login</button>
+        <button (click)="login()" [disabled]="isLogIn$ | async" class="btn-login" mat-raised-button>Login</button>
     </form>
 
-    <p class="error-message" *ngIf="errorMessage">{{errorMessage}}</p>
+    <p class="error-message" *ngIf="error$ | async">{{error$ | async}}</p>
 
 </div>

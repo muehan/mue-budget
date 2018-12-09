@@ -36,14 +36,8 @@ export class AuthService {
     return this.firebaseAuth.auth.currentUser;
   }
 
-  public emailLogin(email: string, password: string): Promise<any> {
+  public emailLogin(email: string, password: string): Promise<firebase.auth.UserCredential> {
     return this.firebaseAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((user) => {
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
   }
 
   public logout() {
