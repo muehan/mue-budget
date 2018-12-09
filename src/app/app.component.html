@@ -1,1 +1,6 @@
-<router-outlet></router-outlet>
+<div *ngIf="isLoggingIn$ | async; else elseBlock">
+    <img src="assets/gifs/loading.gif">
+</div>
+<ng-template #elseBlock>
+    <router-outlet></router-outlet>
+</ng-template>

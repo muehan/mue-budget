@@ -6,6 +6,8 @@ export enum ActionTypes {
     Login = '[Auth] Login',
     LoginSuccess = '[Auth] Login Success',
     LoginFailer = '[Auth] Login Failer',
+
+    Initialize = '[Auth] Initialize',
 }
 
 export class Login implements Action {
@@ -26,4 +28,10 @@ export class LoginFailer implements Action {
     constructor(public payload: any) { }
 }
 
-export type ActionsUnion = Login | LoginSuccess | LoginFailer;
+export class Initialize implements Action {
+    readonly type = ActionTypes.Initialize;
+
+    constructor() { }
+}
+
+export type ActionsUnion = Login | LoginSuccess | LoginFailer | Initialize;

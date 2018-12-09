@@ -42,6 +42,14 @@ export function authReducer(
                 errors: action.payload
             };
         }
+        case AuthActions.ActionTypes.Initialize: {
+            return {
+                ...state,
+                isLoggingIn: true,
+                user: undefined,
+                errors: undefined,
+            };
+        }
         default: {
             return state;
         }

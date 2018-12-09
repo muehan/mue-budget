@@ -18,11 +18,13 @@ export class AuthService {
     private firebaseAuth: AngularFireAuth,
     private store: Store<AppState>,
   ) {
+    this.store.dispatch(new AuthActions.Initialize())
     this.firebaseAuth.authState.subscribe(user => {
       if (user) {
         this.store.dispatch(new AuthActions.LoginSuccess(user))
-      }
-      this.isLoading$.next(false);
+      } else {
+      this.store.dispatch(new AuthActions.LoginFailer(''))
+    }
     });
   }
 
