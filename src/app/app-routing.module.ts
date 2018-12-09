@@ -7,14 +7,13 @@ import { SiteTemplateComponent } from './template/site-template/site-template.co
 
 const routes: Routes = [
   {
-    path: 'transaction', component: SiteTemplateComponent, children: [
-      { path: '', component: ListComponent, outlet: 'sub' },
+    path: '', component: SiteTemplateComponent, children: [
+      { path: 'list', component: ListComponent },
     ],
     canActivate: [AuthGuardService]
   },
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: '/transaction', pathMatch: 'full' },
-  { path: '**', redirectTo: '/transaction', pathMatch: 'full' },
+  { path: '**', redirectTo: 'list', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { AuthService } from 'src/app/+auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-site-template',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SiteTemplateComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
+  }
+
+  public logout() {
+    console.log('logout');
+    this.authService.logout();
+    this.router.navigate(['login']);
   }
 
 }

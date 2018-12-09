@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
@@ -17,7 +19,9 @@ import { environment } from '../../environments/environment';
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     MatToolbarModule,
+    MatMenuModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -28,6 +32,8 @@ import { environment } from '../../environments/environment';
     MatInputModule,
     MatButtonModule,
     MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule,
