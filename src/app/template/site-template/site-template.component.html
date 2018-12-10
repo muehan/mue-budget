@@ -3,8 +3,17 @@
 
     <span class="fill-remaining-space"></span>
     <mat-menu #appMenu="matMenu">
-        <!-- <button mat-menu-item>Settings</button> -->
-        <button mat-menu-item (click)="logout()"><mat-icon >person</mat-icon>Logout</button>
+        <button mat-menu-item [routerLink]="['/list']">
+            <mat-icon >list</mat-icon>Transactions
+        </button>
+
+        <button mat-menu-item [routerLink]="['/category']">
+            <mat-icon >person</mat-icon>Categories
+        </button>
+
+        <button mat-menu-item (click)="logout()">
+            <mat-icon >person</mat-icon>Logout
+        </button>
         <!-- <mat-icon [routerLink]="['changePassword']" class="example-icon">ac_unit</mat-icon>-->
     </mat-menu>
 
