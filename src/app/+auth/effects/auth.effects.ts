@@ -13,7 +13,6 @@ export class AuthEffects {
     constructor(
         private authService: AuthService,
         private actions$: Actions,
-        private router: Router,
     ) { }
 
     @Effect()
