@@ -1,3 +1,5 @@
-<p>
-  category works!
-</p>
+<h1>Categories</h1>
+
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let category of categories$">{{category}}</mat-list-item>
+</mat-list>
