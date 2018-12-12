@@ -1,17 +1,18 @@
 import { CategoryActions } from '../actions';
 import { createSelector } from '@ngrx/store';
-import { User } from 'firebase';
 import { Category } from '../model/categroy';
 
 
 export interface CategoryState {
     isLoading: boolean;
     categories: Category[];
+    errors: any;
 }
 
 export const initialState: CategoryState = {
     isLoading: false,
     categories: [],
+    errors: undefined,
 }
 
 export function categoryReducer(
@@ -32,9 +33,11 @@ export function categoryReducer(
                 ...state,
             };
         }
-        case CategoryActions.ActionTypes.GetCategoriesFailed: {
+        case CategoryActions.ActionTypes.GetCategoriesFailed:
+        case CategoryActions.ActionTypes.AddCategoriesFailed: {
             return {
                 isLoading: false,
+                errors: action.payload,
                 ...state,
             };
         }

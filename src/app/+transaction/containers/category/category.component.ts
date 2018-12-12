@@ -14,6 +14,7 @@ import { CategoryActions } from '../../actions';
 export class CategoryComponent implements OnInit {
 
   public categories$: Observable<Category[]> = this.store.select(getAllCategories);
+  public newCategory: string;
 
   constructor(
     private store: Store<AppState>
@@ -24,6 +25,10 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  public onSubmit(){
+    this.store.dispatch(new CategoryActions.AddCategories({name: this.newCategory}));
   }
 
 }

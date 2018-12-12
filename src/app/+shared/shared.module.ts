@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
@@ -24,6 +25,7 @@ import { environment } from '../../environments/environment';
     MatToolbarModule,
     MatMenuModule,
     MatListModule,
+    MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -37,6 +39,7 @@ import { environment } from '../../environments/environment';
     MatIconModule,
     MatMenuModule,
     MatListModule,
+    MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule,
