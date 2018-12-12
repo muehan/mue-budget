@@ -19,7 +19,7 @@ export class CategoryEffectsService {
   getCategories$ = this.actions
     .ofType<CategoryActions.GetCategories>(CategoryActions.ActionTypes.GetCategories)
     .pipe(
-      mergeMap(() => {
+      switchMap((_) => {
         return this.categoryService.getAll()
           .pipe(
             map((categories) => {

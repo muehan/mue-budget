@@ -23,7 +23,9 @@ export class CategoryService {
     }
 
     public getAll(): Observable<Category[]> {
-        return this.items$;
+        return this.firebase.list('category').snapshotChanges().pipe(map(changes => changes.map(c => {
+            return { $key: c.key, ...c.payload }
+        })))
     }
 
     public add(newItem: Category): any {

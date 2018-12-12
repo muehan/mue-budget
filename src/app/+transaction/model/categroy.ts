@@ -1,4 +1,4 @@
 export class Category {
     $key?: string;
-    name: string;
+    name?: string;
 }
