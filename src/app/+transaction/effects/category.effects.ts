@@ -8,7 +8,7 @@ import { switchMap, map, catchError, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable()
-export class CategoryEffectsService {
+export class CategoryEffects {
 
   constructor(
     private actions: Actions,

@@ -15,7 +15,7 @@ import { AuthEffects } from './+auth/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
 import { APP_REDUCERS } from './store/state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { CategoryEffectsService } from './+transaction/effects/category.effects';
+import { CategoryEffects } from './+transaction/effects/category.effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { CategoryEffectsService } from './+transaction/effects/category.effects'
     AuthModule,
     TransactionModule,
     ReportingModule,
-    EffectsModule.forRoot([AuthEffects, CategoryEffectsService]),
+    EffectsModule.forRoot([AuthEffects, CategoryEffects]),
     StoreModule.forRoot(APP_REDUCERS),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
