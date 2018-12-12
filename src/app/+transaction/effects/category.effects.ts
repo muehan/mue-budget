@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { CategoryActions } from '../actions';
 import { CategoryService } from '../services/category.service';
-import { switchMap, map, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable()
@@ -19,8 +19,17 @@ export class CategoryEffectsService {
   getCategories$ = this.actions
     .ofType<CategoryActions.GetCategories>(CategoryActions.ActionTypes.GetCategories)
     .pipe(
-      switchMap(x => this.categoryService.getAll()),
-      map(x => new CategoryActions.GetCategoriesSuccess(x))
+      mergeMap(() => {
+        return this.categoryService.getAll()
+          .pipe(
+            map((categories) => {
+              return new CategoryActions.GetCategoriesSuccess(categories);
+            }),
+            catchError((error) => {
+              return of(new CategoryActions.GetCategoriesFailed(error));
+            })
+          );
+      })
     )
 
   @Effect()
