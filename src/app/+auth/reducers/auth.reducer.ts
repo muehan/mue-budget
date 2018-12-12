@@ -60,7 +60,7 @@ export function authReducer(
 export function getAuthLoginSelectors(selectedState: (state: any) => AuthState) {
     return {
         getUser: createSelector(selectedState, (state: AuthState) => state.user),
-        getIsAuthenticated: createSelector(selectedState, (state: AuthState) => state.user != undefined),
+        getIsAuthenticated: createSelector(selectedState, (state: AuthState) => !state.user),
         getLoggingInProgress: createSelector(selectedState, (state: AuthState) => state.isLoggingIn),
         getErrors: createSelector(selectedState, (state: AuthState) => state.errors),
     };

@@ -23,6 +23,7 @@ export class AuthGuardService implements CanActivate {
       filter((status) => status === false),
       switchMap(() => this.store.select(getIsAuthenticated)),
       tap((auth) => {
+        console.log(auth);
         if (!auth) {
           this.router.navigate(['/login']);
         }
