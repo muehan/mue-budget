@@ -27,8 +27,11 @@ export class CategoryComponent implements OnInit {
   ngOnInit() {
   }
 
-  public onSubmit(){
-    this.store.dispatch(new CategoryActions.AddCategories({name: this.newCategory}));
+  public onSubmit() {
+    console.log('submit: ' + this.newCategory);
+    if (this.newCategory) {
+      this.store.dispatch(new CategoryActions.AddCategories({ name: this.newCategory }));
+    }
   }
 
 }

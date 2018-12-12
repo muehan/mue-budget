@@ -31,6 +31,7 @@ export class CategoryService {
     }
 
     public add(newItem: Category): any {
+        console.log(newItem);
         this.firebaselist.push(newItem);
     }
 
