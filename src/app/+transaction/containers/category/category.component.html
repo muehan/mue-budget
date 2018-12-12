@@ -1,13 +1,9 @@
 <h1>Categories</h1>
 
-<form class="example-form" (ngSubmit)="onSubmit()">
-    <mat-form-field class="example-full-width">
-        <input matInput
-               placeholder="Category"
-               [value]="newCategory">
-    </mat-form-field>
-    <button type="submit">Create</button>
-</form>
+<input matInput
+       placeholder="Category"
+       [value]="newCategory">
+<button type="button" (click)="create()">Create</button>
 
 <mat-list role="list">
     <mat-list-item role="listitem"
