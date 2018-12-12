@@ -3,6 +3,7 @@ import { CategoryComponent } from './containers/category/category.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SiteTemplateComponent } from '../template/site-template/site-template.component';
 import { NgModule } from '@angular/core';
+import { AuthGuardService } from '../services/auth-guard.service';
 
 const routes: Routes = [
     {
@@ -11,7 +12,8 @@ const routes: Routes = [
         children: [
             { path: 'list', component: ListComponent },
             { path: 'category', component: CategoryComponent },
-        ]
+        ],
+        canActivate: [AuthGuardService]
     }
 ];
 

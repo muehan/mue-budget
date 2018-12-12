@@ -7,7 +7,6 @@ const routes: Routes = [
   {
     path: 'transaction',
     loadChildren: './+transaction/transaction.module#TransactionModule',
-    canActivate: [AuthGuardService]
   },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'list', pathMatch: 'full' },

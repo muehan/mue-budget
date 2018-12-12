@@ -19,6 +19,7 @@ export class AuthGuardService implements CanActivate {
   ) { }
 
   canActivate(): Observable<boolean> {
+    console.log('authguard canActivate');
     return this.store.select(getLoggingInProgress).pipe(
       filter((status) => status === false),
       switchMap(() => this.store.select(getIsAuthenticated)),
