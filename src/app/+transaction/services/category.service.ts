@@ -4,7 +4,9 @@ import { Category } from '../model/categroy';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class CategoryService {
 
     private items$: Observable<Category[]>;
