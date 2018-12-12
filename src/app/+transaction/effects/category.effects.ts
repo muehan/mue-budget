@@ -20,9 +20,11 @@ export class CategoryEffects {
     .ofType<CategoryActions.GetCategories>(CategoryActions.ActionTypes.GetCategories)
     .pipe(
       switchMap((_) => {
+        console.log('getCategories');
         return this.categoryService.getAll()
           .pipe(
             map((categories) => {
+              console.log('categories: ' + categories);
               return new CategoryActions.GetCategoriesSuccess(categories);
             }),
             catchError((error) => {

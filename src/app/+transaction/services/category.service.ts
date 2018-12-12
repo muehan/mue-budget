@@ -6,7 +6,7 @@ import { map } from 'rxjs/internal/operators/map';
 
 @Injectable({
     providedIn: 'root'
-  })
+})
 export class CategoryService {
 
     private items$: Observable<Category[]>;
@@ -25,9 +25,15 @@ export class CategoryService {
     }
 
     public getAll(): Observable<Category[]> {
-        return this.firebase.list('category').snapshotChanges().pipe(map(changes => changes.map(c => {
-            return { $key: c.key, ...c.payload }
-        })))
+        return this.firebase
+            .list<Category>('category')
+            .snapshotChanges()
+            .pipe(
+                map(
+                    changes => changes
+                        .map(c => {
+                            return { $key: c.key, ...c.payload.val() }
+                        })))
     }
 
     public add(newItem: Category): Observable<any> {

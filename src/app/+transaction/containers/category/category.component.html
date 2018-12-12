@@ -8,5 +8,5 @@
 <button type="button" (click)="create()">Create</button>
 
 <mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let category of categories$ | async">{{category}}</mat-list-item>
+    <mat-list-item role="listitem" *ngFor="let category of categories$ | async">{{ category.name }}</mat-list-item>
 </mat-list>

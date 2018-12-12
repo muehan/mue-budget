@@ -22,23 +22,24 @@ export function categoryReducer(
     switch (action.type) {
         case CategoryActions.ActionTypes.GetCategories: {
             return {
-                isLoading: true,
                 ...state,
+                isLoading: true,
             };
         }
         case CategoryActions.ActionTypes.GetCategoriesSuccess: {
+            console.log('reducer: ' + action.payload);
             return {
+                ...state,
                 isLoading: false,
                 categories: action.payload,
-                ...state,
             };
         }
         case CategoryActions.ActionTypes.GetCategoriesFailed:
         case CategoryActions.ActionTypes.AddCategoriesFailed: {
             return {
+                ...state,
                 isLoading: false,
                 errors: action.payload,
-                ...state,
             };
         }
         default: {
