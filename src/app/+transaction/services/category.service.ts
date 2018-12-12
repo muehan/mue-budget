@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Category } from '../model/categroy';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 
 @Injectable({
@@ -30,9 +30,11 @@ export class CategoryService {
         })))
     }
 
-    public add(newItem: Category): any {
+    public add(newItem: Category): Observable<any> {
         console.log(newItem);
         this.firebaselist.push(newItem);
+
+        return of();
     }
 
 }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
 import { getAllCategories } from '../../reducers';
 import { CategoryActions } from '../../actions';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-category',
@@ -14,7 +15,7 @@ import { CategoryActions } from '../../actions';
 export class CategoryComponent implements OnInit {
 
   public categories$: Observable<Category[]> = this.store.select(getAllCategories);
-  public newCategory: string;
+  public category = new FormControl('');
 
   constructor(
     private store: Store<AppState>
@@ -28,9 +29,9 @@ export class CategoryComponent implements OnInit {
   }
 
   public create() {
-    console.log('submit: ' + this.newCategory);
-    if (this.newCategory) {
-      this.store.dispatch(new CategoryActions.AddCategories({ name: this.newCategory }));
+    console.log('submit: ' + this.category.value);
+    if (this.category.value) {
+      this.store.dispatch(new CategoryActions.AddCategories({ name: this.category.value }));
     }
   }
 
