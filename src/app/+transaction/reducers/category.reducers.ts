@@ -34,6 +34,7 @@ export function categoryReducer(
                 categories: action.payload,
             };
         }
+        case CategoryActions.ActionTypes.DeleteCategoriesFailed:
         case CategoryActions.ActionTypes.GetCategoriesFailed:
         case CategoryActions.ActionTypes.AddCategoriesFailed: {
             return {

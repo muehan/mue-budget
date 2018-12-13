@@ -45,4 +45,15 @@ export class CategoryEffects {
           catchError(error => of(new CategoryActions.AddCategoriesFailed(error)))
         ))
     )
+
+  @Effect()
+  deleteCategory$ = this.actions
+    .ofType<CategoryActions.DeleteCategories>(CategoryActions.ActionTypes.DeleteCategories)
+    .pipe(
+      map(action => action.payload),
+      switchMap(x => this.categoryService.remove(x)
+        .then(x => new CategoryActions.DeleteCategoriesSuccess())
+        .catch(x => new CategoryActions.DeleteCategoriesFailed(x))
+      )
+    )
 }

@@ -3,7 +3,14 @@
 
     <mat-list role="list">
         <mat-list-item role="listitem"
-                       *ngFor="let category of categories$ | async">{{ category.name }}</mat-list-item>
+                       *ngFor="let category of categories$ | async">{{ category.name }}
+            <button mat-icon-button
+                    color="warn"
+                    style="float: right;"
+                    (click)="remove(category)">
+                <mat-icon aria-label="icon-button with a delete icon">delete</mat-icon>
+            </button>
+        </mat-list-item>
     </mat-list>
 
     <button mat-fab

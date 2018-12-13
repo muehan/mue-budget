@@ -9,19 +9,12 @@ import { map } from 'rxjs/internal/operators/map';
 })
 export class CategoryService {
 
-    private items$: Observable<Category[]>;
     private firebaselist: AngularFireList<Category>;
 
     constructor(
         private firebase: AngularFireDatabase,
     ) {
         this.firebaselist = this.firebase.list('category');
-
-        this.items$ = this.firebaselist
-            .snapshotChanges()
-            .pipe(
-                map(changes => changes.map(c => ({ $key: c.payload.key, ...c.payload.val() })))
-            )
     }
 
     public getAll(): Observable<Category[]> {
@@ -41,6 +34,10 @@ export class CategoryService {
         this.firebaselist.push(newItem);
 
         return of();
+    }
+
+    public remove(item: Category) {
+        return this.firebaselist.remove(item.$key);
     }
 
 }
