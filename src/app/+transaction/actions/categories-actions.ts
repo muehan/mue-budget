@@ -10,6 +10,10 @@ export enum ActionTypes {
     AddCategoriesSuccess = '[Categories] Add Success',
     AddCategoriesFailed = '[Categories] Add Failed',
 
+    EditCategories = '[Categories] Edit',
+    EditCategoriesSuccess = '[Categories] Edit Success',
+    EditCategoriesFailed = '[Categories] Edit Failed',
+
     DeleteCategories = '[Categories] Delete',
     DeleteCategoriesSuccess = '[Categories] Delete Success',
     DeleteCategoriesFailed = '[Categories] Delete Failed',
@@ -51,6 +55,24 @@ export class AddCategoriesFailed implements Action {
     constructor(public payload: any) { }
 }
 
+export class EditCategories implements Action {
+    readonly type = ActionTypes.EditCategories;
+
+    constructor(public payload: Category) { }
+}
+
+export class EditCategoriesSuccess implements Action {
+    readonly type = ActionTypes.EditCategoriesSuccess;
+
+    constructor() { }
+}
+
+export class EditCategoriesFailed implements Action {
+    readonly type = ActionTypes.EditCategoriesFailed;
+
+    constructor(public payload: any) { }
+}
+
 export class DeleteCategories implements Action {
     readonly type = ActionTypes.DeleteCategories;
 
@@ -72,4 +94,5 @@ export class DeleteCategoriesFailed implements Action {
 export type ActionsUnion = 
 GetCategories | GetCategoriesSuccess | GetCategoriesFailed |
 AddCategories | AddCategoriesSuccess | AddCategoriesFailed |
+EditCategories | EditCategoriesSuccess | EditCategoriesFailed |
 DeleteCategories | DeleteCategoriesSuccess | DeleteCategoriesFailed;

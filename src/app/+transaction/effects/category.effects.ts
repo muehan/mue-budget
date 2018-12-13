@@ -54,4 +54,15 @@ export class CategoryEffects {
         .catch(x => new CategoryActions.DeleteCategoriesFailed(x))
       )
     )
+
+  @Effect()
+  editCategory$ = this.actions
+    .ofType<CategoryActions.EditCategories>(CategoryActions.ActionTypes.EditCategories)
+    .pipe(
+      map(action => action.payload),
+      switchMap(x => this.categoryService.edit(x)
+        .then(x => new CategoryActions.EditCategoriesSuccess())
+        .catch(x => new CategoryActions.EditCategoriesFailed(x))
+      )
+    )
 }

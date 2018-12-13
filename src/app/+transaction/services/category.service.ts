@@ -36,7 +36,13 @@ export class CategoryService {
         return of();
     }
 
-    public remove(item: Category) {
+    public edit(item: Category): Promise<void> {
+        let key = item.$key;
+        delete item.$key;
+        return this.firebaselist.update(key, item);
+      }
+
+    public remove(item: Category): Promise<void> {
         return this.firebaselist.remove(item.$key);
     }
 

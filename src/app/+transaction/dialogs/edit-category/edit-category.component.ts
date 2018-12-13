@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Category } from '../../model/categroy';
+import { database } from 'firebase';
+
+export interface IEditCatalogData {
+  category: Category;
+}
 
 @Component({
   selector: 'mue-edit-category',
@@ -9,16 +15,22 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class EditCategoryComponent implements OnInit {
 
-  public category = new FormControl('');
+  public categoryForm = new FormControl(this.data.category.name);
+  
+  private category: Category;
 
   constructor(
-    public dialogRef: MatDialogRef<EditCategoryComponent>, ) { }
+    public dialogRef: MatDialogRef<EditCategoryComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IEditCatalogData) {
+      this.category = data.category;
+    }
 
   ngOnInit() {
   }
 
   public save() {
-    this.dialogRef.close(this.category.value);
+    this.category.name = this.categoryForm.value;
+    this.dialogRef.close(this.category);
   }
 
   public close() {

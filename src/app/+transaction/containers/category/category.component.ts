@@ -48,15 +48,16 @@ export class CategoryComponent implements OnInit {
   }
 
   public edit(item: Category) {
-    let dialogRef = this.dialog.open(EditCategoryComponent, {
-      height: '150px',
-      width: '230px',
-      data: { category: item },
-    });
+    let dialogRef = this.dialog.open(
+      EditCategoryComponent, {
+        height: '150px',
+        width: '230px',
+        data: { category: item },
+      });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.store.dispatch(new CategoryActions.AddCategories({ name: result }));
+        this.store.dispatch(new CategoryActions.EditCategories(result));
       }
     });
   }
