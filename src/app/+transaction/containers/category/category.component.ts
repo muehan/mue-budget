@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
 import { getAllCategories } from '../../reducers';
 import { CategoryActions } from '../../actions';
-import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCategoryComponent } from '../../dialogs/add-category/add-category.component';
 
 @Component({
   selector: 'app-category',
@@ -15,10 +16,10 @@ import { FormControl } from '@angular/forms';
 export class CategoryComponent implements OnInit {
 
   public categories$: Observable<Category[]> = this.store.select(getAllCategories);
-  public category = new FormControl('');
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    public dialog: MatDialog,
   ) {
     this.store
       .dispatch(
@@ -29,10 +30,16 @@ export class CategoryComponent implements OnInit {
   }
 
   public create() {
-    console.log('submit: ' + this.category.value);
-    if (this.category.value) {
-      this.store.dispatch(new CategoryActions.AddCategories({ name: this.category.value }));
-    }
+    let dialogRef = this.dialog.open(AddCategoryComponent, {
+      height: '400px',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new CategoryActions.AddCategories({ name: result }));
+      }
+    });
   }
 
 }

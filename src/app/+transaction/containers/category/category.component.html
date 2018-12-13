@@ -1,12 +1,5 @@
 <h1>Categories</h1>
 
-<form class="example-form">
-    <mat-form-field>
-        <input matInput placeholder="Category" [formControl]="category">
-    </mat-form-field>
-</form>
-<button type="button" (click)="create()">Create</button>
-
 <mat-list role="list">
     <mat-list-item role="listitem" *ngFor="let category of categories$ | async">{{ category.name }}</mat-list-item>
 </mat-list>
