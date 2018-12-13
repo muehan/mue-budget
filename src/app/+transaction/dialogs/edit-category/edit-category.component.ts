@@ -17,7 +17,7 @@ export class EditCategoryComponent implements OnInit {
   ngOnInit() {
   }
 
-  public Save() {
+  public save() {
     this.dialogRef.close(this.category.value);
   }
 
