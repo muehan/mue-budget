@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SiteTemplateComponent } from '../template/site-template/site-template.component';
 import { NgModule } from '@angular/core';
 import { AuthGuardService } from '../services/auth-guard.service';
+import { SubcategoryComponent } from './containers/subcategory/subcategory.component';
 
 const routes: Routes = [
     {
@@ -12,6 +13,7 @@ const routes: Routes = [
         children: [
             { path: 'list', component: ListComponent },
             { path: 'category', component: CategoryComponent },
+            { path: 'subcategory', component: SubcategoryComponent },
         ],
         canActivate: [AuthGuardService]
     }
