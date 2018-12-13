@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/+auth/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-site-template',
+  selector: 'mue-site-template',
   templateUrl: './site-template.component.html',
   styleUrls: ['./site-template.component.scss']
 })

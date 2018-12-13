@@ -5,7 +5,7 @@ import { getLoggingInProgress } from './+auth/reducers';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
-  selector: 'app-root',
+  selector: 'mue-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

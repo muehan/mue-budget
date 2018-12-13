@@ -3,16 +3,16 @@ import { FormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'mue-add-category',
-  templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.scss']
+  selector: 'mue-edit-category',
+  templateUrl: './edit-category.component.html',
+  styleUrls: ['./edit-category.component.scss']
 })
-export class AddCategoryComponent implements OnInit {
+export class EditCategoryComponent implements OnInit {
 
   public category = new FormControl('');
 
   constructor(
-    public dialogRef: MatDialogRef<AddCategoryComponent>, ) { }
+    public dialogRef: MatDialogRef<EditCategoryComponent>, ) { }
 
   ngOnInit() {
   }

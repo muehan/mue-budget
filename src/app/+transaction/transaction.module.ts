@@ -5,12 +5,14 @@ import { ListComponent } from './containers/list/list.component';
 import { CategoryComponent } from './containers/category/category.component';
 import { TransactionRoutingModule } from './transaction-routes.modules';
 import { AddCategoryComponent } from './dialogs/add-category/add-category.component';
+import { EditCategoryComponent } from './dialogs/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
     ListComponent,
     CategoryComponent,
     AddCategoryComponent,
+    EditCategoryComponent,
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,7 @@ import { AddCategoryComponent } from './dialogs/add-category/add-category.compon
   ],
   entryComponents: [
     AddCategoryComponent,
+    EditCategoryComponent,
   ]
 })
 export class TransactionModule { }

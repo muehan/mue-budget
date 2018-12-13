@@ -9,7 +9,7 @@ import { filter } from 'rxjs/internal/operators/filter';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
+  selector: 'mue-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

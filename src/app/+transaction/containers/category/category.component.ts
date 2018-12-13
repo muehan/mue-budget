@@ -7,9 +7,10 @@ import { getAllCategories } from '../../reducers';
 import { CategoryActions } from '../../actions';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCategoryComponent } from '../../dialogs/add-category/add-category.component';
+import { EditCategoryComponent } from '../../dialogs/edit-category/edit-category.component';
 
 @Component({
-  selector: 'app-category',
+  selector: 'mue-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
@@ -44,6 +45,20 @@ export class CategoryComponent implements OnInit {
 
   public remove(item: Category) {
     this.store.dispatch(new CategoryActions.DeleteCategories(item));
+  }
+
+  public edit(item: Category) {
+    let dialogRef = this.dialog.open(EditCategoryComponent, {
+      height: '150px',
+      width: '230px',
+      data: { category: item },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.store.dispatch(new CategoryActions.AddCategories({ name: result }));
+      }
+    });
   }
 
 }
