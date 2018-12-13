@@ -1,0 +1,28 @@
+<div class="container">
+    <h1>Categories</h1>
+
+    <mat-list role="list">
+        <mat-list-item role="listitem"
+                       *ngFor="let category of categories$ | async">{{ category.name }}
+            <div class="position-right">
+                <button mat-icon-button
+                        color="accent"
+                        (click)="edit(category)">
+                    <mat-icon aria-label="icon-button with a delete icon">edit</mat-icon>
+                </button>
+                
+                <button mat-icon-button
+                        color="warn"
+                        (click)="remove(category)">
+                    <mat-icon aria-label="icon-button with a delete icon">delete</mat-icon>
+                </button>
+
+            </div>
+        </mat-list-item>
+    </mat-list>
+
+    <button mat-fab
+            class="create-button"
+            color="primary"
+            (click)="create()">Add</button>
+</div>

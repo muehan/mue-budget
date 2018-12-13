@@ -1,0 +1,14 @@
+<div class="container">
+    <form class="login-container" [formGroup]="loginFormGroup">
+        <mat-form-field class="input-form">
+            <input type="text" matInput placeholder="email" formControlName="mail">
+        </mat-form-field>
+        <mat-form-field class="input-form">
+            <input type="password" matInput placeholder="password" formControlName="password">
+        </mat-form-field>
+        <button (click)="login()" [disabled]="isLogIn$ | async" class="btn-login" mat-raised-button>Login</button>
+    </form>
+
+    <p class="error-message" *ngIf="error$ | async">{{error$ | async}}</p>
+
+</div>
