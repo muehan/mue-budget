@@ -31,8 +31,8 @@ export class CategoryComponent implements OnInit {
 
   public create() {
     let dialogRef = this.dialog.open(AddCategoryComponent, {
-      height: '400px',
-      width: '400px',
+      height: '100px',
+      width: '100px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

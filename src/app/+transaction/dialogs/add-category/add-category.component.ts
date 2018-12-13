@@ -12,14 +12,16 @@ export class AddCategoryComponent implements OnInit {
   public category = new FormControl('');
 
   constructor(
-    public dialogRef: MatDialogRef<AddCategoryComponent>,)
-    { }
+    public dialogRef: MatDialogRef<AddCategoryComponent>, ) { }
 
   ngOnInit() {
   }
 
   public create() {
-    this.dialogRef.close(this.category.value)
+    this.dialogRef.close(this.category.value);
   }
 
+  public close() {
+    this.dialogRef.close();
+  }
 }
