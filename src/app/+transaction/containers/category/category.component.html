@@ -6,7 +6,7 @@
                        *ngFor="let category of categories$ | async">{{ category.name }}
             <button mat-icon-button
                     color="warn"
-                    style="float: right;"
+                    class="position-right"
                     (click)="remove(category)">
                 <mat-icon aria-label="icon-button with a delete icon">delete</mat-icon>
             </button>
