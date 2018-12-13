@@ -27,7 +27,6 @@ export function categoryReducer(
             };
         }
         case CategoryActions.ActionTypes.GetCategoriesSuccess: {
-            console.log('reducer: ' + action.payload);
             return {
                 ...state,
                 isLoading: false,
