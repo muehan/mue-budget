@@ -1,0 +1,17 @@
+<div *ngIf="subCategoryFormGroup">
+    <form class="example-form" [formGroup]="subCategoryFormGroup" (ngSubmit)="save()">
+        <mat-form-field>
+            <input matInput placeholder="Subcategory" formControlName="subcategoryName" required>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Category" formControlName="categoryName" required>
+                <mat-option *ngFor="let category of categeories$ | async" [value]="category.name">
+                    {{category.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button color="primary">Save</button>
+        <button type="button" mat-raised-button color="primary" style="float: right;" (click)="close()">Close</button>
+    </form>
+</div>

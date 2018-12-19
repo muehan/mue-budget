@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,6 +27,7 @@ import { environment } from '../../environments/environment';
     MatToolbarModule,
     MatMenuModule,
     MatListModule,
+    MatSelectModule,
     MatFormFieldModule,
     MatDialogModule,
     FormsModule,
@@ -41,6 +43,7 @@ import { environment } from '../../environments/environment';
     MatIconModule,
     MatMenuModule,
     MatListModule,
+    MatSelectModule,
     MatFormFieldModule,
     MatDialogModule,
     FormsModule,
