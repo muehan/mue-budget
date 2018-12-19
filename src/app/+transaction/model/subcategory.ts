@@ -1,5 +1,5 @@
 export class Subcategory {
     $key?: string;
-    categoryKey$?: string;
+    categoryName?: string;
     name?: string;
 }

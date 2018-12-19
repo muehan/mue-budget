@@ -16,7 +16,7 @@ export class AddSubcategoryComponent implements OnInit {
 
   public subCategoryFormGroup: FormGroup = new FormGroup({
     'subcategoryName': new FormControl('', [Validators.required]),
-    'categoryKey': new FormControl('', [Validators.required]),
+    'categoryName': new FormControl('', [Validators.required]),
   });
 
   public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
@@ -31,11 +31,9 @@ export class AddSubcategoryComponent implements OnInit {
   public create() {
 
     let result = {
-      categoryKey$: this.subCategoryFormGroup.get('categoryKey').value,
+      categoryName: this.subCategoryFormGroup.get('categoryName').value,
       name: this.subCategoryFormGroup.get('subcategoryName').value,
     };
-
-    console.log(result);
 
     this.dialogRef.close(result);
   }

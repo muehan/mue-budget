@@ -3,8 +3,8 @@
         <input matInput placeholder="Subcategory" formControlName="subcategoryName" required>
     </mat-form-field>
     <mat-form-field>
-        <mat-select placeholder="Category" formControlName="categoryKey" required>
-            <mat-option *ngFor="let category of categeories$ | async" [value]="category.$key">
+        <mat-select placeholder="Category" formControlName="categoryName" required>
+            <mat-option *ngFor="let category of categeories$ | async" [value]="category.name">
                 {{category.name}}
             </mat-option>
         </mat-select>

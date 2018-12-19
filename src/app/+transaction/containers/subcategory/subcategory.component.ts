@@ -42,6 +42,7 @@ export class SubcategoryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       if (result) {
         this.store.dispatch(new SubcategoryActions.AddSubcategories(result));
       }
