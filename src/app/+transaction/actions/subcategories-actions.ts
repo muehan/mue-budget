@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Category } from '../model/categroy';
+import { Subcategory } from '../model/subcategory';
 
 export enum ActionTypes {
     GetSubcategories = '[Subcategories] Get',
@@ -58,7 +59,7 @@ export class AddSubcategoriesFailed implements Action {
 export class EditSubcategories implements Action {
     readonly type = ActionTypes.EditSubcategories;
 
-    constructor(public payload: Category) { }
+    constructor(public payload: Subcategory) { }
 }
 
 export class EditSubcategoriesSuccess implements Action {
@@ -76,7 +77,7 @@ export class EditSubcategoriesFailed implements Action {
 export class DeleteSubcategories implements Action {
     readonly type = ActionTypes.DeleteSubcategories;
 
-    constructor(public payload: Category) { }
+    constructor(public payload: Subcategory) { }
 }
 
 export class DeleteSubcategoriesSuccess implements Action {

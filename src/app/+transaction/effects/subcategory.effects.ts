@@ -34,7 +34,7 @@ export class SubcategoryEffects {
     )
 
   @Effect()
-  addCategory$ = this.actions
+  addSubCategory$ = this.actions
     .ofType<SubcategoryActions.AddSubcategories>(SubcategoryActions.ActionTypes.AddSubcategories)
     .pipe(
       map(action => action.payload),
@@ -46,7 +46,7 @@ export class SubcategoryEffects {
     )
 
   @Effect()
-  deleteCategory$ = this.actions
+  deleteSubCategory$ = this.actions
     .ofType<SubcategoryActions.DeleteSubcategories>(SubcategoryActions.ActionTypes.DeleteSubcategories)
     .pipe(
       map(action => action.payload),
@@ -57,7 +57,7 @@ export class SubcategoryEffects {
     )
 
   @Effect()
-  editCategory$ = this.actions
+  editSubCategory$ = this.actions
     .ofType<SubcategoryActions.EditSubcategories>(SubcategoryActions.ActionTypes.EditSubcategories)
     .pipe(
       map(action => action.payload),

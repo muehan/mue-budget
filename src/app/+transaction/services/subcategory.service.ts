@@ -38,6 +38,7 @@ export class SubcategoryService {
     public edit(item: Subcategory): Promise<void> {
         let key = item.$key;
         delete item.$key;
+        console.log(item);
         return this.firebaselist.update(key, item);
     }
 

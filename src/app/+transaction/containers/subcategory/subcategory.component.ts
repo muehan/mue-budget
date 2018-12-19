@@ -56,9 +56,9 @@ export class SubcategoryComponent implements OnInit {
   public edit(item: Subcategory) {
     let dialogRef = this.dialog.open(
       EditSubcategoryComponent, {
-        height: '150px',
+        height: '215px',
         width: '230px',
-        data: { category: item },
+        data: { subCategory: item },
       });
 
     dialogRef.afterClosed().subscribe(result => {

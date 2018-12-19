@@ -1,11 +1,15 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, OnInit, Inject, ɵConsole } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category } from '../../model/categroy';
 import { Subcategory } from '../../model/subcategory';
+import { Observable } from 'rxjs';
+import { getAllCategories } from '../../reducers';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/state';
 
 export interface IEditSubcategoryData {
-  category: Subcategory;
+  subCategory: Subcategory;
 }
 
 @Component({
@@ -15,22 +19,31 @@ export interface IEditSubcategoryData {
 })
 export class EditSubcategoryComponent implements OnInit {
 
-  public subcategoryForm = new FormControl(this.data.category.name);
-  
-  private subcategory: Subcategory;
+  public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
+
+  public subCategoryFormGroup: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<EditSubcategoryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IEditSubcategoryData) {
-      this.subcategory = data.category;
-    }
+    private store: Store<AppState>,
+    @Inject(MAT_DIALOG_DATA) public data: IEditSubcategoryData)
+    { }
 
   ngOnInit() {
+    this.subCategoryFormGroup = new FormGroup({
+      'subcategoryName': new FormControl(this.data.subCategory.name, [Validators.required]),
+      'categoryName': new FormControl(this.data.subCategory.categoryName, [Validators.required]),
+    });
   }
 
   public save() {
-    this.subcategory.name = this.subcategoryForm.value;
-    this.dialogRef.close(this.subcategory);
+    let result = {
+      $key: this.data.subCategory.$key,
+      categoryName: this.subCategoryFormGroup.get('categoryName').value,
+      name: this.subCategoryFormGroup.get('subcategoryName').value,
+    };
+
+    this.dialogRef.close(result);
   }
 
   public close() {
