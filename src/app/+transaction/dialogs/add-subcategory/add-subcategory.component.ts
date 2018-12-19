@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AppState } from 'src/app/store/state';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Category } from '../../model/categroy';
+import { getAllCategories } from '../../reducers';
 
 @Component({
   selector: 'mue-add-subcategory',
@@ -9,16 +14,30 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddSubcategoryComponent implements OnInit {
 
-  public subcategoryForm = new FormControl('');
+  public subCategoryFormGroup: FormGroup = new FormGroup({
+    'subcategoryName': new FormControl('', [Validators.required]),
+    'categoryKey': new FormControl('', [Validators.required]),
+  });
+
+  public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
 
   constructor(
-    public dialogRef: MatDialogRef<AddSubcategoryComponent>, ) { }
+    public dialogRef: MatDialogRef<AddSubcategoryComponent>,
+    private store: Store<AppState>,
+  ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   public create() {
-    this.dialogRef.close(this.subcategoryForm.value);
+
+    let result = {
+      categoryKey$: this.subCategoryFormGroup.get('categoryKey').value,
+      name: this.subCategoryFormGroup.get('subcategoryName').value,
+    };
+
+    console.log(result);
+
+    this.dialogRef.close(result);
   }
 
   public close() {

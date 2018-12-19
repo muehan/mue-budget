@@ -5,7 +5,7 @@ import { getAllSubcategories } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 import { MatDialog } from '@angular/material/dialog';
-import { SubcategoryActions } from '../../actions';
+import { SubcategoryActions, CategoryActions } from '../../actions';
 import { AddSubcategoryComponent } from '../../dialogs/add-subcategory/add-subcategory.component';
 import { EditSubcategoryComponent } from '../../dialogs/edit-subcategory/edit-subcategory.component';
 
@@ -23,9 +23,13 @@ export class SubcategoryComponent implements OnInit {
     private store: Store<AppState>,
     private dialog: MatDialog,
   ) {
-    this.store
-    .dispatch(
-      new SubcategoryActions.GetSubcategories())
+    this.store.dispatch(
+      new SubcategoryActions.GetSubcategories()
+    );
+
+    this.store.dispatch(
+      new CategoryActions.GetCategories()
+    );
   }
 
   ngOnInit() {
@@ -33,13 +37,13 @@ export class SubcategoryComponent implements OnInit {
 
   public create() {
     let dialogRef = this.dialog.open(AddSubcategoryComponent, {
-      height: '150px',
+      height: '215px',
       width: '230px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(new SubcategoryActions.AddSubcategories({ name: result }));
+        this.store.dispatch(new SubcategoryActions.AddSubcategories(result));
       }
     });
   }
