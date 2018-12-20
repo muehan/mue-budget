@@ -1,0 +1,18 @@
+<mat-list>
+    <mat-list-item *ngFor="let transaction of transactions$ | async">
+        {{ transaction.value }} | {{ transaction.description }} | {{transaction.category}}
+
+        <div class="position-right">
+
+            <button mat-icon-button color="accent" (click)="edit(transaction)">
+                  <mat-icon aria-label="icon-button with a delete icon">edit</mat-icon>
+                </button>
+
+            <button mat-icon-button color="warn" (click)="remove(transaction)">
+                  <mat-icon aria-label="icon-button with a delete icon">delete</mat-icon>
+                </button>
+        </div>
+    </mat-list-item>
+</mat-list>
+
+<button mat-fab class="create-button" color="primary" (click)="create()">Add</button>

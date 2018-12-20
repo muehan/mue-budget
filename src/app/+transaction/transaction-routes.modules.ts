@@ -1,4 +1,4 @@
-import { ListComponent } from './containers/list/list.component';
+import { TransactionsComponent } from './containers/transactions/transactions.component';
 import { CategoryComponent } from './containers/category/category.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SiteTemplateComponent } from '../template/site-template/site-template.component';
@@ -11,7 +11,7 @@ const routes: Routes = [
         path: '',
         component: SiteTemplateComponent,
         children: [
-            { path: 'list', component: ListComponent },
+            { path: 'list', component: TransactionsComponent },
             { path: 'category', component: CategoryComponent },
             { path: 'subcategory', component: SubcategoryComponent },
         ],

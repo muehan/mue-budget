@@ -2,22 +2,22 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
-import { Subcategory } from '../model/subcategory';
+import { Transaction } from '../model/transaction';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SubcategoryService {
+export class TransactionService {
 
-    private firebaselist: AngularFireList<Subcategory>;
+    private firebaselist: AngularFireList<Transaction>;
 
     constructor(
         private firebase: AngularFireDatabase,
     ) {
-        this.firebaselist = this.firebase.list('subSubcategory');
+        this.firebaselist = this.firebase.list('transactions');
     }
 
-    public getAll(): Observable<Subcategory[]> {
+    public getAll(): Observable<Transaction[]> {
         return this.firebaselist
             .snapshotChanges()
             .pipe(
@@ -28,19 +28,19 @@ export class SubcategoryService {
                         })))
     }
 
-    public add(newItem: Subcategory): Observable<any> {
+    public add(newItem: Transaction): Observable<any> {
         this.firebaselist.push(newItem);
 
         return of();
     }
 
-    public edit(item: Subcategory): Promise<void> {
+    public edit(item: Transaction): Promise<void> {
         let key = item.$key;
         delete item.$key;
         return this.firebaselist.update(key, item);
-    }
+      }
 
-    public remove(item: Subcategory): Promise<void> {
+    public remove(item: Transaction): Promise<void> {
         return this.firebaselist.remove(item.$key);
     }
 
