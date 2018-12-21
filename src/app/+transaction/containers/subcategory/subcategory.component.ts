@@ -38,7 +38,7 @@ export class SubcategoryComponent implements OnInit {
   public create() {
     let dialogRef = this.dialog.open(AddSubcategoryComponent, {
       height: '215px',
-      width: '230px',
+      width: '300px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

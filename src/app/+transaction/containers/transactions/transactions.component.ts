@@ -60,7 +60,7 @@ export class TransactionsComponent implements OnInit {
     let dialogRef = this.dialog.open(
       EditTransactionComponent, {
         height: '280px',
-        width: '80%',
+        width: '300px',
         data: { transaction: item, categories$: this.categories$ },
       });
 

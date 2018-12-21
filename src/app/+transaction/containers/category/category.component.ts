@@ -33,7 +33,7 @@ export class CategoryComponent implements OnInit {
   public create() {
     let dialogRef = this.dialog.open(AddCategoryComponent, {
       height: '150px',
-      width: '230px',
+      width: '300px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
