@@ -9,7 +9,7 @@
 
     <mat-form-field>
         <mat-select placeholder="Category" formControlName="categoryName" required>
-            <mat-option *ngFor="let category of categeories$ | async" [value]="category.name">
+            <mat-option *ngFor="let category of data.categeories$ | async" [value]="category.name">
                 {{category.name}}
             </mat-option>
         </mat-select>
