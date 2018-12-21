@@ -18,6 +18,7 @@ export class AddTransactionComponent implements OnInit {
     'descriptionForm': new FormControl('', [Validators.required]),
     'valueForm': new FormControl('', [Validators.required]),
     'categoryName': new FormControl('', [Validators.required]),
+    'dateForm': new FormControl(new Date(), [Validators.required]),
   });
 
   public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
@@ -34,6 +35,7 @@ export class AddTransactionComponent implements OnInit {
       description: this.transactionFormGroup.get('descriptionForm').value,
       value: this.transactionFormGroup.get('valueForm').value,
       category: this.transactionFormGroup.get('categoryName').value,
+      date: this.transactionFormGroup.get('dateForm').value,
     };
 
     this.dialogRef.close(result);

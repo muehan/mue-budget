@@ -27,7 +27,8 @@ export class EditTransactionComponent implements OnInit {
     this.transactionFormGroup = new FormGroup({
       'descriptionForm': new FormControl(this.data.transaction.description, [Validators.required]),
       'valueForm': new FormControl(this.data.transaction.value, [Validators.required]),
-      'categoryName': new FormControl(this.data.transaction.category, [Validators.required]),
+      'categoryNameForm': new FormControl(this.data.transaction.category, [Validators.required]),
+      'dateForm': new FormControl(this.data.transaction.date, [Validators.required]),
     });
   }
 
@@ -36,7 +37,8 @@ export class EditTransactionComponent implements OnInit {
       ...this.data.transaction,
       description: this.transactionFormGroup.get('descriptionForm').value,
       value: this.transactionFormGroup.get('valueForm').value,
-      category: this.transactionFormGroup.get('categoryName').value,
+      category: this.transactionFormGroup.get('categoryNameForm').value,
+      date: this.transactionFormGroup.get('dateForm').value,
     };
 
     this.dialogRef.close(result);

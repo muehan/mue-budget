@@ -5,4 +5,5 @@ export class Transaction {
     value: number;
     category?: string;
     subCategory?: string;
+    date?: Date;
 }
