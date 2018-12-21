@@ -54,5 +54,8 @@ import { environment } from '../../environments/environment';
     AngularFireModule,
     AngularFireDatabaseModule,
   ],
+  providers: [
+    MatDatepickerModule,
+  ]
 })
 export class SharedModule { }
