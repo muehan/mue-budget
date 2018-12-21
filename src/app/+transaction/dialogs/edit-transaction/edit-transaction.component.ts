@@ -33,6 +33,7 @@ export class EditTransactionComponent implements OnInit {
 
   public create() {
     let result = {
+      ...this.data.transaction,
       description: this.transactionFormGroup.get('descriptionForm').value,
       value: this.transactionFormGroup.get('valueForm').value,
       category: this.transactionFormGroup.get('categoryName').value,
