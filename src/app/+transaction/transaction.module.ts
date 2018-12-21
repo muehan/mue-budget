@@ -10,6 +10,7 @@ import { SubcategoryComponent } from './containers/subcategory/subcategory.compo
 import { AddSubcategoryComponent } from './dialogs/add-subcategory/add-subcategory.component';
 import { EditSubcategoryComponent } from './dialogs/edit-subcategory/edit-subcategory.component';
 import { AddTransactionComponent } from './dialogs/add-transaction/add-transaction.component';
+import { EditTransactionComponent } from './dialogs/edit-transaction/edit-transaction.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AddTransactionComponent } from './dialogs/add-transaction/add-transacti
     AddSubcategoryComponent,
     EditSubcategoryComponent,
     AddTransactionComponent,
+    EditTransactionComponent,
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,7 @@ import { AddTransactionComponent } from './dialogs/add-transaction/add-transacti
     AddSubcategoryComponent,
     EditSubcategoryComponent,
     AddTransactionComponent,
+    EditTransactionComponent,
   ]
 })
 export class TransactionModule { }

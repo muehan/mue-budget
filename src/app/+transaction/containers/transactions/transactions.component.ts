@@ -4,9 +4,11 @@ import { AppState } from 'src/app/store/state';
 import { TransactionActions, SubcategoryActions, CategoryActions } from '../../actions';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../model/transaction';
-import { getAllTransactions } from '../../reducers';
+import { getAllTransactions, getAllCategories } from '../../reducers';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTransactionComponent } from '../../dialogs/add-transaction/add-transaction.component';
+import { EditTransactionComponent } from '../../dialogs/edit-transaction/edit-transaction.component';
+import { Category } from '../../model/categroy';
 
 @Component({
   selector: 'mue-transactions',
@@ -16,6 +18,7 @@ import { AddTransactionComponent } from '../../dialogs/add-transaction/add-trans
 export class TransactionsComponent implements OnInit {
 
   public transactions$: Observable<Transaction[]> = this.store.select(getAllTransactions);
+  public categories$: Observable<Category[]> = this.store.select(getAllCategories);
 
   constructor(
     private store: Store<AppState>,
@@ -54,17 +57,17 @@ export class TransactionsComponent implements OnInit {
   }
 
   public edit(item: Transaction) {
-    // let dialogRef = this.dialog.open(
-    //   EditCategoryComponent, {
-    //     height: '150px',
-    //     width: '230px',
-    //     data: { category: item },
-    //   });
+    let dialogRef = this.dialog.open(
+      EditTransactionComponent, {
+        height: '280px',
+        width: '230px',
+        data: { transaction: item, categories$: this.categories$ },
+      });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     this.store.dispatch(new CategoryActions.EditCategories(result));
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new TransactionActions.EditTransactions(result));
+      }
+    });
   }
 }
