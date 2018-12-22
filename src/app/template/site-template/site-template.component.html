@@ -11,9 +11,13 @@
             <mat-icon>category</mat-icon>Categories
         </button>
 
+        <button mat-menu-item [routerLink]="['/analyze/monthly']">
+            <mat-icon>show_chart</mat-icon>Performance
+        </button>
+        <!-- 
         <button mat-menu-item [routerLink]="['/subcategory']">
             <mat-icon>layers</mat-icon>Subcategories
-        </button>
+        </button> -->
 
         <button mat-menu-item (click)="logout()">
             <mat-icon>person</mat-icon>Logout

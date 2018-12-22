@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../+shared/shared.module';
+import { ReportingRoutingModule } from './reporting-routes.modules';
+import { MonthlyComponent } from './containers/monthly/monthly.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    MonthlyComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,
+    ReportingRoutingModule,
   ]
 })
 export class ReportingModule { }
