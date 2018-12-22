@@ -3,5 +3,7 @@ export class Transaction {
     $key: string;
     description: string;
     value: number;
-    category: string;
+    category?: string;
+    subCategory?: string;
+    date?: Date;
 }

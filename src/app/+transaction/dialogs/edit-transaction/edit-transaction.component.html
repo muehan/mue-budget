@@ -1,0 +1,26 @@
+<form class="example-form" [formGroup]="transactionFormGroup" (ngSubmit)="create()">
+    <mat-form-field class="full-width">
+        <input matInput placeholder="Beschreibung" formControlName="descriptionForm">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <input matInput placeholder="Wert" type="number" formControlName="valueForm">
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-select placeholder="Category" formControlName="categoryNameForm" required>
+            <mat-option *ngFor="let category of data.categories$ | async" [value]="category.name">
+                {{category.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <input matInput [matDatepicker]="picker" placeholder="date" formControlName="dateForm" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</form>
+
+<button type="button" mat-raised-button color="primary" (click)="create()">Save</button>
+<button type="button" mat-raised-button color="primary" style="float: right;" (click)="close()">Close</button>

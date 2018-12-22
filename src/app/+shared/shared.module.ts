@@ -9,6 +9,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
@@ -29,6 +31,8 @@ import { environment } from '../../environments/environment';
     MatListModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
@@ -45,11 +49,16 @@ import { environment } from '../../environments/environment';
     MatListModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     AngularFireModule,
     AngularFireDatabaseModule,
   ],
+  providers: [
+    MatDatepickerModule,
+  ]
 })
 export class SharedModule { }
