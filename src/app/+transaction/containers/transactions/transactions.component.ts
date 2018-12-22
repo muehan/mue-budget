@@ -41,8 +41,9 @@ export class TransactionsComponent implements OnInit {
 
   public create() {
     let dialogRef = this.dialog.open(AddTransactionComponent, {
-      height: '280px',
-      width: '230px',
+      height: '350px',
+      width: '90%',
+      maxWidth: '500px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -59,8 +60,9 @@ export class TransactionsComponent implements OnInit {
   public edit(item: Transaction) {
     let dialogRef = this.dialog.open(
       EditTransactionComponent, {
-        height: '280px',
-        width: '80%',
+        height: '350px',
+        width: '90%',
+        maxWidth: '500px',
         data: { transaction: item, categories$: this.categories$ },
       });
 

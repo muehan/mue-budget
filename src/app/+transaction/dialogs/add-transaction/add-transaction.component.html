@@ -1,51 +1,30 @@
-<form
-  class="example-form"
-  [formGroup]="transactionFormGroup"
-  (ngSubmit)="create()"
->
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Beschreibung"
-      formControlName="descriptionForm"
-    />
-  </mat-form-field>
+<form class="example-form" [formGroup]="transactionFormGroup" (ngSubmit)="create()">
+    <mat-form-field class="full-width">
+        <input matInput placeholder="Beschreibung" formControlName="descriptionForm" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <input
-      matInput
-      placeholder="Wert"
-      type="number"
-      formControlName="valueForm"
-    />
-  </mat-form-field>
+    <mat-form-field class="full-width">
+        <input matInput placeholder="Wert" type="number" formControlName="valueForm" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-select placeholder="Category" formControlName="categoryName" required>
-      <mat-option
-        *ngFor="let category of (categeories$ | async)"
-        [value]="category.name">
-        {{ category.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-select placeholder="Category" formControlName="categoryName" required>
+            <mat-option *ngFor="let category of (categeories$ | async)" [value]="category.name">
+                {{ category.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="date" formControlName="dateForm" />
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field class="full-width">
+        <input matInput [matDatepicker]="picker" placeholder="date" formControlName="dateForm" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 </form>
 
 <button type="button" mat-raised-button color="primary" (click)="create()">
   Create
 </button>
-<button
-  type="button"
-  mat-raised-button
-  color="primary"
-  style="float: right;"
-  (click)="close()"
->
+<button type="button" mat-raised-button color="primary" style="float: right;" (click)="close()">
   Close
 </button>
