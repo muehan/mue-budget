@@ -17,6 +17,7 @@ export class EditCategoryComponent implements OnInit {
   public categoryForm = new FormControl(this.data.category.name);
   
   private category: Category;
+  private selectedColor: string;
 
   constructor(
     public dialogRef: MatDialogRef<EditCategoryComponent>,
@@ -29,7 +30,12 @@ export class EditCategoryComponent implements OnInit {
 
   public save() {
     this.category.name = this.categoryForm.value;
+    this.category.color = this.selectedColor;
     this.dialogRef.close(this.category);
+  }
+
+  public colorSelected($event) {
+    this.selectedColor = $event;
   }
 
   public close() {

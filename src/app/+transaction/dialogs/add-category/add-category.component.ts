@@ -10,6 +10,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class AddCategoryComponent implements OnInit {
 
   public category = new FormControl('');
+  public color = new FormControl('');
+
+  private selectedColor: string;
 
   constructor(
     public dialogRef: MatDialogRef<AddCategoryComponent>, ) { }
@@ -18,10 +21,18 @@ export class AddCategoryComponent implements OnInit {
   }
 
   public create() {
-    this.dialogRef.close(this.category.value);
+    this.dialogRef.close(
+      {
+        name: this.category.value,
+        color: this.selectedColor,
+      });
   }
 
   public close() {
     this.dialogRef.close();
+  }
+
+  public colorSelected($event) {
+    this.selectedColor = $event;
   }
 }
