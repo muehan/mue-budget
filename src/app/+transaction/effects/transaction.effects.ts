@@ -21,8 +21,8 @@ export class TransactionEffects {
       switchMap((_) => {
         return this.transactionService.getAll()
           .pipe(
-            map((Transactions) => {
-              return new TransactionActions.GetTransactionsSuccess(Transactions);
+            map((transactions) => {
+              return new TransactionActions.GetTransactionsSuccess(transactions);
             }),
             catchError((error) => {
               return of(new TransactionActions.GetTransactionsFailed(error));
@@ -35,7 +35,10 @@ export class TransactionEffects {
   addCategory$ = this.actions
     .ofType<TransactionActions.AddTransactions>(TransactionActions.ActionTypes.AddTransactions)
     .pipe(
-      map(action => action.payload),
+      map(action => {
+        console.log(action.payload);
+        return action.payload
+      }),
       switchMap(x => this.transactionService.add(x)
         .pipe(
           map(x => new TransactionActions.AddTransactionsSuccess()),

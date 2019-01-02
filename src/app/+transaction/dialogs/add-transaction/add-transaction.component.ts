@@ -31,11 +31,14 @@ export class AddTransactionComponent implements OnInit {
   }
 
   public create() {
+
+    const selectedDate: Date = new Date(this.transactionFormGroup.get('dateForm').value);
+
     let result = {
       description: this.transactionFormGroup.get('descriptionForm').value,
       value: this.transactionFormGroup.get('valueForm').value,
       category: this.transactionFormGroup.get('categoryName').value,
-      date: this.transactionFormGroup.get('dateForm').value,
+      date: selectedDate.getTime(),
     };
 
     this.dialogRef.close(result);

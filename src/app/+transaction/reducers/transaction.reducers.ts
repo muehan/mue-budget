@@ -49,7 +49,7 @@ export function transactionReducer(
 
 export function getTransactionSelectors(selectedState: (state: any) => TransactionState) {
     return {
-        getAll: createSelector(selectedState, (state: TransactionState) => state.items),
+        getAll: createSelector(selectedState, (state: TransactionState) => state.items.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())),
         getIsLoading: createSelector(selectedState, (state: TransactionState) => state.isLoading)
     };
 }
