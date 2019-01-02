@@ -28,17 +28,19 @@ export class EditTransactionComponent implements OnInit {
       'descriptionForm': new FormControl(this.data.transaction.description, [Validators.required]),
       'valueForm': new FormControl(this.data.transaction.value, [Validators.required]),
       'categoryNameForm': new FormControl(this.data.transaction.category, [Validators.required]),
-      'dateForm': new FormControl(this.data.transaction.date, [Validators.required]),
+      'dateForm': new FormControl(new Date(this.data.transaction.date), [Validators.required]),
     });
   }
 
   public create() {
+    const selectedDate: Date = new Date(this.transactionFormGroup.get('dateForm').value);
+
     let result = {
       ...this.data.transaction,
       description: this.transactionFormGroup.get('descriptionForm').value,
       value: this.transactionFormGroup.get('valueForm').value,
       category: this.transactionFormGroup.get('categoryNameForm').value,
-      date: this.transactionFormGroup.get('dateForm').value,
+      date: selectedDate.getTime(),
     };
 
     this.dialogRef.close(result);
