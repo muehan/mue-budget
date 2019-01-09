@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SubcategoryActions, CategoryActions } from '../../actions';
 import { AddSubcategoryComponent } from '../../dialogs/add-subcategory/add-subcategory.component';
 import { EditSubcategoryComponent } from '../../dialogs/edit-subcategory/edit-subcategory.component';
+import { groupBy } from 'rxjs/operators';
 
 @Component({
   selector: 'mue-subcategory',
@@ -17,7 +18,6 @@ import { EditSubcategoryComponent } from '../../dialogs/edit-subcategory/edit-su
 export class SubcategoryComponent implements OnInit {
 
   public subcategories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
-
 
   constructor(
     private store: Store<AppState>,

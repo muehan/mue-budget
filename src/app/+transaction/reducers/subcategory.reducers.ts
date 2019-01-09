@@ -49,7 +49,7 @@ export function subcategoryReducer(
 
 export function getSubcategorySelectors(selectedState: (state: any) => SubcategoryState) {
     return {
-        getAll: createSelector(selectedState, (state: SubcategoryState) => state.Subcategories),
+        getAll: createSelector(selectedState, (state: SubcategoryState) => state.Subcategories.sort((a,b) => b.categoryName > a.categoryName ? -1 : 1)),
         getIsLoading: createSelector(selectedState, (state: SubcategoryState) => state.isLoading)
     };
 }
