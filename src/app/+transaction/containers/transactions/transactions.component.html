@@ -1,7 +1,7 @@
 <mat-list>
     <mat-list-item *ngFor="let transaction of transactions$ | async" [ngStyle]="{'background-color': getCategoryColor(transaction.category)}">
         <span style="min-width: 80px;">{{ transaction.value }}.- </span>
-        <span style="min-width: 140px;">{{ transaction.description }}</span>
+        <span style="min-width: 140px;">{{ transaction.subCategory }}</span>
         <span>{{transaction.category}}</span>
 
         <div class="position-right">
