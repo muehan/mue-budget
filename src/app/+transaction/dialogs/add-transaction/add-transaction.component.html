@@ -14,7 +14,7 @@
 
     <mat-form-field class="full-width">
       <mat-select placeholder="Subcategory" formControlName="subcategoryName" required>
-          <mat-option *ngFor="let subcategory of (subcategeories$ | async)" [value]="subcategory.name">
+          <mat-option *ngFor="let subcategory of (subcategeoriesFilterd$ | async)" [value]="subcategory.name">
               {{ subcategory.name }}
           </mat-option>
       </mat-select>
