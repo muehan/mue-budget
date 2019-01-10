@@ -5,7 +5,7 @@
     </mat-form-field>
 
     <mat-form-field class="full-width">
-        <mat-select placeholder="Category" formControlName="categoryName" required>
+        <mat-select placeholder="Category" formControlName="categoryName" required (selectionChange)="categoryChanged($event)">
             <mat-option *ngFor="let category of (categeories$ | async)" [value]="category.name">
                 {{ category.name }}
             </mat-option>

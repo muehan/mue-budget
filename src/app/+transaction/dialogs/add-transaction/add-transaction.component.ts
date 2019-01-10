@@ -49,4 +49,8 @@ export class AddTransactionComponent implements OnInit {
   public close() {
     this.dialogRef.close();
   }
+
+  public categoryChanged ($event){
+    console.log($event);
+  }
 }
