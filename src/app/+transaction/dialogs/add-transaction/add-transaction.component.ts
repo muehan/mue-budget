@@ -15,9 +15,9 @@ import { AppState } from 'src/app/store/state';
 export class AddTransactionComponent implements OnInit {
 
   public transactionFormGroup: FormGroup = new FormGroup({
-    'descriptionForm': new FormControl('', [Validators.required]),
     'valueForm': new FormControl('', [Validators.required]),
     'categoryName': new FormControl('', [Validators.required]),
+    'subcategoryName': new FormControl('', [Validators.required]),
     'dateForm': new FormControl(new Date(), [Validators.required]),
   });
 
