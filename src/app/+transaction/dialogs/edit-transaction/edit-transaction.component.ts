@@ -21,7 +21,11 @@ export interface IEditTransactionData {
 export class EditTransactionComponent implements OnInit {
 
   public transactionFormGroup: FormGroup;
-  public subcategeoriesFilterd$: Observable<Subcategory[]> = this.data.subcategeories$;
+  public subcategeoriesFilterd$: Observable<Subcategory[]> = this.data.subcategeories$.pipe(
+    map(x => {
+      return x.filter(sub => sub.categoryName == this.data.transaction.category);
+    })
+  );
 
   constructor(
     public dialogRef: MatDialogRef<EditTransactionComponent>,
