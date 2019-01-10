@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
-import { getAllCategories } from '../../reducers';
+import { getAllCategories, getAllSubcategories } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 
@@ -22,6 +22,7 @@ export class AddTransactionComponent implements OnInit {
   });
 
   public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
+  public subcategeories$: Observable<Category[]> = this.store.select(getAllSubcategories);
 
   constructor(
     public dialogRef: MatDialogRef<AddTransactionComponent>,
