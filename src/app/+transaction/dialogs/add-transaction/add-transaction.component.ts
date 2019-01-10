@@ -6,6 +6,7 @@ import { Category } from '../../model/categroy';
 import { getAllCategories, getAllSubcategories } from '../../reducers';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
+import { Subcategory } from '../../model/subcategory';
 
 @Component({
   selector: 'mue-add-transaction',
@@ -22,7 +23,7 @@ export class AddTransactionComponent implements OnInit {
   });
 
   public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
-  public subcategeories$: Observable<Category[]> = this.store.select(getAllSubcategories);
+  public subcategeories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
 
   constructor(
     public dialogRef: MatDialogRef<AddTransactionComponent>,
