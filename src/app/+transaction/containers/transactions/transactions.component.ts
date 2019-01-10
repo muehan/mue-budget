@@ -4,12 +4,13 @@ import { AppState } from 'src/app/store/state';
 import { TransactionActions, SubcategoryActions, CategoryActions } from '../../actions';
 import { Observable, Subscription } from 'rxjs';
 import { Transaction } from '../../model/transaction';
-import { getAllTransactions, getAllCategories } from '../../reducers';
+import { getAllTransactions, getAllCategories, getAllSubcategories } from '../../reducers';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTransactionComponent } from '../../dialogs/add-transaction/add-transaction.component';
 import { EditTransactionComponent } from '../../dialogs/edit-transaction/edit-transaction.component';
 import { Category } from '../../model/categroy';
 import { take, last, first } from 'rxjs/operators';
+import { Subcategory } from '../../model/subcategory';
 
 @Component({
   selector: 'mue-transactions',
@@ -20,6 +21,7 @@ export class TransactionsComponent implements OnInit {
 
   public transactions$: Observable<Transaction[]> = this.store.select(getAllTransactions);
   public categories$: Observable<Category[]> = this.store.select(getAllCategories);
+  public subcategeories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
   public categories: Category[] = new Array<Category>();
 
   constructor(
@@ -67,7 +69,11 @@ export class TransactionsComponent implements OnInit {
         height: '350px',
         width: '90%',
         maxWidth: '500px',
-        data: { transaction: item, categories$: this.categories$ },
+        data: {
+          transaction: item,
+          categories$: this.categories$,
+          subcategeories$: this.subcategeories$,
+        },
       });
 
     dialogRef.afterClosed().subscribe(result => {

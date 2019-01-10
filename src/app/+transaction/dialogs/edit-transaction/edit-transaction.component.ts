@@ -4,10 +4,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
 import { Transaction } from '../../model/transaction';
+import { Subcategory } from '../../model/subcategory';
+import { map } from 'rxjs/operators';
 
 export interface IEditTransactionData {
   transaction: Transaction;
-  categories$: Observable<Category[]>
+  categories$: Observable<Category[]>;
+  subcategeories$: Observable<Subcategory[]>;
 }
 
 @Component({
@@ -18,6 +21,7 @@ export interface IEditTransactionData {
 export class EditTransactionComponent implements OnInit {
 
   public transactionFormGroup: FormGroup;
+  public subcategeoriesFilterd$: Observable<Subcategory[]> = this.data.subcategeories$;
 
   constructor(
     public dialogRef: MatDialogRef<EditTransactionComponent>,
@@ -25,25 +29,33 @@ export class EditTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.transactionFormGroup = new FormGroup({
-      'descriptionForm': new FormControl(this.data.transaction.description, [Validators.required]),
       'valueForm': new FormControl(this.data.transaction.value, [Validators.required]),
       'categoryNameForm': new FormControl(this.data.transaction.category, [Validators.required]),
+      'subcategoryName': new FormControl(this.data.transaction.subCategory, [Validators.required]),
       'dateForm': new FormControl(new Date(this.data.transaction.date), [Validators.required]),
     });
   }
 
   public create() {
-    const selectedDate: Date = new Date(this.transactionFormGroup.get('dateForm').value);
 
     let result = {
       ...this.data.transaction,
-      description: this.transactionFormGroup.get('descriptionForm').value,
       value: this.transactionFormGroup.get('valueForm').value,
       category: this.transactionFormGroup.get('categoryNameForm').value,
-      date: selectedDate.getTime(),
+      subCategory: this.transactionFormGroup.get('subcategoryName').value,
+      date: new Date(this.transactionFormGroup.get('dateForm').value).getTime(),
     };
 
     this.dialogRef.close(result);
+  }
+
+  public categoryChanged ($event){
+    this.subcategeoriesFilterd$ = this.data.subcategeories$
+    .pipe(
+      map(x => {
+        return x.filter(sub => sub.categoryName == $event.value);
+      })
+    );
   }
 
   public close() {
