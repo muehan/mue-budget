@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -24,6 +25,7 @@ export class AddTransactionComponent implements OnInit {
 
   public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
   public subcategeories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
+  public subcategeoriesFilterd$: Observable<Subcategory[]> = this.subcategeories$;
 
   constructor(
     public dialogRef: MatDialogRef<AddTransactionComponent>,
@@ -51,6 +53,11 @@ export class AddTransactionComponent implements OnInit {
   }
 
   public categoryChanged ($event){
-    console.log($event);
+    this.subcategeoriesFilterd$ = this.subcategeories$
+    .pipe(
+      map(x => {
+        return x.filter(sub => sub.categoryName == $event.value);
+      })
+    );
   }
 }
