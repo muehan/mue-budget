@@ -2,3 +2,9 @@
 <div>Total: {{ totalExpenses$ | async }}</div>
 <div>current year: {{ currentYear }}</div>
 <div>current month: {{ currentMonth }}</div>
+
+<div>
+  <div *ngFor="let category of categories$ | async">
+    {{category}}: {{ getExpensesByCategory(category) }}
+  </div>
+</div>

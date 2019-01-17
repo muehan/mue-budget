@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../+transaction/model/transaction';
-import { getAllTransactions, getTransactionIsLoading } from 'src/app/+transaction/reducers';
+import { getAllTransactions, getTransactionIsLoading, getAllCategories } from 'src/app/+transaction/reducers';
 import { TransactionActions } from 'src/app/+transaction/actions';
+import { Category } from 'src/app/+transaction/model/categroy';
 
 @Component({
   selector: 'mue-performance',
@@ -14,8 +15,8 @@ import { TransactionActions } from 'src/app/+transaction/actions';
 export class PerformanceComponent implements OnInit {
 
   public transactions$: Observable<Transaction[]> = this.store.select(getAllTransactions);
-
   public isLoading$: Observable<boolean> = this.store.select(getTransactionIsLoading);
+  public categories$: Observable<Category[]> = this.store.select(getAllCategories);
 
   constructor(
     private store: Store<AppState>,
