@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../+transaction/model/transaction';
 import { getAllTransactions } from 'src/app/+transaction/reducers';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'mue-performance',
@@ -23,6 +23,7 @@ export class PerformanceComponent implements OnInit {
     )
 
   public totalExpenses$: Observable<number> = this.currentMonth$.pipe(
+    filter(x => x.length > 0),
     map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
   )
 
