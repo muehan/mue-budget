@@ -4,7 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../+transaction/model/transaction';
 import { getAllTransactions, getTransactionIsLoading } from 'src/app/+transaction/reducers';
-import { map, filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { TransactionActions } from 'src/app/+transaction/actions';
 
 @Component({
   selector: 'mue-performance',
@@ -30,7 +31,9 @@ export class PerformanceComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-  ) { }
+  ) {
+    this.store.dispatch(new TransactionActions.GetTransactions());
+  }
 
   ngOnInit() {
   }
