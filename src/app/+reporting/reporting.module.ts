@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../+shared/shared.module';
 import { ReportingRoutingModule } from './reporting-routes.modules';
-import { MonthlyComponent } from './containers/monthly/monthly.component';
+import { PerformanceComponent } from './containers/performance/performance.component';
 
 @NgModule({
   declarations: [
-    MonthlyComponent
+    PerformanceComponent
   ],
   imports: [
     CommonModule,
