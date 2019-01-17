@@ -19,7 +19,15 @@ export class MonthlyComponent implements OnInit {
   public currentYear = new Date().getFullYear();
   public currentMonth = new Date().getMonth() + 1;
 
-  public currentMonth$: Observable<Transaction[]> = this.isTransactionLoading$
+  public currentMonth$: Observable<Transaction[]>;
+
+
+  public totalExpenses$: Observable<number>;
+
+  constructor() { }
+
+  ngOnInit() {
+    this.currentMonth$ = this.isTransactionLoading$
     .pipe(
       filter(x => !x),
       switchMap(_ => this.transactions$
@@ -28,14 +36,9 @@ export class MonthlyComponent implements OnInit {
                               && new Date(t.date).getMonth() == new Date().getMonth())),
         )))
 
-
-  public totalExpenses$: Observable<number> = this.currentMonth$.pipe(
-    map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
-  )
-
-  constructor() { }
-
-  ngOnInit() {
+        this.totalExpenses$ = this.currentMonth$.pipe(
+          map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
+        )
   }
 
 }
