@@ -18,8 +18,8 @@ export class PerformanceComponent implements OnInit {
 
   public currentMonth$: Observable<Transaction[]> = this.store.select(getAllTransactions)
     .pipe(
-      map(x => x.filter(t => new Date(t.date).getFullYear() == new Date().getFullYear())),
-      map(x => x.filter(t => new Date(t.date).getMonth() == new Date().getMonth()))
+      map(x => x.filter(t => new Date(t.date).getFullYear() == new Date().getFullYear()
+                          && new Date(t.date).getMonth() == new Date().getMonth())),
     )
 
   public totalExpenses$: Observable<number> = this.currentMonth$.pipe(
