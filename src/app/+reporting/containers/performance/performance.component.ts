@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
 export class PerformanceComponent implements OnInit {
 
   public currentYear = new Date().getFullYear();
-  public currentMonth = new Date().getMonth();
+  public currentMonth = new Date().getMonth() + 1;
 
   public currentMonth$: Observable<Transaction[]> = this.store.select(getAllTransactions)
     .pipe(
