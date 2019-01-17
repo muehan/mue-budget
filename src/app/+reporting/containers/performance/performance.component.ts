@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../+transaction/model/transaction';
 import { getAllTransactions, getTransactionIsLoading } from 'src/app/+transaction/reducers';
-import { map } from 'rxjs/operators';
+import { map, switchMap, filter } from 'rxjs/operators';
 import { TransactionActions } from 'src/app/+transaction/actions';
 
 @Component({
@@ -17,11 +17,16 @@ export class PerformanceComponent implements OnInit {
   public currentYear = new Date().getFullYear();
   public currentMonth = new Date().getMonth() + 1;
 
-  public currentMonth$: Observable<Transaction[]> = this.store.select(getAllTransactions)
-    .pipe(
-      map(x => x.filter(t => new Date(t.date).getFullYear() == new Date().getFullYear()
-                          && new Date(t.date).getMonth() == new Date().getMonth())),
-    )
+  public currentMonth$: Observable<Transaction[]> =
+  this.store.select(getTransactionIsLoading)
+  .pipe(
+    filter(x => !x),
+    switchMap(_ => this.store.select(getAllTransactions)
+      .pipe(
+        map(x => x.filter(t => new Date(t.date).getFullYear() == new Date().getFullYear()
+                            && new Date(t.date).getMonth() == new Date().getMonth())),
+      )))
+
 
   public totalExpenses$: Observable<number> = this.currentMonth$.pipe(
     map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
