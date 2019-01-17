@@ -32,13 +32,14 @@ export class CategoryComponent implements OnInit {
 
   public create() {
     let dialogRef = this.dialog.open(AddCategoryComponent, {
-      height: '150px',
-      width: '300px',
+      height: '190px',
+      width: '90%',
+      maxWidth: '500px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(new CategoryActions.AddCategories({ name: result }));
+        this.store.dispatch(new CategoryActions.AddCategories(result));
       }
     });
   }
@@ -50,8 +51,9 @@ export class CategoryComponent implements OnInit {
   public edit(item: Category) {
     let dialogRef = this.dialog.open(
       EditCategoryComponent, {
-        height: '150px',
-        width: '230px',
+        height: '190px',
+        width: '90%',
+        maxWidth: '500px',
         data: { category: item },
       });
 

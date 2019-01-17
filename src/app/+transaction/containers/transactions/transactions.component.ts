@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 import { TransactionActions, SubcategoryActions, CategoryActions } from '../../actions';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Transaction } from '../../model/transaction';
-import { getAllTransactions, getAllCategories } from '../../reducers';
+import { getAllTransactions, getAllCategories, getAllSubcategories } from '../../reducers';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTransactionComponent } from '../../dialogs/add-transaction/add-transaction.component';
 import { EditTransactionComponent } from '../../dialogs/edit-transaction/edit-transaction.component';
 import { Category } from '../../model/categroy';
+import { take, last, first } from 'rxjs/operators';
+import { Subcategory } from '../../model/subcategory';
 
 @Component({
   selector: 'mue-transactions',
@@ -19,11 +21,15 @@ export class TransactionsComponent implements OnInit {
 
   public transactions$: Observable<Transaction[]> = this.store.select(getAllTransactions);
   public categories$: Observable<Category[]> = this.store.select(getAllCategories);
+  public subcategeories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
+  public categories: Category[] = new Array<Category>();
 
   constructor(
     private store: Store<AppState>,
     public dialog: MatDialog,
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.store.dispatch(
       new SubcategoryActions.GetSubcategories()
     );
@@ -31,12 +37,12 @@ export class TransactionsComponent implements OnInit {
     this.store.dispatch(
       new CategoryActions.GetCategories()
     );
-  }
 
-  ngOnInit() {
     this.store.dispatch(
       new TransactionActions.GetTransactions()
     );
+
+    this.categories$.pipe(take(2)).subscribe(cats => this.categories = cats);
   }
 
   public create() {
@@ -63,7 +69,11 @@ export class TransactionsComponent implements OnInit {
         height: '350px',
         width: '90%',
         maxWidth: '500px',
-        data: { transaction: item, categories$: this.categories$ },
+        data: {
+          transaction: item,
+          categories$: this.categories$,
+          subcategeories$: this.subcategeories$,
+        },
       });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -71,5 +81,11 @@ export class TransactionsComponent implements OnInit {
         this.store.dispatch(new TransactionActions.EditTransactions(result));
       }
     });
+  }
+
+  public getCategoryColor(categroyName: string) {
+    let category = this.categories.find(x => x.name === categroyName);
+
+    return category ? category.color : '#FFFFFF';
   }
 }

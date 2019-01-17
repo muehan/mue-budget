@@ -22,13 +22,15 @@ export class TransactionService {
             .snapshotChanges()
             .pipe(
                 map(
-                    changes => changes
-                        .map(c => {
-                            return { $key: c.key, ...c.payload.val() }
-                        })))
+                    changes =>
+                        changes
+                            .map(c => {
+                                return { $key: c.key, ...c.payload.val() }
+                            })))
     }
 
     public add(newItem: Transaction): Observable<any> {
+        console.log(newItem);
         this.firebaselist.push(newItem);
 
         return of();
@@ -38,7 +40,7 @@ export class TransactionService {
         let key = item.$key;
         delete item.$key;
         return this.firebaselist.update(key, item);
-      }
+    }
 
     public remove(item: Transaction): Promise<void> {
         return this.firebaselist.remove(item.$key);

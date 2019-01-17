@@ -1,7 +1,10 @@
-<form class="example-form">
-    <mat-form-field>
+<form class="category-form">
+    <mat-form-field class="full-width">
         <input matInput placeholder="Category" [formControl]="categoryForm">
     </mat-form-field>
+
+    <mcc-color-picker colorPickerSelectorHeight="100" usedSizeColors="0" class="mcc-cp-small" [selectedColor]="data.category.color" (selected)="colorSelected($event)">
+    </mcc-color-picker>
 </form>
 <button type="button" mat-raised-button color="primary" (click)="save()">Save</button>
 <button type="button" mat-raised-button color="primary" style="float: right;" (click)="close()">Close</button>
