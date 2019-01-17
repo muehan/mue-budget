@@ -1,6 +1,5 @@
 <h1>Monthly expenses</h1>
-Total: {{ totalExpenses$ | async }}
-<br />
+<div *ngIf="!isLoading$ | async">Total: {{ totalExpenses$ | async }}</div>
 current year: {{ currentYear }}
 <br />
 current month: {{ currentMonth }}
