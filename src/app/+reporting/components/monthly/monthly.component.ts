@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Transaction } from 'src/app/+transaction/model/transaction';
 import { filter, switchMap, map } from 'rxjs/operators';
 import { Category } from 'src/app/+transaction/model/categroy';
+import { Subcategory } from 'src/app/+transaction/model/subcategory';
 
 @Component({
   selector: 'mue-monthly',
@@ -18,7 +19,10 @@ export class MonthlyComponent implements OnInit {
   public isTransactionLoading$: Observable<boolean>;
 
   @Input()
-  public categories$: Observable<Category[]>
+  public categories$: Observable<Category[]>;
+
+  @Input()
+  public subcategories$: Observable<Subcategory[]>;
 
   public currentYear = new Date().getFullYear();
   public currentMonth = new Date().getMonth() + 1;
@@ -45,6 +49,13 @@ export class MonthlyComponent implements OnInit {
   public getExpensesByCategory(categoryName: string) : Observable<number> {
     return this.currentMonth$.pipe(
       map(x => x.filter(t => t.category === categoryName)),
+      map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
+    );
+  }
+
+  public getExpensesBySubCategory(subcategoryName: string) : Observable<number> {
+    return this.currentMonth$.pipe(
+      map(x => x.filter(t => t.subCategory === subcategoryName)),
       map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
     );
   }

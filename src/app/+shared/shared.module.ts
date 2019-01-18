@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { MccColorPickerModule } from 'material-community-components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -37,6 +38,7 @@ import { environment } from '../../environments/environment';
     MatDialogModule,
     MccColorPickerModule,
     FormsModule,
+    MatCardModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
@@ -50,6 +52,7 @@ import { environment } from '../../environments/environment';
     MatMenuModule,
     MatListModule,
     MatSelectModule,
+    MatCardModule,
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,

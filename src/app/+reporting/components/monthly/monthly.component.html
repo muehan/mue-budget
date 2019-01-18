@@ -1,13 +1,20 @@
-<h1>Monthly expenses</h1>
-<div>current year: {{ currentYear }}</div>
-<div>current month: {{ currentMonth }}</div>
-
-<br />
-<br />
-<div>
-  <div *ngFor="let category of categories$ | async">
-    {{category.name}}: {{ getExpensesByCategory(category.name) | async | number:'1.0-2'}}
-  </div>
-</div>
-
-<div>Total: {{ totalExpenses$ | async | number:'1.0-2' }}</div>
+<mat-card>
+  <mat-card-header>
+    <h1>Monthly expenses</h1>
+    <div>current year: {{ currentYear }}</div>
+    <div>current month: {{ currentMonth }}</div>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item *ngFor="let category of categories$ | async">
+        {{category.name}}: {{ getExpensesByCategory(category.name) | async | number:'1.0-2'}}
+        <mat-list>
+        <mat-list-item *ngFor="let subcategory of subcategories$ | async">
+          {{subcategory.name}}: {{ getExpensesBySubCategory(subcategory.name) | async | number:'1.0-2'}}
+        </mat-list-item>
+        </mat-list>
+      </mat-list-item>
+    </mat-list>
+    <div>Total: {{ totalExpenses$ | async | number:'1.0-2' }}</div>
+  </mat-card-content>
+</mat-card>
