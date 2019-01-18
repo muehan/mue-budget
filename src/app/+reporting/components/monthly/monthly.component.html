@@ -5,6 +5,6 @@
 
 <div>
   <div *ngFor="let category of categories$ | async">
-    {{category.name}}: {{ getExpensesByCategory(category) | async }}
+    {{category.name}}: {{ getExpensesByCategory(category.name) | async }}
   </div>
 </div>
