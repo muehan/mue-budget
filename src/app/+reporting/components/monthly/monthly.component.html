@@ -1,10 +1,12 @@
 <h1>Monthly expenses</h1>
-<div>Total: {{ totalExpenses$ | async }}</div>
+<div>Total: {{ totalExpenses$ | async | number:'1.0-2' }}</div>
 <div>current year: {{ currentYear }}</div>
 <div>current month: {{ currentMonth }}</div>
 
+<br />
+<br />
 <div>
   <div *ngFor="let category of categories$ | async">
-    {{category.name}}: {{ getExpensesByCategory(category.name) | async }}
+    {{category.name}}: {{ getExpensesByCategory(category.name) | async | number:'1.0-2'}}
   </div>
 </div>
