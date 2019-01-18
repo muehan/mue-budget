@@ -63,7 +63,13 @@ export class MonthlyComponent implements OnInit {
   public getExpensesBySubCategory(subcategoryName: string) : Observable<number> {
     return this.currentMonth$.pipe(
       map(x => x.filter(t => t.subCategory === subcategoryName)),
-      map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
+      map(x => {
+        if(x){
+          return x.map(t => t.value).reduce((prev, next) => prev + next)
+        } else {
+          return 0;
+        }
+      })
     );
   }
 
