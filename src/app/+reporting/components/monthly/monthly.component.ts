@@ -4,6 +4,7 @@ import { Transaction } from 'src/app/+transaction/model/transaction';
 import { filter, switchMap, map } from 'rxjs/operators';
 import { Category } from 'src/app/+transaction/model/categroy';
 import { Subcategory } from 'src/app/+transaction/model/subcategory';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'mue-monthly',
@@ -49,7 +50,13 @@ export class MonthlyComponent implements OnInit {
   public getExpensesByCategory(categoryName: string) : Observable<number> {
     return this.currentMonth$.pipe(
       map(x => x.filter(t => t.category === categoryName)),
-      map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
+      map(x => {
+        if(x){
+          return x.map(t => t.value).reduce((prev, next) => prev + next)
+        } else {
+          return 0;
+        }
+      })
     );
   }
 
