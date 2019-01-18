@@ -51,7 +51,7 @@ export class MonthlyComponent implements OnInit {
     return this.currentMonth$.pipe(
       map(x => x.filter(t => t.category === categoryName)),
       map(x => {
-        if(x){
+        if(x.length !== 0){
           return x.map(t => t.value).reduce((prev, next) => prev + next)
         } else {
           return 0;
@@ -64,7 +64,7 @@ export class MonthlyComponent implements OnInit {
     return this.currentMonth$.pipe(
       map(x => x.filter(t => t.subCategory === subcategoryName)),
       map(x => {
-        if(x){
+        if(x.length !== 0){
           return x.map(t => t.value).reduce((prev, next) => prev + next)
         } else {
           return 0;
