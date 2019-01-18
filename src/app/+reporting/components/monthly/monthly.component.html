@@ -8,11 +8,11 @@
     <mat-list>
       <mat-list-item *ngFor="let category of categories$ | async">
         {{category.name}}: {{ getExpensesByCategory(category.name) | async | number:'1.0-2'}}
-        <mat-list>
-        <mat-list-item *ngFor="let subcategory of subcategories$ | async">
-          {{subcategory.name}}: {{ getExpensesBySubCategory(subcategory.name) | async | number:'1.0-2'}}
-        </mat-list-item>
-        </mat-list>
+        <div>
+          <mat-list-item *ngFor="let subcategory of subcategoriesByCategory(category.name) | async">
+            {{subcategory.name}}: {{ getExpensesBySubCategory(subcategory.name) | async | number:'1.0-2'}}
+          </mat-list-item>
+        </div>
       </mat-list-item>
     </mat-list>
     <div>Total: {{ totalExpenses$ | async | number:'1.0-2' }}</div>

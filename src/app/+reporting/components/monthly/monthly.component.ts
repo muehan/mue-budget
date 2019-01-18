@@ -59,4 +59,11 @@ export class MonthlyComponent implements OnInit {
       map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
     );
   }
+
+  public subcategoriesByCategory(categoryname: string) : Observable<Subcategory[]> {
+    return this.subcategories$
+      .pipe(
+        map(c => c.filter(x => x.categoryName == categoryname))
+      );
+  }
 }
