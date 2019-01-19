@@ -8,7 +8,7 @@ import { MonthlyComponent } from './components/monthly/monthly.component';
 @NgModule({
   declarations: [
     PerformanceComponent,
-    MonthlyComponent
+    MonthlyComponent,
   ],
   imports: [
     CommonModule,
