@@ -25,30 +25,38 @@ export class MonthlyComponent implements OnInit {
   @Input()
   public subcategories$: Observable<Subcategory[]>;
 
-  public currentYear = new Date().getFullYear();
-  public currentMonth = new Date().getMonth() + 1;
-  public currentMonth$: Observable<Transaction[]>;
+  public currentDate = new Date();
+  public selectedDate = new Date();
+  public selectedMonth$: Observable<Transaction[]>;
   public totalExpenses$: Observable<number>;
+
+  public get selectedYear() : string {
+    return this.selectedDate.getFullYear();
+  }
+
+  public get selectedMonth(): string {
+    return this.selectedDate.getMonth() + 1;
+  }
 
   constructor() { }
 
   ngOnInit() {
-    this.currentMonth$ = this.isTransactionLoading$
+    this.selectedMonth$ = this.isTransactionLoading$
     .pipe(
       filter(x => !x),
       switchMap(_ => this.transactions$
         .pipe(
-          map(x => x.filter(t => new Date(t.date).getFullYear() == new Date().getFullYear()
-                              && new Date(t.date).getMonth() == new Date().getMonth())),
+          map(x => x.filter(t => new Date(t.date).getFullYear() == this.selectedDate.getFullYear()
+                              && new Date(t.date).getMonth() == this.selectedDate.getMonth())),
         )))
 
-        this.totalExpenses$ = this.currentMonth$.pipe(
+        this.totalExpenses$ = this.selectedMonth$.pipe(
           map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
         )
   }
 
   public getExpensesByCategory(categoryName: string) : Observable<number> {
-    return this.currentMonth$.pipe(
+    return this.selectedMonth$.pipe(
       map(x => x.filter(t => t.category === categoryName)),
       map(x => {
         if(x.length !== 0){
@@ -61,7 +69,7 @@ export class MonthlyComponent implements OnInit {
   }
 
   public getExpensesBySubCategory(subcategoryName: string) : Observable<number> {
-    return this.currentMonth$.pipe(
+    return this.selectedMonth$.pipe(
       map(x => x.filter(t => t.subCategory === subcategoryName)),
       map(x => {
         if(x.length !== 0){
@@ -78,5 +86,13 @@ export class MonthlyComponent implements OnInit {
       .pipe(
         map(c => c.filter(x => x.categoryName == categoryname))
       );
+  }
+
+  public nextMonth(): void {
+    this.selectedDate.setMonth(this.selectedDate.getMonth() +1);
+  }
+
+  public previousMonth(): void {
+    this.selectedDate.setMonth(this.selectedDate.getMonth() -1);
   }
 }
