@@ -30,11 +30,11 @@ export class MonthlyComponent implements OnInit {
   public selectedMonth$: Observable<Transaction[]>;
   public totalExpenses$: Observable<number>;
 
-  public get selectedYear() : string {
+  public get selectedYear() : number {
     return this.selectedDate.getFullYear();
   }
 
-  public get selectedMonth(): string {
+  public get selectedMonth(): number {
     return this.selectedDate.getMonth() + 1;
   }
 
