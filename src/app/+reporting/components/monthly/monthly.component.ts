@@ -12,7 +12,6 @@ import { of } from 'rxjs';
   styleUrls: ['./monthly.component.scss']
 })
 export class MonthlyComponent implements OnInit {
-
   @Input()
   public transactions$: Observable<Transaction[]>;
 
@@ -30,7 +29,7 @@ export class MonthlyComponent implements OnInit {
   public selectedMonth$: Observable<Transaction[]>;
   public totalExpenses$: Observable<number>;
 
-  public get selectedYear() : number {
+  public get selectedYear(): number {
     return this.selectedDate.getFullYear();
   }
 
@@ -38,29 +37,38 @@ export class MonthlyComponent implements OnInit {
     return this.selectedDate.getMonth() + 1;
   }
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    this.selectedMonth$ = this.isTransactionLoading$
-    .pipe(
+    this.selectedMonth$ = this.isTransactionLoading$.pipe(
       filter(x => !x),
-      switchMap(_ => this.transactions$
-        .pipe(
-          map(x => x.filter(t => new Date(t.date).getFullYear() == this.selectedDate.getFullYear()
-                              && new Date(t.date).getMonth() == this.selectedDate.getMonth())),
-        )))
-
-        this.totalExpenses$ = this.selectedMonth$.pipe(
-          map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
+      switchMap(_ =>
+        this.transactions$.pipe(
+          map(x =>
+            x.filter(
+              t =>
+                new Date(t.date).getFullYear() ==
+                  this.selectedDate.getFullYear() &&
+                new Date(t.date).getMonth() == this.selectedDate.getMonth()
+            )
+          )
         )
+      )
+    );
   }
 
-  public getExpensesByCategory(categoryName: string) : Observable<number> {
+  public getTotalExpenses(): Observable<number> {
+    return this.selectedMonth$.pipe(
+      map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
+    );
+  }
+
+  public getExpensesByCategory(categoryName: string): Observable<number> {
     return this.selectedMonth$.pipe(
       map(x => x.filter(t => t.category === categoryName)),
       map(x => {
-        if(x.length !== 0){
-          return x.map(t => t.value).reduce((prev, next) => prev + next)
+        if (x.length !== 0) {
+          return x.map(t => t.value).reduce((prev, next) => prev + next);
         } else {
           return 0;
         }
@@ -68,12 +76,12 @@ export class MonthlyComponent implements OnInit {
     );
   }
 
-  public getExpensesBySubCategory(subcategoryName: string) : Observable<number> {
+  public getExpensesBySubCategory(subcategoryName: string): Observable<number> {
     return this.selectedMonth$.pipe(
       map(x => x.filter(t => t.subCategory === subcategoryName)),
       map(x => {
-        if(x.length !== 0){
-          return x.map(t => t.value).reduce((prev, next) => prev + next)
+        if (x.length !== 0) {
+          return x.map(t => t.value).reduce((prev, next) => prev + next);
         } else {
           return 0;
         }
@@ -81,18 +89,19 @@ export class MonthlyComponent implements OnInit {
     );
   }
 
-  public subcategoriesByCategory(categoryname: string) : Observable<Subcategory[]> {
-    return this.subcategories$
-      .pipe(
-        map(c => c.filter(x => x.categoryName == categoryname))
-      );
+  public subcategoriesByCategory(
+    categoryname: string
+  ): Observable<Subcategory[]> {
+    return this.subcategories$.pipe(
+      map(c => c.filter(x => x.categoryName == categoryname))
+    );
   }
 
   public nextMonth(): void {
-    this.selectedDate.setMonth(this.selectedDate.getMonth() +1);
+    this.selectedDate.setMonth(this.selectedDate.getMonth() + 1);
   }
 
   public previousMonth(): void {
-    this.selectedDate.setMonth(this.selectedDate.getMonth() -1);
+    this.selectedDate.setMonth(this.selectedDate.getMonth() - 1);
   }
 }

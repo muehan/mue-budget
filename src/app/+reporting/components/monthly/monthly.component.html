@@ -20,6 +20,6 @@
                 </mat-list-item>
             </mat-list>
         </div>
-        <mat-list-item style="font-weight: bold">Total: {{ totalExpenses$ | async | number:'1.0-2' }}</mat-list-item>
+        <mat-list-item style="font-weight: bold">Total: {{ getTotalExpenses() | async | number:'1.0-2' }}</mat-list-item>
     </mat-card-content>
 </mat-card>
