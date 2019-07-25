@@ -26,7 +26,8 @@ export class MonthlyComponent implements OnInit {
 
   public currentDate = new Date();
   public selectedDate = new Date();
-  public selectedMonth$: Observable<Transaction[]>;
+  public transactionFromSelectedMonth$: Observable<Transaction[]>;
+  public transactionFromSelectedYear$: Observable<Transaction[]>;
   public totalExpenses$: Observable<number>;
 
   public get selectedYear(): number {
@@ -40,16 +41,29 @@ export class MonthlyComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.selectedMonth$ = this.isTransactionLoading$.pipe(
+    this.transactionFromSelectedMonth$ = this.isTransactionLoading$.pipe(
       filter(x => !x),
       switchMap(_ =>
         this.transactions$.pipe(
           map(x =>
             x.filter(
               t =>
-                new Date(t.date).getFullYear() ==
-                  this.selectedDate.getFullYear() &&
+                new Date(t.date).getFullYear() == this.selectedDate.getFullYear() &&
                 new Date(t.date).getMonth() == this.selectedDate.getMonth()
+            )
+          )
+        )
+      )
+    );
+
+    this.transactionFromSelectedYear$ = this.isTransactionLoading$.pipe(
+      filter(x => !x),
+      switchMap(_ =>
+        this.transactions$.pipe(
+          map(x =>
+            x.filter(
+              t =>
+                new Date(t.date).getFullYear() == this.selectedDate.getFullYear()
             )
           )
         )
@@ -58,13 +72,13 @@ export class MonthlyComponent implements OnInit {
   }
 
   public getTotalExpenses(): Observable<number> {
-    return this.selectedMonth$.pipe(
+    return this.transactionFromSelectedMonth$.pipe(
       map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
     );
   }
 
   public getExpensesByCategory(categoryName: string): Observable<number> {
-    return this.selectedMonth$.pipe(
+    return this.transactionFromSelectedMonth$.pipe(
       map(x => x.filter(t => t.category === categoryName)),
       map(x => {
         if (x.length !== 0) {
@@ -77,7 +91,7 @@ export class MonthlyComponent implements OnInit {
   }
 
   public getExpensesBySubCategory(subcategoryName: string): Observable<number> {
-    return this.selectedMonth$.pipe(
+    return this.transactionFromSelectedMonth$.pipe(
       map(x => x.filter(t => t.subCategory === subcategoryName)),
       map(x => {
         if (x.length !== 0) {
