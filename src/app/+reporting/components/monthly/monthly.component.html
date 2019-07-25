@@ -12,7 +12,7 @@
     </mat-card-header>
 
     <mat-card-content>
-        <mat-list-item style="font-weight: bold; margin-bottom: 10px;">Total: {{ getTotalExpenses() | async | number:'1.0-2' }}</mat-list-item>
+        <div style="font-weight: bold; margin-bottom: 10px;">Total: {{ getTotalExpenses() | async | number:'1.0-2' }}</div>
         <div *ngFor="let category of categories$ | async">
             {{category.name}}: {{ getExpensesByCategory(category.name) | async | number:'1.0-2'}}
             <mat-list class="sub-class">
