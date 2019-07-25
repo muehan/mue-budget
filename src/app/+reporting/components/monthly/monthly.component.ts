@@ -27,7 +27,7 @@ export class MonthlyComponent implements OnInit {
   public currentDate = new Date();
   public selectedDate = new Date();
   public transactionFromSelectedMonth$: Observable<Transaction[]>;
-  public transactionFromSelectedYear$: Observable<Transaction[]>;
+  public transactionFromSelectedYearWithoutCurrentMonth$: Observable<Transaction[]>;
   public totalExpenses$: Observable<number>;
 
   public get selectedYear(): number {
@@ -56,7 +56,7 @@ export class MonthlyComponent implements OnInit {
       )
     );
 
-    this.transactionFromSelectedYear$ = this.isTransactionLoading$.pipe(
+    this.transactionFromSelectedYearWithoutCurrentMonth$ = this.isTransactionLoading$.pipe(
       filter(x => !x),
       switchMap(_ =>
         this.transactions$.pipe(
@@ -64,7 +64,7 @@ export class MonthlyComponent implements OnInit {
             x.filter(
               t =>
                 new Date(t.date).getFullYear() == this.selectedDate.getFullYear() &&
-                new Date(t.date).getMonth() >= this.currentDate.getMonth()
+                new Date(t.date).getMonth() >= this.currentDate.getMonth() -1
             )
           )
         )
@@ -114,7 +114,7 @@ export class MonthlyComponent implements OnInit {
   }
 
   public getAverageExpensesBySubCategory(subcategoryName: string): Observable<number> {
-    return this.transactionFromSelectedYear$
+    return this.transactionFromSelectedYearWithoutCurrentMonth$
       .pipe(
         filter(x => x.length > 0),
         map(x => x.filter(t => t.subCategory === subcategoryName)),
@@ -122,7 +122,7 @@ export class MonthlyComponent implements OnInit {
           if (x.length !== 0) {
             return x
               .map(t => t.value)
-              .reduce((prev, next) => prev + next) / this.currentDate.getMonth();
+              .reduce((prev, next) => prev + next) / this.currentDate.getMonth() -1;
           } else {
             return 0;
           }
