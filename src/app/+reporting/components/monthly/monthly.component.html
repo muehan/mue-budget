@@ -1,4 +1,4 @@
-<mat-card style="margin-top: 5px;">
+<mat-card style="margin-top: 5px;" ng-if="!isTransactionLoading$">
     <mat-card-header>
         <mat-card-title>Monthly expenses</mat-card-title>
         <mat-card-subtitle>current year: {{ selectedYear }}</mat-card-subtitle>
@@ -10,16 +10,19 @@
             <mat-icon aria-label="next month button" (click)="nextMonth()">arrow_forward_ios</mat-icon>
         </button>
     </mat-card-header>
+
     <mat-card-content>
+        <div style="font-weight: bold; margin-bottom: 10px;">Total: {{ getTotalExpenses() | async | number:'1.0-2' }}</div>
         <div *ngFor="let category of categories$ | async">
-            {{category.name}}: {{ getExpensesByCategory(category.name) | async | number:'1.0-2'}}
-            <mat-list style="margin-left:30px;">
+            {{ category.name }}:
+            {{ getExpensesByCategory(category.name) | async | number:'1.0-2' }}
+            <mat-list class="sub-class">
                 <mat-list-item *ngFor="let subcategory of subcategoriesByCategory(category.name) | async">
-                    <span *ngIf="subcategory">{{subcategory.name}}: {{ getExpensesBySubCategory(subcategory.name) |
-                        async | number:'1.0-2'}}</span>
+                    <span *ngIf="subcategory">{{subcategory.name}}</span>
+                    <span *ngIf="subcategory">: {{ getExpensesBySubCategory(subcategory.name) | async | number:'1.0-2'}}</span>
+                    <span *ngIf="subcategory">| ({{ getAverageExpensesBySubCategory(subcategory.name) | async | number:'1.0-2' }})</span>
                 </mat-list-item>
             </mat-list>
         </div>
-        <mat-list-item style="font-weight: bold">Total: {{ totalExpenses$ | async | number:'1.0-2' }}</mat-list-item>
     </mat-card-content>
 </mat-card>
