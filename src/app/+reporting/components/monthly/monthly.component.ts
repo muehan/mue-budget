@@ -64,7 +64,7 @@ export class MonthlyComponent implements OnInit {
             x.filter(
               t =>
                 new Date(t.date).getFullYear() == this.selectedDate.getFullYear() &&
-                new Date(t.date).getMonth() >= this.selectedDate.getMonth()
+                new Date(t.date).getMonth() >= this.currentDate.getMonth()
             )
           )
         )
