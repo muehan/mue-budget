@@ -63,7 +63,8 @@ export class MonthlyComponent implements OnInit {
           map(x =>
             x.filter(
               t =>
-                new Date(t.date).getFullYear() == this.selectedDate.getFullYear()
+                new Date(t.date).getFullYear() == this.selectedDate.getFullYear() &&
+                new Date(t.date).getMonth() >= this.selectedDate.getMonth()
             )
           )
         )
@@ -121,7 +122,7 @@ export class MonthlyComponent implements OnInit {
           if (x.length !== 0) {
             return x
               .map(t => t.value)
-              .reduce((prev, next) => prev + next) / this.currentDate.getMonth() + 1;
+              .reduce((prev, next) => prev + next) / this.currentDate.getMonth();
           } else {
             return 0;
           }
