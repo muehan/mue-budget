@@ -20,7 +20,7 @@
                 <mat-list-item *ngFor="let subcategory of subcategoriesByCategory(category.name) | async">
                     <span *ngIf="subcategory">{{subcategory.name}}</span>
                     <span *ngIf="subcategory">: {{ getExpensesBySubCategory(subcategory.name) | async | number:'1.0-2'}}</span>
-                    <span *ngIf="subcategory">| ({{ getAverageExpensesBySubCategory(category.name) | async | number:'1.0-2' }})</span>
+                    <span *ngIf="subcategory">| ({{ getAverageExpensesBySubCategory(subcategory.name) | async | number:'1.0-2' }})</span>
                 </mat-list-item>
             </mat-list>
         </div>
