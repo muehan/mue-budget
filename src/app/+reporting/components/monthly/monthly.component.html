@@ -14,7 +14,9 @@
     <mat-card-content>
         <div style="font-weight: bold; margin-bottom: 10px;">Total: {{ getTotalExpenses() | async | number:'1.0-2' }}</div>
         <div *ngFor="let category of categories$ | async">
-            {{category.name}}: {{ getExpensesByCategory(category.name) | async | number:'1.0-2'}}
+            {{ category.name }}:
+            {{ getExpensesByCategory(category.name) | async | number:'1.0-2' }} |
+            ({{ getAverageExpensesBySubCategory(category.name) | async | number:'1.0-2' }})
             <mat-list class="sub-class">
                 <mat-list-item *ngFor="let subcategory of subcategoriesByCategory(category.name) | async">
                     <span *ngIf="subcategory">{{subcategory.name}}: {{ getExpensesBySubCategory(subcategory.name) |

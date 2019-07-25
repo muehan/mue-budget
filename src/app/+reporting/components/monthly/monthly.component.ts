@@ -103,6 +103,21 @@ export class MonthlyComponent implements OnInit {
     );
   }
 
+  public getAverageExpensesBySubCategory(subcategoryName: string): Observable<number> {
+    return this.transactionFromSelectedYear$.pipe(
+      map(x => x.filter(t => t.subCategory === subcategoryName)),
+      map(x => {
+        if (x.length !== 0) {
+          return x
+            .map(t => t.value)
+            .reduce((prev, next) => prev + next) / this.currentDate.getMonth() +1
+        } else {
+          return 0;
+        }
+      })
+    );
+  }
+
   public subcategoriesByCategory(
     categoryname: string
   ): Observable<Subcategory[]> {
