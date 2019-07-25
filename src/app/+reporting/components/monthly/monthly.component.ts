@@ -72,50 +72,59 @@ export class MonthlyComponent implements OnInit {
   }
 
   public getTotalExpenses(): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
+    return this.transactionFromSelectedMonth$
+    .pipe(
+      filter(x => x.length > 0),
+      map(x => x.map(t => t.value)
+        .reduce((prev, next) => prev + next))
     );
   }
 
   public getExpensesByCategory(categoryName: string): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      map(x => x.filter(t => t.category === categoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          return x.map(t => t.value).reduce((prev, next) => prev + next);
-        } else {
-          return 0;
-        }
-      })
-    );
+    return this.transactionFromSelectedMonth$
+      .pipe(
+        filter(x => x.length > 0),
+        map(x => x.filter(t => t.category === categoryName)),
+        map(x => {
+          if (x.length !== 0) {
+            return x.map(t => t.value).reduce((prev, next) => prev + next);
+          } else {
+            return 0;
+          }
+        })
+      );
   }
 
   public getExpensesBySubCategory(subcategoryName: string): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      map(x => x.filter(t => t.subCategory === subcategoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          return x.map(t => t.value).reduce((prev, next) => prev + next);
-        } else {
-          return 0;
-        }
-      })
-    );
+    return this.transactionFromSelectedMonth$
+      .pipe(
+        filter(x => x.length > 0),
+        map(x => x.filter(t => t.subCategory === subcategoryName)),
+        map(x => {
+          if (x.length !== 0) {
+            return x.map(t => t.value).reduce((prev, next) => prev + next);
+          } else {
+            return 0;
+          }
+        })
+      );
   }
 
   public getAverageExpensesBySubCategory(subcategoryName: string): Observable<number> {
-    return this.transactionFromSelectedYear$.pipe(
-      map(x => x.filter(t => t.subCategory === subcategoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          return x
-            .map(t => t.value)
-            .reduce((prev, next) => prev + next)
-        } else {
-          return 0;
-        }
-      })
-    );
+    return this.transactionFromSelectedYear$
+      .pipe(
+        filter(x => x.length > 0),
+        map(x => x.filter(t => t.subCategory === subcategoryName)),
+        map(x => {
+          if (x.length !== 0) {
+            return x
+              .map(t => t.value)
+              .reduce((prev, next) => prev + next)
+          } else {
+            return 0;
+          }
+        })
+      );
   }
 
   public subcategoriesByCategory(
