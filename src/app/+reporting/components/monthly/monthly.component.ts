@@ -110,7 +110,7 @@ export class MonthlyComponent implements OnInit {
         if (x.length !== 0) {
           return x
             .map(t => t.value)
-            .reduce((prev, next) => prev + next) / this.currentDate.getMonth() +1
+            .reduce((prev, next) => prev + next)
         } else {
           return 0;
         }
