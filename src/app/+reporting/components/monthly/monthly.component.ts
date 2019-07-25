@@ -102,7 +102,9 @@ export class MonthlyComponent implements OnInit {
         map(x => x.filter(t => t.subCategory === subcategoryName)),
         map(x => {
           if (x.length !== 0) {
-            return x.map(t => t.value).reduce((prev, next) => prev + next);
+            return x
+              .map(t => t.value)
+              .reduce((prev, next) => prev + next);
           } else {
             return 0;
           }
