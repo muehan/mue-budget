@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class SiteTemplateComponent implements OnInit {
 
-  @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger, { static: true }) trigger: MatMenuTrigger;
 
   constructor(
     private authService: AuthService,
