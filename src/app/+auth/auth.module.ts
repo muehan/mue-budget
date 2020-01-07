@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../+shared/shared.module';
 import { LoginComponent } from './containers/login/login.component';
 import { AuthService } from './services/auth.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [
@@ -11,11 +11,11 @@ import { AngularFireAuth } from 'angularfire2/auth';
   ],
   providers:[
     AuthService,
-    AngularFireAuth,
   ],
   imports: [
     CommonModule,
     SharedModule,
+    AngularFireAuthModule,
   ]
 })
 export class AuthModule { }

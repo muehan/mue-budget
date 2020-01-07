@@ -15,8 +15,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MccColorPickerModule } from 'material-community-components';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { environment } from '../../environments/environment';
 
