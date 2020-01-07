@@ -1,11 +1,11 @@
 
 
-import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
+import { Injectable } from "@angular/core";
+import { Effect, Actions, ofType } from "@ngrx/effects";
 import { CategoryActions } from '../actions';
 import { CategoryService } from '../services/category.service';
-import { switchMap, map, catchError, mergeMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { switchMap, map, catchError, mergeMap } from "rxjs/operators";
+import { of } from "rxjs";
 
 @Injectable()
 export class CategoryEffects {
@@ -17,8 +17,8 @@ export class CategoryEffects {
 
   @Effect()
   getCategories$ = this.actions
-    .ofType<CategoryActions.GetCategories>(CategoryActions.ActionTypes.GetCategories)
     .pipe(
+      ofType<CategoryActions.GetCategories>(CategoryActions.ActionTypes.GetCategories),
       switchMap((_) => {
         return this.categoryService.getAll()
           .pipe(
@@ -34,8 +34,8 @@ export class CategoryEffects {
 
   @Effect()
   addCategory$ = this.actions
-    .ofType<CategoryActions.AddCategories>(CategoryActions.ActionTypes.AddCategories)
     .pipe(
+      ofType<CategoryActions.AddCategories>(CategoryActions.ActionTypes.AddCategories),
       map(action => action.payload),
       switchMap(x => this.categoryService.add(x)
         .pipe(
@@ -46,8 +46,8 @@ export class CategoryEffects {
 
   @Effect()
   deleteCategory$ = this.actions
-    .ofType<CategoryActions.DeleteCategories>(CategoryActions.ActionTypes.DeleteCategories)
     .pipe(
+      ofType<CategoryActions.DeleteCategories>(CategoryActions.ActionTypes.DeleteCategories),
       map(action => action.payload),
       switchMap(x => this.categoryService.remove(x)
         .then(x => new CategoryActions.DeleteCategoriesSuccess())
@@ -57,8 +57,8 @@ export class CategoryEffects {
 
   @Effect()
   editCategory$ = this.actions
-    .ofType<CategoryActions.EditCategories>(CategoryActions.ActionTypes.EditCategories)
     .pipe(
+      ofType<CategoryActions.EditCategories>(CategoryActions.ActionTypes.EditCategories),
       map(action => action.payload),
       switchMap(x => this.categoryService.edit(x)
         .then(x => new CategoryActions.EditCategoriesSuccess())

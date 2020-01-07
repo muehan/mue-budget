@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
+import { Injectable } from "@angular/core";
+import { AngularFireDatabase, AngularFireList } from "angularfire2/database";
+import { Observable, of } from "rxjs";
+import { map } from "rxjs/internal/operators/map";
 import { Transaction } from '../model/transaction';
 
 @Injectable({

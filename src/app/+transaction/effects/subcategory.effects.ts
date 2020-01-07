@@ -1,11 +1,10 @@
 
 
-import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
+import { Injectable } from "@angular/core";
+import { Effect, Actions, ofType } from "@ngrx/effects";
 import { SubcategoryActions } from '../actions';
-import { CategoryService } from '../services/category.service';
-import { switchMap, map, catchError, mergeMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { switchMap, map, catchError, mergeMap } from "rxjs/operators";
+import { of } from "rxjs";
 import { SubcategoryService } from '../services/subcategory.service';
 
 @Injectable()
@@ -18,8 +17,8 @@ export class SubcategoryEffects {
 
   @Effect()
   getSubcategories$ = this.actions
-    .ofType<SubcategoryActions.GetSubcategories>(SubcategoryActions.ActionTypes.GetSubcategories)
     .pipe(
+      ofType<SubcategoryActions.GetSubcategories>(SubcategoryActions.ActionTypes.GetSubcategories),
       switchMap((_) => {
         return this.subcategoryService.getAll()
           .pipe(
@@ -35,8 +34,8 @@ export class SubcategoryEffects {
 
   @Effect()
   addSubCategory$ = this.actions
-    .ofType<SubcategoryActions.AddSubcategories>(SubcategoryActions.ActionTypes.AddSubcategories)
     .pipe(
+      ofType<SubcategoryActions.AddSubcategories>(SubcategoryActions.ActionTypes.AddSubcategories),
       map(action => action.payload),
       switchMap(x => this.subcategoryService.add(x)
         .pipe(
@@ -47,8 +46,8 @@ export class SubcategoryEffects {
 
   @Effect()
   deleteSubCategory$ = this.actions
-    .ofType<SubcategoryActions.DeleteSubcategories>(SubcategoryActions.ActionTypes.DeleteSubcategories)
     .pipe(
+      ofType<SubcategoryActions.DeleteSubcategories>(SubcategoryActions.ActionTypes.DeleteSubcategories),
       map(action => action.payload),
       switchMap(x => this.subcategoryService.remove(x)
         .then(x => new SubcategoryActions.DeleteSubcategoriesSuccess())
@@ -58,8 +57,8 @@ export class SubcategoryEffects {
 
   @Effect()
   editSubCategory$ = this.actions
-    .ofType<SubcategoryActions.EditSubcategories>(SubcategoryActions.ActionTypes.EditSubcategories)
     .pipe(
+      ofType<SubcategoryActions.EditSubcategories>(SubcategoryActions.ActionTypes.EditSubcategories),
       map(action => action.payload),
       switchMap(x => this.subcategoryService.edit(x)
         .then(x => new SubcategoryActions.EditSubcategoriesSuccess())

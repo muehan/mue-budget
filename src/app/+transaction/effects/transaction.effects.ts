@@ -1,10 +1,10 @@
 
-import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
-import { TransactionActions } from '../actions';
-import { switchMap, map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { TransactionService } from '../services/transaction.service';
+import { Injectable } from "@angular/core";
+import { Effect, Actions, ofType } from "@ngrx/effects";
+import { TransactionActions } from "../actions";
+import { switchMap, map, catchError } from "rxjs/operators";
+import { of } from "rxjs";
+import { TransactionService } from "../services/transaction.service";
 
 @Injectable()
 export class TransactionEffects {
@@ -16,8 +16,8 @@ export class TransactionEffects {
 
   @Effect()
   getTransactions$ = this.actions
-    .ofType<TransactionActions.GetTransactions>(TransactionActions.ActionTypes.GetTransactions)
     .pipe(
+      ofType<TransactionActions.GetTransactions>(TransactionActions.ActionTypes.GetTransactions),
       switchMap((_) => {
         return this.transactionService.getAll()
           .pipe(
@@ -33,8 +33,8 @@ export class TransactionEffects {
 
   @Effect()
   addCategory$ = this.actions
-    .ofType<TransactionActions.AddTransactions>(TransactionActions.ActionTypes.AddTransactions)
     .pipe(
+      ofType<TransactionActions.AddTransactions>(TransactionActions.ActionTypes.AddTransactions),
       map(action => {
         console.log(action.payload);
         return action.payload
@@ -48,8 +48,8 @@ export class TransactionEffects {
 
   @Effect()
   deleteCategory$ = this.actions
-    .ofType<TransactionActions.DeleteTransactions>(TransactionActions.ActionTypes.DeleteTransactions)
     .pipe(
+      ofType<TransactionActions.DeleteTransactions>(TransactionActions.ActionTypes.DeleteTransactions),
       map(action => action.payload),
       switchMap(x => this.transactionService.remove(x)
         .then(x => new TransactionActions.DeleteTransactionsSuccess())
@@ -59,8 +59,8 @@ export class TransactionEffects {
 
   @Effect()
   editCategory$ = this.actions
-    .ofType<TransactionActions.EditTransactions>(TransactionActions.ActionTypes.EditTransactions)
     .pipe(
+      ofType<TransactionActions.EditTransactions>(TransactionActions.ActionTypes.EditTransactions),
       map(action => action.payload),
       switchMap(x => this.transactionService.edit(x)
         .then(x => new TransactionActions.EditTransactionsSuccess())

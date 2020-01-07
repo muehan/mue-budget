@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
-import { Category } from '../model/categroy';
+import { Action } from "@ngrx/store";
+import { Category } from "../model/categroy";
 
 export enum ActionTypes {
     GetCategories = '[Categories] Get',

@@ -1,5 +1,5 @@
 import { AuthState, authReducer } from '../+auth/reducers/auth.reducer';
-import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector } from "@ngrx/store";
 import { CategoryState, categoryReducer } from '../+transaction/reducers/category.reducers';
 import { SubcategoryState, subcategoryReducer } from '../+transaction/reducers/subcategory.reducers';
 import { TransactionState, transactionReducer } from '../+transaction/reducers/transaction.reducers';
@@ -21,4 +21,4 @@ export const APP_REDUCERS: ActionReducerMap<AppState> = {
     category: categoryReducer,
     subcategory: subcategoryReducer,
     transactions: transactionReducer,
-  };
+};
