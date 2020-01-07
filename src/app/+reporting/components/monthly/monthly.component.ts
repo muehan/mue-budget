@@ -4,7 +4,6 @@ import { Transaction } from "src/app/+transaction/model/transaction";
 import { filter, switchMap, map } from "rxjs/operators";
 import { Category } from "src/app/+transaction/model/categroy";
 import { Subcategory } from "src/app/+transaction/model/subcategory";
-import { of } from "rxjs";
 
 @Component({
   selector: "mue-monthly",
