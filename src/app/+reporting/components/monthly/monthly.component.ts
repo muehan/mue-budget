@@ -123,10 +123,17 @@ export class MonthlyComponent implements OnInit {
       map(x => x.filter(t => t.subCategory === subcategoryName)),
       map(x => {
         if (x.length !== 0) {
-          return (
-            x.map(t => t.value).reduce((prev, next) => prev + next) /
-            this.currentDate.getMonth()
-          ); // getMonth returns month 0-11
+          if(this.selectedDate.getFullYear() == new Date().getFullYear()){
+            return (
+              x.map(t => t.value).reduce((prev, next) => prev + next) /
+              this.currentDate.getMonth()
+            );
+          } else {
+            return (
+              x.map(t => t.value).reduce((prev, next) => prev + next) / 12
+            );
+          }
+          // getMonth returns month 0-11
         } else {
           return 0;
         }
