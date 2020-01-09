@@ -3,19 +3,19 @@
 
     <span class="fill-remaining-space"></span>
     <mat-menu #appMenu="matMenu">
-        <button mat-menu-item [routerLink]="['/list']">
+        <button mat-menu-item routerLink="/transaction/list">
             <mat-icon>list</mat-icon>Transactions
         </button>
 
-        <button mat-menu-item [routerLink]="['/category']">
+        <button mat-menu-item routerLink="/transaction/category">
             <mat-icon>category</mat-icon>Categories
         </button>
 
-        <button mat-menu-item [routerLink]="['/subcategory']">
+        <button mat-menu-item routerLink="/transaction/subcategory">
             <mat-icon>layers</mat-icon>Subcategories
         </button>
 
-        <button mat-menu-item [routerLink]="['/analyze/performance']">
+        <button mat-menu-item routerLink="/reporting/performance">
             <mat-icon>show_chart</mat-icon>Performance
         </button>
 

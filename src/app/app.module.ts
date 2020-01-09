@@ -9,7 +9,6 @@ import { SharedModule } from './+shared/shared.module';
 import { AuthModule } from './+auth/auth.module';
 import { TransactionModule } from './+transaction/transaction.module';
 import { ReportingModule } from './+reporting/reporting.module';
-import { SiteTemplateComponent } from './template/site-template/site-template.component';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './+auth/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
@@ -18,14 +17,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CategoryEffects } from './+transaction/effects/category.effects';
 import { SubcategoryEffects } from './+transaction/effects/subcategory.effects';
 import { TransactionEffects } from './+transaction/effects/transaction.effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SiteTemplateComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     SharedModule,

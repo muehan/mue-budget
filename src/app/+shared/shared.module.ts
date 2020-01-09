@@ -13,18 +13,22 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
 import { MccColorPickerModule } from 'material-community-components';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { environment } from '../../environments/environment';
 
+import { SiteTemplateComponent } from './containers/site-template/site-template.component';
+import { RouterModule } from '@angular/router';
+
 @NgModule({
-  declarations: [],
+  declarations: [
+    SiteTemplateComponent
+  ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
+    RouterModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
@@ -44,7 +48,7 @@ import { environment } from '../../environments/environment';
     AngularFireDatabaseModule,
   ],
   exports: [
-    BrowserAnimationsModule,
+    CommonModule,
     MatInputModule,
     MatButtonModule,
     MatToolbarModule,
