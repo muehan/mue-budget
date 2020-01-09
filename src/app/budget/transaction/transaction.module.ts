@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../+shared/shared.module';
+import { SharedModule } from '../../+shared/shared.module';
 import { TransactionsComponent } from './containers/transactions/transactions.component';
 import { CategoryComponent } from './containers/category/category.component';
 import { TransactionRoutingModule } from './transaction-routes.modules';

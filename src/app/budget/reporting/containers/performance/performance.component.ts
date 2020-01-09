@@ -1,12 +1,12 @@
-import { AppState } from './../../../store/state';
+import { AppState } from '../../../../store/state';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Transaction } from '../../../+transaction/model/transaction';
-import { getAllTransactions, getTransactionIsLoading, getAllCategories, getAllSubcategories } from 'src/app/+transaction/reducers';
-import { TransactionActions, CategoryActions, SubcategoryActions } from 'src/app/+transaction/actions';
-import { Category } from 'src/app/+transaction/model/categroy';
-import { Subcategory } from 'src/app/+transaction/model/subcategory';
+import { Transaction } from '../../../transaction/model/transaction';
+import { getAllTransactions, getTransactionIsLoading, getAllCategories, getAllSubcategories } from '../../../transaction/reducers';
+import { TransactionActions, CategoryActions, SubcategoryActions } from '../../../transaction/actions';
+import { Category } from '../../../transaction/model/categroy';
+import { Subcategory } from '../../../transaction/model/subcategory';
 
 @Component({
   selector: 'mue-performance',

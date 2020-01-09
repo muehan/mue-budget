@@ -1,8 +1,8 @@
 import { AuthState, authReducer } from '../+auth/reducers/auth.reducer';
 import { ActionReducerMap, createFeatureSelector } from "@ngrx/store";
-import { CategoryState, categoryReducer } from '../+transaction/reducers/category.reducers';
-import { SubcategoryState, subcategoryReducer } from '../+transaction/reducers/subcategory.reducers';
-import { TransactionState, transactionReducer } from '../+transaction/reducers/transaction.reducers';
+import { CategoryState, categoryReducer } from '../budget/transaction/reducers/category.reducers';
+import { SubcategoryState, subcategoryReducer } from '../budget/transaction/reducers/subcategory.reducers';
+import { TransactionState, transactionReducer } from '../budget/transaction/reducers/transaction.reducers';
 
 export interface AppState {
     auth: AuthState;

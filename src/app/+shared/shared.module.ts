@@ -19,12 +19,12 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { environment } from '../../environments/environment';
 
-import { SiteTemplateComponent } from './containers/site-template/site-template.component';
 import { RouterModule } from '@angular/router';
+import { SiteTemplateComponent } from '../budget/containers/site-template/site-template.component';
 
 @NgModule({
   declarations: [
-    SiteTemplateComponent
+    SiteTemplateComponent,
   ],
   imports: [
     CommonModule,

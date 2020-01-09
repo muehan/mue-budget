@@ -1,0 +1,21 @@
+<mat-toolbar>
+    <span>Mue-Home</span>
+
+    <span class="fill-remaining-space"></span>
+    <mat-menu #appMenu="matMenu">
+        <button mat-menu-item routerLink="/budget/transaction/list">
+            <mat-icon>list</mat-icon>Budget
+        </button>
+
+        <button mat-menu-item (click)="logout()">
+            <mat-icon>person</mat-icon>Logout
+        </button>
+        <!-- <mat-icon [routerLink]="['changePassword']" class="example-icon">ac_unit</mat-icon>-->
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+    </button>
+
+</mat-toolbar>
+<router-outlet></router-outlet>

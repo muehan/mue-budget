@@ -1,9 +1,9 @@
 import { Observable } from "rxjs/internal/Observable";
 import { Component, OnInit, Input } from "@angular/core";
-import { Transaction } from "src/app/+transaction/model/transaction";
 import { filter, switchMap, map } from "rxjs/operators";
-import { Category } from "src/app/+transaction/model/categroy";
-import { Subcategory } from "src/app/+transaction/model/subcategory";
+import { Transaction } from '../../../transaction/model/transaction';
+import { Category } from '../../../transaction/model/categroy';
+import { Subcategory } from '../../../transaction/model/subcategory';
 
 @Component({
   selector: "mue-monthly",

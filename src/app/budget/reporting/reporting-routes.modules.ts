@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
-import { SiteTemplateComponent } from '../+shared/containers/site-template/site-template.component';
+import { SiteTemplateComponent } from './../containers/site-template/site-template.component';
 import { NgModule } from '@angular/core';
-import { AuthGuardService } from '../services/auth-guard.service';
+import { AuthGuardService } from '../../services/auth-guard.service';
 import { PerformanceComponent } from './containers/performance/performance.component';
 
 const routes: Routes = [
