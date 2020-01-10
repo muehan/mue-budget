@@ -8,10 +8,10 @@ import { MainTemplateComponent } from './containers/main-template/main-template.
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: '', loadChildren: './budget/budget.module#BudgetModule' },
   {
-    path: 'home', component: MainTemplateComponent, children: [
-      { path: '', component: HomeComponent }
+    path: '', component: MainTemplateComponent, children: [
+      { path: 'home', component: HomeComponent },
+      { path: '', loadChildren: './budget/budget.module#BudgetModule' },
     ], canActivate: [AuthGuardService]
   },
 ];

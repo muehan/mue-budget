@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatMenuTrigger } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/+auth/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -10,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class MainTemplateComponent implements OnInit {
 
-  @ViewChild(MatMenuTrigger, { static: true }) trigger: MatMenuTrigger;
+  public opened: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -18,6 +17,10 @@ export class MainTemplateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  public toggleSideBar(): void {
+    this.opened = !this.opened;
   }
 
   public logout() {

@@ -1,0 +1,43 @@
+
+.mue-cart {
+    background-color: tomato;
+    opacity: 0.8;
+    width: 100%;
+    margin: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: inline;
+}
+
+.cart-content {
+    display: flex;
+    padding: 5px;
+    justify-content: center;
+}
+
+.cart-content-text {
+    font-size: 14px;
+}
+
+.cart-content-icon {
+    margin: 10px;
+}
+
+.row {
+    width: 100%;
+    // border: 1px solid blue;
+    display: flex;
+}
+
+.flex-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

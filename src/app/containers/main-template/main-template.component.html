@@ -1,8 +1,11 @@
 <mat-toolbar>
-    <span>Mue-Home</span>
+    <button mat-icon-button (click)="toggleSideBar()" aria-label="Sidebar collabs button">
+        <mat-icon>reorder</mat-icon>
+    </button>
+    <span>Haushalt</span>
 
     <span class="fill-remaining-space"></span>
-    <mat-menu #appMenu="matMenu">
+    <!-- <mat-menu #appMenu="matMenu">
         <button mat-menu-item routerLink="/budget/transaction/list">
             <mat-icon>list</mat-icon>Budget
         </button>
@@ -10,12 +13,96 @@
         <button mat-menu-item (click)="logout()">
             <mat-icon>person</mat-icon>Logout
         </button>
-        <!-- <mat-icon [routerLink]="['changePassword']" class="example-icon">ac_unit</mat-icon>-->
-    </mat-menu>
+        <mat-icon [routerLink]="['changePassword']" class="example-icon">ac_unit</mat-icon>
+    </mat-menu> -->
 
-    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+    <!-- <button mat-icon-button [matMenuTriggerFor]="appMenu">
         <mat-icon>more_vert</mat-icon>
-    </button>
+    </button> -->
 
 </mat-toolbar>
-<router-outlet></router-outlet>
+<mat-sidenav-container style="height: 100%;">
+    <mat-sidenav #sidenav mode="over" [(opened)]="opened" class="sidenav">
+        <mat-accordion displaymode="default" multi="false">
+            <mat-nav-list role="navigation">
+
+                <div class="link-item">
+                    <a routerLink="/home" (click)="toggleSideBar()" class="link-link">
+                        <div class="link-content">
+                            <mat-icon class="link-icon" aria-hidden="false" aria-label="person icon">
+                                home
+                            </mat-icon>
+                            <span class="list-item-text">Home</span>
+                        </div>
+                    </a>
+                </div>
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Budget
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="link-item">
+                        <a routerLink="/budget/transaction/list" (click)="toggleSideBar()" class="link-link">
+                            <div class="link-content">
+                                <mat-icon class="link-icon" aria-hidden="false" aria-label="list icon">
+                                    list
+                                </mat-icon>
+                                <span class="list-item-text">Transactions</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="link-item">
+                        <a routerLink="/budget/transaction/category" (click)="toggleSideBar()" class="link-link">
+                            <div class="link-content">
+                                <mat-icon class="link-icon" aria-hidden="false" aria-label="category icon">
+                                    Categories
+                                </mat-icon>
+                                <span class="list-item-text">Categories</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="link-item">
+                        <a routerLink="/budget/transaction/subcategory" (click)="toggleSideBar()" class="link-link">
+                            <div class="link-content">
+                                <mat-icon class="link-icon" aria-hidden="false" aria-label="layers icon">
+                                    layers
+                                </mat-icon>
+                                <span class="list-item-text">Subcategories</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="link-item">
+                        <a routerLink="/budget/reporting/performance" (click)="toggleSideBar()" class="link-link">
+                            <div class="link-content">
+                                <mat-icon class="link-icon" aria-hidden="false" aria-label="show_chart icon">
+                                    show_chart
+                                </mat-icon>
+                                <span class="list-item-text">Performance</span>
+                            </div>
+                        </a>
+                    </div>
+                </mat-expansion-panel>
+
+                <div class="link-item">
+                    <a (click)="logout()" class="link-link">
+                        <div class="link-content">
+                            <mat-icon class="link-icon" aria-hidden="false" aria-label="person icon">
+                                person
+                            </mat-icon>
+                            <span class="list-item-text">Logout</span>
+                        </div>
+                    </a>
+                </div>
+            </mat-nav-list>
+        </mat-accordion>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

@@ -9,7 +9,7 @@ import { SubcategoryComponent } from './containers/subcategory/subcategory.compo
 const routes: Routes = [
     {
         path: 'transaction',
-        component: SiteTemplateComponent,
+        // component: SiteTemplateComponent,
         children: [
             { path: 'list', component: TransactionsComponent },
             { path: 'category', component: CategoryComponent },

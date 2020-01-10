@@ -13,7 +13,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AuthService,
   ],
   imports: [
-    CommonModule,
     SharedModule,
     AngularFireAuthModule,
   ]
