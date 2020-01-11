@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
-import { getAllCategories, getAllSubcategories } from '../../reducers';
+import { getAllCategories, getAllSubcategories } from '../../../reducers';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 import { Subcategory } from '../../model/subcategory';

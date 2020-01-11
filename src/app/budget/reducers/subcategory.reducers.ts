@@ -1,6 +1,6 @@
 import { SubcategoryActions } from '../actions';
 import { createSelector } from '@ngrx/store';
-import { Subcategory } from '../model/subcategory';
+import { Subcategory } from '../transaction/model/subcategory';
 
 export interface SubcategoryState {
     isLoading: boolean;

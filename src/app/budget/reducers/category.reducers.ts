@@ -1,6 +1,6 @@
 import { CategoryActions } from '../actions';
 import { createSelector } from '@ngrx/store';
-import { Category } from '../model/categroy';
+import { Category } from '../transaction/model/categroy';
 
 
 export interface CategoryState {

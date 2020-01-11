@@ -5,7 +5,7 @@ import { AppState } from 'src/app/store/state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
-import { getAllCategories } from '../../reducers';
+import { getAllCategories } from '../../../reducers';
 
 @Component({
   selector: 'mue-add-subcategory',

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
-import { TransactionActions, SubcategoryActions, CategoryActions } from '../../actions';
-import { Observable, Subscription } from 'rxjs';
+import { TransactionActions, SubcategoryActions, CategoryActions } from '../../../actions';
+import { Observable } from 'rxjs';
 import { Transaction } from '../../model/transaction';
-import { getAllTransactions, getAllCategories, getAllSubcategories } from '../../reducers';
+import { getAllTransactions, getAllCategories, getAllSubcategories } from '../../../reducers';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTransactionComponent } from '../../dialogs/add-transaction/add-transaction.component';
 import { EditTransactionComponent } from '../../dialogs/edit-transaction/edit-transaction.component';
 import { Category } from '../../model/categroy';
-import { take, last, first } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Subcategory } from '../../model/subcategory';
 
 @Component({

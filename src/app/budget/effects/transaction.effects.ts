@@ -4,7 +4,7 @@ import { Effect, Actions, ofType } from "@ngrx/effects";
 import { TransactionActions } from "../actions";
 import { switchMap, map, catchError } from "rxjs/operators";
 import { of } from "rxjs";
-import { TransactionService } from "../services/transaction.service";
+import { TransactionService } from "../transaction/services/transaction.service";
 
 @Injectable()
 export class TransactionEffects {

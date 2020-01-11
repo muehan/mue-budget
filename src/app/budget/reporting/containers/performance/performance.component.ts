@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../transaction/model/transaction';
-import { getAllTransactions, getTransactionIsLoading, getAllCategories, getAllSubcategories } from '../../../transaction/reducers';
-import { TransactionActions, CategoryActions, SubcategoryActions } from '../../../transaction/actions';
+import { getAllTransactions, getTransactionIsLoading, getAllCategories, getAllSubcategories } from '../../../reducers';
+import { TransactionActions, CategoryActions, SubcategoryActions } from '../../../actions';
 import { Category } from '../../../transaction/model/categroy';
 import { Subcategory } from '../../../transaction/model/subcategory';
 

@@ -1,10 +1,11 @@
 import { TransactionActions } from '../actions';
 import { createSelector } from '@ngrx/store';
-import { Transaction } from '../model/transaction';
+import { Transaction } from '../transaction/model/transaction';
 
 export interface TransactionState {
     isLoading: boolean;
     items: Transaction[];
+    
     errors: any;
 }
 

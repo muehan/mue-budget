@@ -3,9 +3,9 @@
 import { Injectable } from "@angular/core";
 import { Effect, Actions, ofType } from "@ngrx/effects";
 import { SubcategoryActions } from '../actions';
-import { switchMap, map, catchError, mergeMap } from "rxjs/operators";
+import { switchMap, map, catchError } from "rxjs/operators";
 import { of } from "rxjs";
-import { SubcategoryService } from '../services/subcategory.service';
+import { SubcategoryService } from '../transaction/services/subcategory.service';
 
 @Injectable()
 export class SubcategoryEffects {

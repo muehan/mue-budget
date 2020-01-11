@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Subcategory } from '../../model/subcategory';
-import { getAllSubcategories } from '../../reducers';
+import { getAllSubcategories } from '../../../reducers';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 import { MatDialog } from '@angular/material/dialog';
-import { SubcategoryActions, CategoryActions } from '../../actions';
+import { SubcategoryActions, CategoryActions } from '../../../actions';
 import { AddSubcategoryComponent } from '../../dialogs/add-subcategory/add-subcategory.component';
 import { EditSubcategoryComponent } from '../../dialogs/edit-subcategory/edit-subcategory.component';
-import { groupBy } from 'rxjs/operators';
 
 @Component({
   selector: 'mue-subcategory',

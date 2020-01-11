@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Transaction } from '../model/transaction';
+import { Transaction } from '../transaction/model/transaction';
 
 export enum ActionTypes {
     GetTransactions = '[Transactions] Get',

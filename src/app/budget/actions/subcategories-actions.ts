@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import { Category } from '../model/categroy';
-import { Subcategory } from '../model/subcategory';
+import { Category } from '../transaction/model/categroy';
+import { Subcategory } from '../transaction/model/subcategory';
 
 export enum ActionTypes {
     GetSubcategories = '[Subcategories] Get',

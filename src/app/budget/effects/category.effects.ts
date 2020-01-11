@@ -3,8 +3,8 @@
 import { Injectable } from "@angular/core";
 import { Effect, Actions, ofType } from "@ngrx/effects";
 import { CategoryActions } from '../actions';
-import { CategoryService } from '../services/category.service';
-import { switchMap, map, catchError, mergeMap } from "rxjs/operators";
+import { CategoryService } from '../transaction/services/category.service';
+import { switchMap, map, catchError } from "rxjs/operators";
 import { of } from "rxjs";
 
 @Injectable()
@@ -39,7 +39,7 @@ export class CategoryEffects {
       map(action => action.payload),
       switchMap(x => this.categoryService.add(x)
         .pipe(
-          map(x => new CategoryActions.AddCategoriesSuccess()),
+          map(() => new CategoryActions.AddCategoriesSuccess()),
           catchError(error => of(new CategoryActions.AddCategoriesFailed(error)))
         ))
     )
@@ -50,7 +50,7 @@ export class CategoryEffects {
       ofType<CategoryActions.DeleteCategories>(CategoryActions.ActionTypes.DeleteCategories),
       map(action => action.payload),
       switchMap(x => this.categoryService.remove(x)
-        .then(x => new CategoryActions.DeleteCategoriesSuccess())
+        .then(() => new CategoryActions.DeleteCategoriesSuccess())
         .catch(x => new CategoryActions.DeleteCategoriesFailed(x))
       )
     )
@@ -61,7 +61,7 @@ export class CategoryEffects {
       ofType<CategoryActions.EditCategories>(CategoryActions.ActionTypes.EditCategories),
       map(action => action.payload),
       switchMap(x => this.categoryService.edit(x)
-        .then(x => new CategoryActions.EditCategoriesSuccess())
+        .then(() => new CategoryActions.EditCategoriesSuccess())
         .catch(x => new CategoryActions.EditCategoriesFailed(x))
       )
     )
