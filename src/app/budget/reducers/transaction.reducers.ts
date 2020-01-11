@@ -5,13 +5,16 @@ import { Transaction } from '../transaction/model/transaction';
 export interface TransactionState {
     isLoading: boolean;
     items: Transaction[];
-    
+    currentDate: Date;
+    selectedDate: Date;
     errors: any;
 }
 
 export const initialState: TransactionState = {
     isLoading: false,
     items: [],
+    currentDate: new Date(),
+    selectedDate: new Date(),
     errors: undefined,
 }
 
