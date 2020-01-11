@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 import { AuthActions } from '../actions';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
   constructor(
     private firebaseAuth: AngularFireAuth,
     private store: Store<AppState>,
+    private router: Router,
   ) {
     this.store.dispatch(new AuthActions.Initialize())
     this.firebaseAuth.authState.subscribe(user => {
@@ -45,9 +47,13 @@ export class AuthService {
   }
 
   public logout() {
-    this.isLoading$.next(true);
-    this.firebaseAuth.auth.signOut();
-    this.authState = null;
+    this.firebaseAuth
+      .auth
+      .signOut()
+      .finally(() => {
+        this.authState = null;
+        this.router.navigate(['/login']);
+      });
   }
 
   public resetPassword(newPassword: string, oldPassword: string): Promise<any> {

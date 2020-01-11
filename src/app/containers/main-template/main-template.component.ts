@@ -13,7 +13,7 @@ export class MainTemplateComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router: Router,
+    
   ) { }
 
   ngOnInit() {
@@ -26,7 +26,6 @@ export class MainTemplateComponent implements OnInit {
   public logout() {
     console.log('logout');
     this.authService.logout();
-    this.router.navigate(['login']);
   }
 
 }
