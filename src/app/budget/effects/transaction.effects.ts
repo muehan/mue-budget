@@ -32,7 +32,7 @@ export class TransactionEffects {
     )
 
   @Effect()
-  addCategory$ = this.actions
+  addTransaction$ = this.actions
     .pipe(
       ofType<TransactionActions.AddTransactions>(TransactionActions.ActionTypes.AddTransactions),
       map(action => {
@@ -47,7 +47,7 @@ export class TransactionEffects {
     )
 
   @Effect()
-  deleteCategory$ = this.actions
+  deleteTransaction$ = this.actions
     .pipe(
       ofType<TransactionActions.DeleteTransactions>(TransactionActions.ActionTypes.DeleteTransactions),
       map(action => action.payload),
@@ -58,7 +58,7 @@ export class TransactionEffects {
     )
 
   @Effect()
-  editCategory$ = this.actions
+  editTransaction$ = this.actions
     .pipe(
       ofType<TransactionActions.EditTransactions>(TransactionActions.ActionTypes.EditTransactions),
       map(action => action.payload),

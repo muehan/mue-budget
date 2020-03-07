@@ -21,12 +21,10 @@ export class TransactionService {
         return this.firebaselist
             .snapshotChanges()
             .pipe(
-                map(
-                    changes =>
-                        changes
-                            .map(c => {
-                                return { $key: c.key, ...c.payload.val() }
-                            })))
+                map(changes => changes
+                    .map(c => {
+                        return { $key: c.key, ...c.payload.val() }
+                    })))
     }
 
     public add(newItem: Transaction): Observable<any> {
