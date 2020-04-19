@@ -4,7 +4,7 @@ import { AppState } from 'src/app/store/state';
 import { TransactionActions, SubcategoryActions, CategoryActions } from '../../../actions';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../model/transaction';
-import { getAllTransactions, getAllCategories, getAllSubcategories } from '../../../reducers';
+import { getAllTransactions, getAllCategories, getAllSubcategories, getLastFewTransactions } from '../../../reducers';
 import { MatDialog } from '@angular/material/dialog';
 import { AddTransactionComponent } from '../../dialogs/add-transaction/add-transaction.component';
 import { EditTransactionComponent } from '../../dialogs/edit-transaction/edit-transaction.component';
@@ -19,7 +19,7 @@ import { Subcategory } from '../../model/subcategory';
 })
 export class TransactionsComponent implements OnInit {
 
-  public transactions$: Observable<Transaction[]> = this.store.select(getAllTransactions);
+  public transactions$: Observable<Transaction[]> = this.store.select(getLastFewTransactions);
   public categories$: Observable<Category[]> = this.store.select(getAllCategories);
   public subcategeories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
   public categories: Category[] = new Array<Category>();
@@ -36,10 +36,6 @@ export class TransactionsComponent implements OnInit {
 
     this.store.dispatch(
       new CategoryActions.GetCategories()
-    );
-
-    this.store.dispatch(
-      new TransactionActions.GetTransactions()
     );
 
     this.categories$.pipe(take(2)).subscribe(cats => this.categories = cats);

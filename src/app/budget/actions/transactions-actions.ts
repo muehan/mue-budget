@@ -1,10 +1,22 @@
 import { Action } from '@ngrx/store';
 import { Transaction } from '../transaction/model/transaction';
+import { DatabaseSnapshot } from '@angular/fire/database';
 
 export enum ActionTypes {
-    GetTransactions = '[Transactions] Get',
-    GetTransactionsSuccess = '[Transactions] Get Success',
-    GetTransactionsFailed = '[Transactions] Get Failed',
+    GetTransactionChanges = '[Transactions] Get',
+    GetTransactionChangesFailed = '[Transactions] Get Failed',
+
+    TransactionAdded = '[Transactions] item added',
+    TransactionChanged = '[Transactions] item changed',
+    TransactionRemoved = '[Transactions] item removed',
+
+    LoadLastFewTransactions = "[Transactions] LoadLastFew",
+    LoadLastFewTransactionsSuccess = "[Transactions] LoadLastFew Success",
+    LoadLastFewTransactionsFailed = "[Transactions] LoadLastFew Failed",
+
+    GetAllTransactions = '[Transactions] GetAll',
+    GetAllTransactionsSuccess = '[Transactions] GetAll Success',
+    GetAllTransactionsFailed = '[Transactions] GetAll Failed',
 
     AddTransactions = '[Transactions] Add',
     AddTransactionsSuccess = '[Transactions] Add Success',
@@ -19,24 +31,39 @@ export enum ActionTypes {
     DeleteTransactionsFailed = '[Transactions] Delete Failed',
 }
 
-export class GetTransactions implements Action {
-    readonly type = ActionTypes.GetTransactions;
+/* GetTransation */
+export class GetTransactionChanges implements Action {
+    readonly type = ActionTypes.GetTransactionChanges;
 
     constructor() { }
 }
 
-export class GetTransactionsSuccess implements Action {
-    readonly type = ActionTypes.GetTransactionsSuccess;
-
-    constructor(public payload: Transaction[]) { }
-}
-
-export class GetTransactionsFailed implements Action {
-    readonly type = ActionTypes.GetTransactionsFailed;
+export class GetTransactionChangesFailed implements Action {
+    readonly type = ActionTypes.GetTransactionChangesFailed;
 
     constructor(public payload: any) { }
 }
 
+/* GetTransation */
+export class TransactionAdded implements Action {
+    readonly type = ActionTypes.TransactionAdded;
+
+    constructor(public payload: DatabaseSnapshot<Transaction>) { }
+}
+
+export class TransactionChanged implements Action {
+    readonly type = ActionTypes.TransactionChanged;
+
+    constructor(public payload: Transaction) { }
+}
+
+export class TransactionRemoved implements Action {
+    readonly type = ActionTypes.TransactionRemoved;
+
+    constructor(public payload: Transaction) { }
+}
+
+/* AddTransaction */
 export class AddTransactions implements Action {
     readonly type = ActionTypes.AddTransactions;
 
@@ -55,6 +82,45 @@ export class AddTransactionsFailed implements Action {
     constructor(public payload: any) { }
 }
 
+/* GetAllTransaction */
+export class GetAllTransactions implements Action {
+    readonly type = ActionTypes.GetAllTransactions;
+
+    constructor() { }
+}
+
+export class GetAllTransactionsSuccess implements Action {
+    readonly type = ActionTypes.GetAllTransactionsSuccess;
+
+    constructor(public payload: Transaction[]) { }
+}
+
+export class GetAllTransactionsFailed implements Action {
+    readonly type = ActionTypes.GetAllTransactionsFailed;
+
+    constructor(public payload: any) { }
+}
+
+/* Get last few Transaction */
+export class LoadLastFewTransactions implements Action {
+    readonly type = ActionTypes.LoadLastFewTransactions;
+
+    constructor() { }
+}
+
+export class LoadLastFewTransactionsSuccess implements Action {
+    readonly type = ActionTypes.LoadLastFewTransactionsSuccess;
+
+    constructor(public payload: Transaction[]) { }
+}
+
+export class LoadLastFewTransactionsFailed implements Action {
+    readonly type = ActionTypes.LoadLastFewTransactionsFailed;
+
+    constructor(public payload: any) { }
+}
+
+/* Edit Transation */
 export class EditTransactions implements Action {
     readonly type = ActionTypes.EditTransactions;
 
@@ -73,6 +139,7 @@ export class EditTransactionsFailed implements Action {
     constructor(public payload: any) { }
 }
 
+/* Delete Transaction */
 export class DeleteTransactions implements Action {
     readonly type = ActionTypes.DeleteTransactions;
 
@@ -92,7 +159,10 @@ export class DeleteTransactionsFailed implements Action {
 }
 
 export type ActionsUnion = 
-GetTransactions | GetTransactionsSuccess | GetTransactionsFailed |
+GetTransactionChanges | GetTransactionChangesFailed |
+TransactionAdded | TransactionChanged | TransactionRemoved |
+GetAllTransactions | GetAllTransactionsSuccess | GetAllTransactionsFailed |
+LoadLastFewTransactions | LoadLastFewTransactionsSuccess | LoadLastFewTransactionsFailed |
 AddTransactions | AddTransactionsSuccess | AddTransactionsFailed |
 EditTransactions | EditTransactionsSuccess | EditTransactionsFailed |
 DeleteTransactions | DeleteTransactionsSuccess | DeleteTransactionsFailed;

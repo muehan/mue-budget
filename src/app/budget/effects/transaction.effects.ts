@@ -5,6 +5,7 @@ import { TransactionActions } from "../actions";
 import { switchMap, map, catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { TransactionService } from "../transaction/services/transaction.service";
+import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER } from '@angular/cdk/overlay/typings/overlay-directives';
 
 @Injectable()
 export class TransactionEffects {
@@ -17,15 +18,59 @@ export class TransactionEffects {
   @Effect()
   getTransactions$ = this.actions
     .pipe(
-      ofType<TransactionActions.GetTransactions>(TransactionActions.ActionTypes.GetTransactions),
+      ofType<TransactionActions.GetTransactionChanges>(TransactionActions.ActionTypes.GetTransactionChanges),
+      switchMap((_) => {
+        return this.transactionService.getChanges()
+          .pipe(
+            map((action) => {
+              if (action.type === "child_added") {
+                return new TransactionActions.TransactionAdded(action.payload);
+              }
+
+              if (action.type === "child_changed") {
+                return new TransactionActions.TransactionChanged(action.payload.val());
+              }
+
+              if (action.type === "child_removed") {
+                return new TransactionActions.TransactionRemoved(action.payload.val());
+              }
+            }),
+            catchError((error) => {
+              return of(new TransactionActions.GetTransactionChangesFailed(error));
+            })
+          );
+      })
+    )
+
+  @Effect()
+  getAllTransactions$ = this.actions
+    .pipe(
+      ofType<TransactionActions.GetAllTransactions>(TransactionActions.ActionTypes.GetAllTransactions),
       switchMap((_) => {
         return this.transactionService.getAll()
           .pipe(
             map((transactions) => {
-              return new TransactionActions.GetTransactionsSuccess(transactions);
+              return new TransactionActions.GetAllTransactionsSuccess(transactions);
             }),
             catchError((error) => {
-              return of(new TransactionActions.GetTransactionsFailed(error));
+              return of(new TransactionActions.GetAllTransactionsFailed(error));
+            })
+          );
+      })
+    )
+
+    @Effect()
+  getFewLastestTransactions$ = this.actions
+    .pipe(
+      ofType<TransactionActions.LoadLastFewTransactions>(TransactionActions.ActionTypes.GetAllTransactions),
+      switchMap((_) => {
+        return this.transactionService.getLastFew()
+          .pipe(
+            map((transactions) => {
+              return new TransactionActions.LoadLastFewTransactionsSuccess(transactions);
+            }),
+            catchError((error) => {
+              return of(new TransactionActions.LoadLastFewTransactionsFailed(error));
             })
           );
       })

@@ -19,4 +19,5 @@ export const {
 export const {
   getAll: getAllTransactions,
   getIsLoading: getTransactionIsLoading,
+  getLastFew: getLastFewTransactions,
 } = getTransactionSelectors(getTransactionState);

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList } from "@angular/fire/database";
+import { AngularFireDatabase, AngularFireList, SnapshotAction } from "@angular/fire/database";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/internal/operators/map";
 import { Transaction } from '../model/transaction';
@@ -10,11 +10,18 @@ import { Transaction } from '../model/transaction';
 export class TransactionService {
 
     private firebaselist: AngularFireList<Transaction>;
+    private firebaselistReduced: AngularFireList<Transaction>;
 
     constructor(
         private firebase: AngularFireDatabase,
     ) {
         this.firebaselist = this.firebase.list('transactions');
+        this.firebaselistReduced = this.firebase.list('transactions', ref => ref.limitToLast(20));
+    }
+
+    public getChanges(): Observable<SnapshotAction<Transaction>> {
+        return this.firebaselist
+            .stateChanges();
     }
 
     public getAll(): Observable<Transaction[]> {
@@ -29,8 +36,20 @@ export class TransactionService {
                             })))
     }
 
+    public getLastFew(): Observable<Transaction[]> {
+        return this.firebaselistReduced
+        .snapshotChanges()
+        .pipe(
+            map(
+                changes =>
+                    changes
+                        .map(c => {
+                            return { $key: c.key, ...c.payload.val() }
+                        })))
+    }
+
     public add(newItem: Transaction): Observable<any> {
-        console.log(newItem);
+        // console.log(newItem);
         this.firebaselist.push(newItem);
 
         return of();
