@@ -5,7 +5,6 @@ import { TransactionActions } from "../actions";
 import { switchMap, map, catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { TransactionService } from "../transaction/services/transaction.service";
-import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER } from '@angular/cdk/overlay/typings/overlay-directives';
 
 @Injectable()
 export class TransactionEffects {
@@ -59,7 +58,7 @@ export class TransactionEffects {
       })
     )
 
-    @Effect()
+  @Effect()
   getFewLastestTransactions$ = this.actions
     .pipe(
       ofType<TransactionActions.LoadLastFewTransactions>(TransactionActions.ActionTypes.GetAllTransactions),
