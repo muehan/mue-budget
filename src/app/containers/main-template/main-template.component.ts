@@ -13,7 +13,6 @@ export class MainTemplateComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    
   ) { }
 
   ngOnInit() {

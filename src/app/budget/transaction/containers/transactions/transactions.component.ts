@@ -23,6 +23,7 @@ export class TransactionsComponent implements OnInit {
   public categories$: Observable<Category[]> = this.store.select(getAllCategories);
   public subcategeories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
   public categories: Category[] = new Array<Category>();
+  public expanted: boolean = false;
 
   constructor(
     private store: Store<AppState>,
@@ -83,5 +84,12 @@ export class TransactionsComponent implements OnInit {
     let category = this.categories.find(x => x.name === categroyName);
 
     return category ? category.color : '#FFFFFF';
+  }
+
+  public expand() {
+    if(!this.expanted){
+      this.expanted = true;
+      this.transactions$ = this.store.select(getAllTransactions);
+    }
   }
 }
