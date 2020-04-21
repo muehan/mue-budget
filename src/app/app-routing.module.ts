@@ -12,6 +12,7 @@ const routes: Routes = [
     path: '', component: MainTemplateComponent, children: [
       { path: 'home', component: HomeComponent },
       { path: '', loadChildren: './budget/budget.module#BudgetModule' },
+      { path: '', loadChildren: './shoping-list/shoping-list.module#ShopingListModule' },
     ], canActivate: [AuthGuardService]
   },
 ];

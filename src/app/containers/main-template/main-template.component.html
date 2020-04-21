@@ -90,6 +90,17 @@
                 </mat-expansion-panel>
 
                 <div class="link-item">
+                    <a routerLink="/shopinglist/list" (click)="toggleSideBar()" class="link-link">
+                        <div class="link-content">
+                            <mat-icon class="link-icon" aria-hidden="false" aria-label="list icon">
+                                list
+                            </mat-icon>
+                            <span class="list-item-text">Shopinglist</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="link-item">
                     <a (click)="logout()" class="link-link">
                         <div class="link-content">
                             <mat-icon class="link-icon" aria-hidden="false" aria-label="person icon">
