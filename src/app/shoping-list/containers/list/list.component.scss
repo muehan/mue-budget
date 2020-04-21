@@ -1,0 +1,48 @@
+.add-button {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+    width: 66px;
+    height: 66px;
+}
+
+.freezer-button {
+    display: inline;
+    float: right;
+}
+
+.mat-mini-fab:not([class*=mat-elevation-z]) {
+    box-shadow: none;
+}
+
+.clear-button {
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    z-index: 1000;
+    background-color: red;
+}
+
+.list {
+    padding-left: 0;
+    width: 95%;
+}
+
+.list-item {
+    padding-left: 0;
+}
+
+.list-item-block {
+    display: inline-block;
+    width: 100%;
+}
+
+.list-item-text {
+    line-height: 48px;
+    margin-left: 8px;
+}
+
+.mat-mini-fab .mat-button-wrapper {
+    line-height: 0;
+}

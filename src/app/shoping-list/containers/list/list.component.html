@@ -1,1 +1,12 @@
-<p>list works!</p>
+<button type="button" class="clear-button" (click)="removeChecked()" mat-fab>clear</button>
+<button type="button" class="add-button" mat-fab (click)="AddNewItem()">Add</button>
+
+<mat-selection-list #itemList class="list">
+    <mat-list-item class="list-item" *ngFor="let item of items$ | async">
+        <div class="list-item-block">
+            <mat-checkbox [(ngModel)]="item.checked" (click)="selectedItem(item)">
+                <span class="list-item-text">{{ item.value }}</span>
+            </mat-checkbox>
+        </div>
+    </mat-list-item>
+</mat-selection-list>

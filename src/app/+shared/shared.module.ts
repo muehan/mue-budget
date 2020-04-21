@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material';
+import { MatNativeDateModule, MatCheckboxModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MccColorPickerModule } from 'material-community-components';
@@ -41,6 +41,7 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
     MatDialogModule,
     MatSidenavModule,
     MccColorPickerModule,
@@ -64,6 +65,7 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
     MatDialogModule,
     MatSidenavModule,
     MccColorPickerModule,
