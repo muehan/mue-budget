@@ -31,14 +31,6 @@ export class TransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(
-      new SubcategoryActions.GetSubcategories()
-    );
-
-    this.store.dispatch(
-      new CategoryActions.GetCategories()
-    );
-
     this.categories$.pipe(take(2)).subscribe(cats => this.categories = cats);
   }
 
