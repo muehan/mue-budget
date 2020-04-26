@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,21 +11,26 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material';
+import { MatNativeDateModule, MatCheckboxModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MccColorPickerModule } from 'material-community-components';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from "angularfire2/database";
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { environment } from '../../environments/environment';
 
+import { RouterModule } from '@angular/router';
+
 @NgModule({
-  declarations: [],
+  declarations: [
+  
+  ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
+    RouterModule,
+    MatExpansionModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
@@ -35,7 +41,9 @@ import { environment } from '../../environments/environment';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
     MatDialogModule,
+    MatSidenavModule,
     MccColorPickerModule,
     FormsModule,
     MatCardModule,
@@ -44,8 +52,9 @@ import { environment } from '../../environments/environment';
     AngularFireDatabaseModule,
   ],
   exports: [
-    BrowserAnimationsModule,
+    CommonModule,
     MatInputModule,
+    MatExpansionModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
@@ -56,7 +65,9 @@ import { environment } from '../../environments/environment';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCheckboxModule,
     MatDialogModule,
+    MatSidenavModule,
     MccColorPickerModule,
     FormsModule,
     ReactiveFormsModule,

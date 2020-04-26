@@ -1,0 +1,45 @@
+.mue-cart {
+    background-color: tomato;
+    opacity: 0.8;
+    width: 100%;
+    margin: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: inline;
+    -webkit-box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.75);
+}
+
+.cart-content {
+    display: flex;
+    padding: 5px;
+    justify-content: center;
+}
+
+.cart-content-text {
+    font-size: 14px;
+}
+
+.cart-content-icon {
+    margin: 10px;
+}
+
+.row {
+    width: 100%;
+    // border: 1px solid blue;
+    display: flex;
+}
+
+.flex-container {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

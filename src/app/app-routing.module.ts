@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './+auth/containers/login/login.component';
+import { HomeComponent } from './containers/home/home.component';
 import { AuthGuardService } from './services/auth-guard.service';
+import { MainTemplateComponent } from './containers/main-template/main-template.component';
 
 const routes: Routes = [
-  {
-    path: 'transaction',
-    loadChildren: './+transaction/transaction.module#TransactionModule',
-  },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: '', redirectTo: 'list', pathMatch: 'full' },
+  {
+    path: '', component: MainTemplateComponent, children: [
+      { path: 'home', component: HomeComponent },
+      { path: '', loadChildren: './budget/budget.module#BudgetModule' },
+      { path: '', loadChildren: './shoping-list/shoping-list.module#ShopingListModule' },
+    ], canActivate: [AuthGuardService]
+  },
 ];
 
 @NgModule({

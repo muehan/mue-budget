@@ -1,0 +1,14 @@
+Package "@angular/core" has an incompatible peer dependency to "zone.js" (requires "~0.9.1", would install "0.10.2")
+Package "material-community-components" has an incompatible peer dependency to "zone.js" (requires "^0.9.1", would install "0.10.2")
+Package "@angular/core" has an incompatible peer dependency to "zone.js" (requires "~0.9.1", would install "0.10.2").
+Package "@angular/compiler-cli" has an incompatible peer dependency to "typescript" (requires ">=3.4 <3.6", would install "3.7.4").
+
+
+
+
+npm WARN deprecated angularfire2@5.2.3: AngularFire has moved, we're now @angular/fire
+npm WARN deprecated core-js@2.6.11: core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.
+
+
+
+ Migration can be rerun with: "ng update @angular/core --from 6 --to 8 --migrate-only"

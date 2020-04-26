@@ -7,31 +7,33 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { SharedModule } from './+shared/shared.module';
 import { AuthModule } from './+auth/auth.module';
-import { TransactionModule } from './+transaction/transaction.module';
-import { ReportingModule } from './+reporting/reporting.module';
-import { SiteTemplateComponent } from './template/site-template/site-template.component';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './+auth/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
 import { APP_REDUCERS } from './store/state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { CategoryEffects } from './+transaction/effects/category.effects';
-import { SubcategoryEffects } from './+transaction/effects/subcategory.effects';
-import { TransactionEffects } from './+transaction/effects/transaction.effects';
+import { CategoryEffects } from './budget/effects/category.effects';
+import { SubcategoryEffects } from './budget/effects/subcategory.effects';
+import { TransactionEffects } from './budget/effects/transaction.effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BudgetModule } from './budget/budget.module';
+import { HomeComponent } from './containers/home/home.component';
+import { MainTemplateComponent } from './containers/main-template/main-template.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SiteTemplateComponent
+    HomeComponent,
+    MainTemplateComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     SharedModule,
     AuthModule,
-    TransactionModule,
-    ReportingModule,
+    BudgetModule,
     EffectsModule.forRoot([AuthEffects, CategoryEffects, SubcategoryEffects, TransactionEffects]),
     StoreModule.forRoot(APP_REDUCERS),
     StoreDevtoolsModule.instrument({

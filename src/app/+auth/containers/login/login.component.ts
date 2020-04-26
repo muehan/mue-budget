@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     .pipe(
       filter(x => x === true),
     ).subscribe(_ =>{
-      this.router.navigate(['list']);
+      this.router.navigate(['home']);
     });
   }
 
