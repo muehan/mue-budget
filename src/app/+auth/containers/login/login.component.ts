@@ -7,7 +7,7 @@ import { AuthActions } from '../../actions';
 import { getLoggingInProgress, getIsAuthenticated, getLoginErrors } from '../../reducers';
 import { filter } from 'rxjs/internal/operators/filter';
 import { Observable } from 'rxjs';
-import { login } from '../../actions/auth-actions';
+import { Login } from '../../actions/auth-actions';
 
 @Component({
   selector: 'mue-login',
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
 
     localStorage.setItem('mail', mail);
 
-    this.store.dispatch(login({
+    this.store.dispatch(Login({
       mail: mail,
       password: password,
     }));

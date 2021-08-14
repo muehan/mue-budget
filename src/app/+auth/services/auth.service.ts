@@ -5,7 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 import { Router } from '@angular/router';
-import { LoginFailer, loginSuccess } from '../actions/auth-actions';
+import { LoginFailer, LoginSuccess } from '../actions/auth-actions';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class AuthService {
       .subscribe(
         user => {
           if (user) {
-            this.store.dispatch(loginSuccess({user: user}))
+            this.store.dispatch(LoginSuccess({user: user}))
           } else {
             this.store.dispatch(LoginFailer({error: 'relogin failed'}))
           }

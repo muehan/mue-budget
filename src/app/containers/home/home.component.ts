@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state';
 import { AddTransactionComponent } from 'src/app/budget/transaction/dialogs/add-transaction/add-transaction.component';
-import { TransactionActions } from 'src/app/budget/actions';
+import { AddTransactions } from 'src/app/budget/actions/transactions-actions';
 
 @Component({
   selector: 'mue-home',
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(new TransactionActions.AddTransactions(result));
+        this.store.dispatch(AddTransactions(result));
       }
     });
   }

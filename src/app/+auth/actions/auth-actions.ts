@@ -2,9 +2,9 @@ import { FireBaseLoginModel } from "../models/firebase.models";
 import firebase from "firebase/app";
 import { createAction, props } from "@ngrx/store";
 
-export const login = createAction('[Auth] Login', props<FireBaseLoginModel>());
+export const Login = createAction('[Auth] Login', props<FireBaseLoginModel>());
 
-export const loginSuccess = createAction(
+export const LoginSuccess = createAction(
   '[Auth] Login Success',
   props<{ user: firebase.User }>()
 );

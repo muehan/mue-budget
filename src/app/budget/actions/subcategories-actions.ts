@@ -1,99 +1,18 @@
-import { Action } from '@ngrx/store';
-import { Category } from '../transaction/model/categroy';
+import { createAction, props } from "@ngrx/store";
 import { Subcategory } from '../transaction/model/subcategory';
 
-export enum ActionTypes {
-    GetSubcategories = '[Subcategories] Get',
-    GetSubcategoriesSuccess = '[Subcategories] Get Success',
-    GetSubcategoriesFailed = '[Subcategories] Get Failed',
+export const GetSubcategories = createAction('[Subcategories] Get');
+export const GetSubcategoriesSuccess = createAction('[Subcategories] Get Success', props<{payload: Subcategory[]}>());
+export const GetSubcategoriesFailed = createAction('[Subcategories] Get Failed', props<{payload: any}>());
 
-    AddSubcategories = '[Subcategories] Add',
-    AddSubcategoriesSuccess = '[Subcategories] Add Success',
-    AddSubcategoriesFailed = '[Subcategories] Add Failed',
+export const AddSubcategories = createAction('[Subcategories] Add', props<{payload: Subcategory}>());
+export const AddSubcategoriesSuccess = createAction('[Subcategories] Add Success');
+export const AddSubcategoriesFailed = createAction('[Subcategories] Add Failed', props<{payload: any}>());
 
-    EditSubcategories = '[Subcategories] Edit',
-    EditSubcategoriesSuccess = '[Subcategories] Edit Success',
-    EditSubcategoriesFailed = '[Subcategories] Edit Failed',
+export const EditSubcategories = createAction('[Subcategories] Edit', props<{payload: Subcategory}>());
+export const EditSubcategoriesSuccess = createAction('[Subcategories] Edit Success');
+export const EditSubcategoriesFailed = createAction('[Subcategories] Edit Failed', props<{payload: any}>());
 
-    DeleteSubcategories = '[Subcategories] Delete',
-    DeleteSubcategoriesSuccess = '[Subcategories] Delete Success',
-    DeleteSubcategoriesFailed = '[Subcategories] Delete Failed',
-}
-
-export class GetSubcategories implements Action {
-    readonly type = ActionTypes.GetSubcategories;
-
-    constructor() { }
-}
-
-export class GetSubcategoriesSuccess implements Action {
-    readonly type = ActionTypes.GetSubcategoriesSuccess;
-
-    constructor(public payload: Category[]) { }
-}
-
-export class GetSubcategoriesFailed implements Action {
-    readonly type = ActionTypes.GetSubcategoriesFailed;
-
-    constructor(public payload: any) { }
-}
-
-export class AddSubcategories implements Action {
-    readonly type = ActionTypes.AddSubcategories;
-
-    constructor(public payload: Category) { }
-}
-
-export class AddSubcategoriesSuccess implements Action {
-    readonly type = ActionTypes.AddSubcategoriesSuccess;
-
-    constructor() { }
-}
-
-export class AddSubcategoriesFailed implements Action {
-    readonly type = ActionTypes.AddSubcategoriesFailed;
-
-    constructor(public payload: any) { }
-}
-
-export class EditSubcategories implements Action {
-    readonly type = ActionTypes.EditSubcategories;
-
-    constructor(public payload: Subcategory) { }
-}
-
-export class EditSubcategoriesSuccess implements Action {
-    readonly type = ActionTypes.EditSubcategoriesSuccess;
-
-    constructor() { }
-}
-
-export class EditSubcategoriesFailed implements Action {
-    readonly type = ActionTypes.EditSubcategoriesFailed;
-
-    constructor(public payload: any) { }
-}
-
-export class DeleteSubcategories implements Action {
-    readonly type = ActionTypes.DeleteSubcategories;
-
-    constructor(public payload: Subcategory) { }
-}
-
-export class DeleteSubcategoriesSuccess implements Action {
-    readonly type = ActionTypes.DeleteSubcategoriesSuccess;
-
-    constructor() { }
-}
-
-export class DeleteSubcategoriesFailed implements Action {
-    readonly type = ActionTypes.DeleteSubcategoriesFailed;
-
-    constructor(public payload: any) { }
-}
-
-export type ActionsUnion = 
-GetSubcategories | GetSubcategoriesSuccess | GetSubcategoriesFailed |
-AddSubcategories | AddSubcategoriesSuccess | AddSubcategoriesFailed |
-EditSubcategories | EditSubcategoriesSuccess | EditSubcategoriesFailed |
-DeleteSubcategories | DeleteSubcategoriesSuccess | DeleteSubcategoriesFailed;
+export const DeleteSubcategories = createAction('[Subcategories] Delete', props<{payload: Subcategory}>());
+export const DeleteSubcategoriesSuccess = createAction('[Subcategories] Delete Success');
+export const DeleteSubcategoriesFailed = createAction('[Subcategories] Delete Failed', props<{payload: any}>());

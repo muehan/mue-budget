@@ -1,98 +1,18 @@
-import { Action } from "@ngrx/store";
+import { createAction, props } from "@ngrx/store";
 import { Category } from "../transaction/model/categroy";
 
-export enum ActionTypes {
-    GetCategories = '[Categories] Get',
-    GetCategoriesSuccess = '[Categories] Get Success',
-    GetCategoriesFailed = '[Categories] Get Failed',
+export const GetCategories = createAction('[Categories] Get');
+export const GetCategoriesSuccess = createAction('[Categories] Get Success', props<{payload: Category[]}>());
+export const GetCategoriesFailed = createAction('[Categories] Get Failed', props<{payload: any}>());
 
-    AddCategories = '[Categories] Add',
-    AddCategoriesSuccess = '[Categories] Add Success',
-    AddCategoriesFailed = '[Categories] Add Failed',
+export const AddCategorie = createAction('[Categories] Add', props<{payload: Category}>());
+export const AddCategoriesSuccess = createAction('[Categories] Add Success');
+export const AddCategoriesFailed = createAction('[Categories] Add Failed', props<{payload: any}>());
 
-    EditCategories = '[Categories] Edit',
-    EditCategoriesSuccess = '[Categories] Edit Success',
-    EditCategoriesFailed = '[Categories] Edit Failed',
+export const EditCategories = createAction('[Categories] Edit', props<{payload: Category}>());
+export const EditCategoriesSuccess = createAction('[Categories] Edit Success');
+export const EditCategoriesFailed = createAction('[Categories] Edit Failed', props<{payload: any}>());
 
-    DeleteCategories = '[Categories] Delete',
-    DeleteCategoriesSuccess = '[Categories] Delete Success',
-    DeleteCategoriesFailed = '[Categories] Delete Failed',
-}
-
-export class GetCategories implements Action {
-    readonly type = ActionTypes.GetCategories;
-
-    constructor() { }
-}
-
-export class GetCategoriesSuccess implements Action {
-    readonly type = ActionTypes.GetCategoriesSuccess;
-
-    constructor(public payload: Category[]) { }
-}
-
-export class GetCategoriesFailed implements Action {
-    readonly type = ActionTypes.GetCategoriesFailed;
-
-    constructor(public payload: any) { }
-}
-
-export class AddCategories implements Action {
-    readonly type = ActionTypes.AddCategories;
-
-    constructor(public payload: Category) { }
-}
-
-export class AddCategoriesSuccess implements Action {
-    readonly type = ActionTypes.AddCategoriesSuccess;
-
-    constructor() { }
-}
-
-export class AddCategoriesFailed implements Action {
-    readonly type = ActionTypes.AddCategoriesFailed;
-
-    constructor(public payload: any) { }
-}
-
-export class EditCategories implements Action {
-    readonly type = ActionTypes.EditCategories;
-
-    constructor(public payload: Category) { }
-}
-
-export class EditCategoriesSuccess implements Action {
-    readonly type = ActionTypes.EditCategoriesSuccess;
-
-    constructor() { }
-}
-
-export class EditCategoriesFailed implements Action {
-    readonly type = ActionTypes.EditCategoriesFailed;
-
-    constructor(public payload: any) { }
-}
-
-export class DeleteCategories implements Action {
-    readonly type = ActionTypes.DeleteCategories;
-
-    constructor(public payload: Category) { }
-}
-
-export class DeleteCategoriesSuccess implements Action {
-    readonly type = ActionTypes.DeleteCategoriesSuccess;
-
-    constructor() { }
-}
-
-export class DeleteCategoriesFailed implements Action {
-    readonly type = ActionTypes.DeleteCategoriesFailed;
-
-    constructor(public payload: any) { }
-}
-
-export type ActionsUnion = 
-GetCategories | GetCategoriesSuccess | GetCategoriesFailed |
-AddCategories | AddCategoriesSuccess | AddCategoriesFailed |
-EditCategories | EditCategoriesSuccess | EditCategoriesFailed |
-DeleteCategories | DeleteCategoriesSuccess | DeleteCategoriesFailed;
+export const DeleteCategorie = createAction('[Categories] Delete', props<{payload: Category}>());
+export const DeleteCategoriesSuccess = createAction('[Categories] Delete Success');
+export const DeleteCategoriesFailed = createAction('[Categories] Delete Failed', props<{payload: any}>());

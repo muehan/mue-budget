@@ -1,114 +1,122 @@
-
 import { Injectable } from "@angular/core";
-import { Effect, Actions, ofType } from "@ngrx/effects";
-import { TransactionActions } from "../actions";
+import { Effect, Actions, ofType, createEffect } from "@ngrx/effects";
+import { SubcategoryActions, TransactionActions } from "../actions";
 import { switchMap, map, catchError } from "rxjs/operators";
 import { of } from "rxjs";
 import { TransactionService } from "../transaction/services/transaction.service";
+import {
+  GetAllTransactionsFailed,
+  GetAllTransactionsSuccess,
+  GetTransactionChangesFailed,
+  TransactionAdded,
+  TransactionChanged,
+  TransactionRemoved,
+  LoadLastFewTransactionsSuccess,
+  LoadLastFewTransactionsFailed,
+  AddTransactionsFailed,
+  AddTransactionsSuccess,
+  DeleteTransactionsFailed,
+  DeleteTransactionsSuccess,
+  EditTransactionsFailed,
+  EditTransactionsSuccess,
+} from "../actions/transactions-actions";
 
 @Injectable()
 export class TransactionEffects {
-
   constructor(
-    private actions: Actions,
-    private transactionService: TransactionService,
-  ) { }
+    private actions$: Actions,
+    private transactionService: TransactionService
+  ) {}
 
-  @Effect()
-  getTransactions$ = this.actions
-    .pipe(
-      ofType<TransactionActions.GetTransactionChanges>(TransactionActions.ActionTypes.GetTransactionChanges),
-      switchMap((_) => {
-        return this.transactionService.getChanges()
-          .pipe(
-            map((action) => {
-              if (action.type === "child_added") {
-                return new TransactionActions.TransactionAdded(action.payload);
-              }
+  getTransactions$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TransactionActions.GetTransactionChanges),
+      switchMap((_) =>
+        this.transactionService.getChanges().pipe(
+          map((action) => {
+            if (action.type === "child_added") {
+              return TransactionAdded({ payload: action.payload });
+            }
 
-              if (action.type === "child_changed") {
-                return new TransactionActions.TransactionChanged(action.payload.val());
-              }
+            if (action.type === "child_changed") {
+              return TransactionChanged({ payload: action.payload.val() });
+            }
 
-              if (action.type === "child_removed") {
-                return new TransactionActions.TransactionRemoved(action.payload.val());
-              }
-            }),
-            catchError((error) => {
-              return of(new TransactionActions.GetTransactionChangesFailed(error));
-            })
-          );
-      })
-    )
-
-  @Effect()
-  getAllTransactions$ = this.actions
-    .pipe(
-      ofType<TransactionActions.GetAllTransactions>(TransactionActions.ActionTypes.GetAllTransactions),
-      switchMap((_) => {
-        return this.transactionService.getAll()
-          .pipe(
-            map((transactions) => {
-              return new TransactionActions.GetAllTransactionsSuccess(transactions);
-            }),
-            catchError((error) => {
-              return of(new TransactionActions.GetAllTransactionsFailed(error));
-            })
-          );
-      })
-    )
-
-  @Effect()
-  getFewLastestTransactions$ = this.actions
-    .pipe(
-      ofType<TransactionActions.LoadLastFewTransactions>(TransactionActions.ActionTypes.GetAllTransactions),
-      switchMap((_) => {
-        return this.transactionService.getLastFew()
-          .pipe(
-            map((transactions) => {
-              return new TransactionActions.LoadLastFewTransactionsSuccess(transactions);
-            }),
-            catchError((error) => {
-              return of(new TransactionActions.LoadLastFewTransactionsFailed(error));
-            })
-          );
-      })
-    )
-
-  @Effect()
-  addTransaction$ = this.actions
-    .pipe(
-      ofType<TransactionActions.AddTransactions>(TransactionActions.ActionTypes.AddTransactions),
-      map(action => {
-        console.log(action.payload);
-        return action.payload
-      }),
-      switchMap(x => this.transactionService.add(x)
-        .pipe(
-          map(x => new TransactionActions.AddTransactionsSuccess()),
-          catchError(error => of(new TransactionActions.AddTransactionsFailed(error)))
-        ))
-    )
-
-  @Effect()
-  deleteTransaction$ = this.actions
-    .pipe(
-      ofType<TransactionActions.DeleteTransactions>(TransactionActions.ActionTypes.DeleteTransactions),
-      map(action => action.payload),
-      switchMap(x => this.transactionService.remove(x)
-        .then(x => new TransactionActions.DeleteTransactionsSuccess())
-        .catch(x => new TransactionActions.DeleteTransactionsFailed(x))
+            if (action.type === "child_removed") {
+              return TransactionRemoved({ payload: action.payload.val() });
+            }
+          }),
+          catchError((error) => of(GetTransactionChangesFailed()))
+        )
       )
-    )
+    );
+  });
 
-  @Effect()
-  editTransaction$ = this.actions
-    .pipe(
-      ofType<TransactionActions.EditTransactions>(TransactionActions.ActionTypes.EditTransactions),
-      map(action => action.payload),
-      switchMap(x => this.transactionService.edit(x)
-        .then(x => new TransactionActions.EditTransactionsSuccess())
-        .catch(x => new TransactionActions.EditTransactionsFailed(x))
+  getAllTransactions$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TransactionActions.GetAllTransactions),
+      switchMap((_) =>
+        this.transactionService.getAll().pipe(
+          map((response) => GetAllTransactionsSuccess({ payload: response })),
+          catchError((error) =>
+            of(GetAllTransactionsFailed({ payload: error }))
+          )
+        )
       )
-    )
+    );
+  });
+
+  getFewLastestTransactions$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TransactionActions.LoadLastFewTransactions),
+      switchMap((_) =>
+        this.transactionService.getLastFew().pipe(
+          map((response) => LoadLastFewTransactionsSuccess({payload: response})),
+          catchError((error) =>
+            of(LoadLastFewTransactionsFailed({ payload: error }))
+          )
+        )
+      )
+    );
+  });
+
+  addTransaction$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TransactionActions.AddTransactions),
+      switchMap((data) =>
+        this.transactionService.add(data.payload).pipe(
+          map((response) => AddTransactionsSuccess()),
+          catchError((error) => of(AddTransactionsFailed({ payload: error })))
+        )
+      )
+    );
+  });
+
+  deleteTransaction$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TransactionActions.DeleteTransactions),
+      switchMap((data) =>
+        this.transactionService.add(data.payload).pipe(
+          map((response) => DeleteTransactionsSuccess()),
+          catchError((error) =>
+            of(DeleteTransactionsFailed({ payload: error }))
+          )
+        )
+      )
+    );
+  });
+
+  editTransaction$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TransactionActions.EditTransactions),
+      switchMap((data) =>
+        this.transactionService.add(data.payload).pipe(
+          map((response) => EditTransactionsSuccess()),
+          catchError((error) =>
+            of(EditTransactionsFailed({ payload: error }))
+          )
+        )
+      )
+    );
+  });
 }

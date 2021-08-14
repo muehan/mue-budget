@@ -11,6 +11,7 @@ import { EditTransactionComponent } from '../../dialogs/edit-transaction/edit-tr
 import { Category } from '../../model/categroy';
 import { take } from 'rxjs/operators';
 import { Subcategory } from '../../model/subcategory';
+import { AddTransactions, DeleteTransactions, EditTransactions } from 'src/app/budget/actions/transactions-actions';
 
 @Component({
   selector: 'mue-transactions',
@@ -43,13 +44,13 @@ export class TransactionsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(new TransactionActions.AddTransactions(result));
+        this.store.dispatch(AddTransactions({payload: result}));
       }
     });
   }
 
   public remove(item: Transaction) {
-    this.store.dispatch(new TransactionActions.DeleteTransactions(item));
+    this.store.dispatch(DeleteTransactions({payload: item}));
   }
 
   public edit(item: Transaction) {
@@ -67,7 +68,7 @@ export class TransactionsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch(new TransactionActions.EditTransactions(result));
+        this.store.dispatch(EditTransactions({payload: result}));
       }
     });
   }

@@ -3,7 +3,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from './store/state';
 import { getLoggingInProgress } from './+auth/reducers';
 import { Observable } from 'rxjs/internal/Observable';
-import { TransactionActions, SubcategoryActions, CategoryActions } from './budget/actions';
+import { GetCategories } from './budget/actions/categories-actions';
+import { GetSubcategories } from './budget/actions/subcategories-actions';
+import { LoadLastFewTransactions, GetAllTransactions } from './budget/actions/transactions-actions';
 
 @Component({
   selector: 'app-root',
@@ -20,20 +22,19 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(
-      new TransactionActions.LoadLastFewTransactions()
+      LoadLastFewTransactions()
     );
     
     this.store.dispatch(
-      new TransactionActions.GetAllTransactions()
+      GetAllTransactions()
     );
 
     this.store.dispatch(
-      new SubcategoryActions.GetSubcategories()
+      GetSubcategories()
     );
 
     this.store.dispatch(
-      new CategoryActions.GetCategories()
+      GetCategories()
     );
-
   }
 }
