@@ -21,18 +21,22 @@ const reducer = createReducer(
     user: undefined,
     errors: undefined,
   })),
-  on(AuthActions.Login, (state) => ({ ...state, isLoggingIn: true })),
-  on(AuthActions.LoginSuccess, (state, payload) => ({
+  on(AuthActions.Login, (state) => ({
+    ...state,
+    isLoggingIn: true,
+    errors: undefined,
+  })),
+  on(AuthActions.LoginSuccess, (state, action) => ({
     ...state,
     errors: undefined,
     isLoggingIn: false,
-    user: payload,
+    user: action.user,
   })),
-  on(AuthActions.LoginFailer, (state, payload) => ({
+  on(AuthActions.LoginFailer, (state, action) => ({
     ...state,
     isLoggingIn: false,
     user: undefined,
-    errors: payload,
+    errors: action.error,
   }))
 );
 

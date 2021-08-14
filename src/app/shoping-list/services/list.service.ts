@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ShoppingItem } from '../models/shopping-item';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { AuthService } from 'src/app/+auth/services/auth.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({
