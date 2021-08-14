@@ -7,6 +7,7 @@ import { AuthActions } from '../../actions';
 import { getLoggingInProgress, getIsAuthenticated, getLoginErrors } from '../../reducers';
 import { filter } from 'rxjs/internal/operators/filter';
 import { Observable } from 'rxjs';
+import { login } from '../../actions/auth-actions';
 
 @Component({
   selector: 'mue-login',
@@ -46,28 +47,9 @@ export class LoginComponent implements OnInit {
 
     localStorage.setItem('mail', mail);
 
-    this.store.dispatch(new AuthActions.Login({
+    this.store.dispatch(login({
       mail: mail,
       password: password,
     }));
-
-    // this.waitUntilLoginComplete()
-    //   .subscribe(_ => {
-    //     this.router.navigate(['list']);
-    //   })
   }
-
-  // private waitUntilLoginComplete(): Observable<boolean> {
-  //   return this.store.select(getLoggingInProgress).pipe(
-  //     withLatestFrom(this.store.select(getLoginErrors)),
-  //     filter(([inProgress]) => !inProgress),
-  //     switchMap(([, errors]) => {
-  //       if (!errors) {
-  //         return of(undefined);
-  //       } else {
-  //         return throwError(errors);
-  //       }
-  //     })
-  //   );
-  // }
 }

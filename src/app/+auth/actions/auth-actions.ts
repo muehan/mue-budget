@@ -1,37 +1,19 @@
-import { Action } from '@ngrx/store';
-import { FireBaseLoginModel } from '../models/firebase.models';
-import { User } from 'firebase';
+import { FireBaseLoginModel } from "../models/firebase.models";
+import firebase from "firebase/app";
+import { createAction, props } from "@ngrx/store";
 
-export enum ActionTypes {
-    Login = '[Auth] Login',
-    LoginSuccess = '[Auth] Login Success',
-    LoginFailer = '[Auth] Login Failer',
+export const login = createAction('[Auth] Login', props<FireBaseLoginModel>());
 
-    Initialize = '[Auth] Initialize',
-}
+export const loginSuccess = createAction(
+  '[Auth] Login Success',
+  props<{ user: firebase.User }>()
+);
 
-export class Login implements Action {
-    readonly type = ActionTypes.Login;
+export const LoginFailer = createAction(
+  '[Auth] Login failed',
+  props<{error: any}>()
+);
 
-    constructor(public payload: FireBaseLoginModel) { }
-}
-
-export class LoginSuccess implements Action {
-    readonly type = ActionTypes.LoginSuccess;
-
-    constructor(public payload: User) { }
-}
-
-export class LoginFailer implements Action {
-    readonly type = ActionTypes.LoginFailer;
-
-    constructor(public payload: any) { }
-}
-
-export class Initialize implements Action {
-    readonly type = ActionTypes.Initialize;
-
-    constructor() { }
-}
-
-export type ActionsUnion = Login | LoginSuccess | LoginFailer | Initialize;
+export const Initialize = createAction(
+  '[Auth] Login Initialize'
+);

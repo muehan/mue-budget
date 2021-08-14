@@ -1,30 +1,23 @@
-
-import { Actions, Effect, ofType } from "@ngrx/effects";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Injectable } from "@angular/core";
-import { AuthService } from '../services/auth.service';
-import { AuthActions } from '../actions';
-import { map } from "rxjs/internal/operators/map";
-import { switchMap } from "rxjs/internal/operators/switchMap";
-import { of } from 'rxjs';
+import { AuthService } from "../services/auth.service";
+import { AuthActions } from "../actions";
+import { switchMap } from "rxjs/operators";
+import { LoginFailer, loginSuccess } from "../actions/auth-actions";
 
 @Injectable()
 export class AuthEffects {
+  constructor(private authService: AuthService, private actions$: Actions) {}
 
-    constructor(
-        private authService: AuthService,
-        private actions$: Actions,
-    ) { }
-
-    @Effect()
-    login$ = this.actions$
-        .pipe(
-            ofType<AuthActions.Login>(AuthActions.ActionTypes.Login),
-            map(action => action.payload),
-            switchMap(data => this.authService.emailLogin(data.mail, data.password)
-                .then(x => new AuthActions.LoginSuccess(x.user))
-                .catch(x => {
-                    console.log(x);
-                    return of(new AuthActions.LoginFailer(x))
-                })
-            ))
+  login$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.login),
+      switchMap((data) =>
+        this.authService
+          .emailLogin(data.mail, data.password)
+          .then((response) => loginSuccess({ user: response.user }))
+          .catch((error) => LoginFailer({ error: error }))
+      )
+    );
+  });
 }
