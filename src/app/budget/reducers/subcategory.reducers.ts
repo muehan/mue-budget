@@ -4,13 +4,13 @@ import { Subcategory } from "../transaction/model/subcategory";
 
 export interface SubcategoryState {
   isLoading: boolean;
-  Subcategories: Subcategory[];
+  subcategories: Subcategory[];
   errors: any;
 }
 
 export const initialState: SubcategoryState = {
   isLoading: false,
-  Subcategories: [],
+  subcategories: [],
   errors: undefined,
 };
 
@@ -23,7 +23,7 @@ const reducer = createReducer(
   on(SubcategoryActions.GetSubcategoriesSuccess, (state, action) => ({
     ...state,
     isLoading: false,
-    categories: action.payload,
+    subcategories: action.payload,
   })),
   on(SubcategoryActions.DeleteSubcategoriesFailed, (state, action) => ({
     ...state,
@@ -54,9 +54,11 @@ export function getSubcategorySelectors(
 ) {
   return {
     getAll: createSelector(selectedState, (state: SubcategoryState) =>
-      state.Subcategories.sort((a, b) =>
-        b.categoryName > a.categoryName ? -1 : 1
-      )
+      state.subcategories.slice().sort((a, b) => {
+        if(b.categoryName > a.categoryName) return -1;
+        if(b.categoryName < a.categoryName) return 1;
+        return 0;
+      })
     ),
     getIsLoading: createSelector(
       selectedState,

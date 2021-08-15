@@ -3,11 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/state';
-import { AuthActions } from '../../actions';
 import { getLoggingInProgress, getIsAuthenticated, getLoginErrors } from '../../reducers';
-import { filter } from 'rxjs/internal/operators/filter';
 import { Observable } from 'rxjs';
 import { Login } from '../../actions/auth-actions';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'mue-login',

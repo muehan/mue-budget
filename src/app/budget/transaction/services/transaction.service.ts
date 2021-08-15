@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase, AngularFireList, SnapshotAction } from "@angular/fire/database";
 import { Observable, of } from "rxjs";
-import { map } from "rxjs/internal/operators/map";
+import { map } from "rxjs/operators";
 import { Transaction } from '../model/transaction';
 
 @Injectable({

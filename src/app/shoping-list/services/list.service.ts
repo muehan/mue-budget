@@ -11,7 +11,6 @@ export class ListService {
 
   private items$: Observable<ShoppingItem[]>;
   private itemArray: Array<ShoppingItem>;
-  private initialized: Boolean = false;
   private itemsSubscription: Subscription;
 
   constructor(
@@ -29,7 +28,6 @@ export class ListService {
         map(x => x.sort(compareFn))
       );
     this.itemsSubscription = this.items$.subscribe(x => this.itemArray = x);
-    this.initialized = true;
   }
 
   public unSubscribe() {

@@ -26,7 +26,6 @@ export class SubcategoryComponent implements OnInit {
 
   constructor(private store: Store<AppState>, private dialog: MatDialog) {
     this.store.dispatch(GetSubcategories());
-
     this.store.dispatch(GetCategories());
   }
 

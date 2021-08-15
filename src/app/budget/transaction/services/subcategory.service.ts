@@ -1,47 +1,43 @@
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase, AngularFireList } from "@angular/fire/database";
 import { Observable, of } from "rxjs";
-import { map } from "rxjs/internal/operators/map";
+import { map } from "rxjs/operators";
 import { Subcategory } from "../model/subcategory";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: "root",
 })
 export class SubcategoryService {
+  private firebaselist: AngularFireList<Subcategory>;
 
-    private firebaselist: AngularFireList<Subcategory>;
+  constructor(private firebase: AngularFireDatabase) {
+    this.firebaselist = this.firebase.list("subSubcategory");
+  }
 
-    constructor(
-        private firebase: AngularFireDatabase,
-    ) {
-        this.firebaselist = this.firebase.list('subSubcategory');
-    }
+  public getAll(): Observable<Subcategory[]> {
+    return this.firebaselist.snapshotChanges().pipe(
+      map((changes) =>
+        changes.map((c) => {
+          return { $key: c.key, ...c.payload.val() };
+        })
+      )
+    );
+  }
 
-    public getAll(): Observable<Subcategory[]> {
-        return this.firebaselist
-            .snapshotChanges()
-            .pipe(
-                map(
-                    changes => changes
-                        .map(c => {
-                            return { $key: c.key, ...c.payload.val() }
-                        })))
-    }
+  public add(newItem: Subcategory): Observable<any> {
+    this.firebaselist.push(newItem);
 
-    public add(newItem: Subcategory): Observable<any> {
-        this.firebaselist.push(newItem);
+    return of();
+  }
 
-        return of();
-    }
+  public edit(item: Subcategory): Promise<void> {
+    return this.firebaselist.update(item.$key, {
+      categoryName: item.categoryName,
+      name: item.name,
+    });
+  }
 
-    public edit(item: Subcategory): Promise<void> {
-        let key = item.$key;
-        delete item.$key;
-        return this.firebaselist.update(key, item);
-    }
-
-    public remove(item: Subcategory): Promise<void> {
-        return this.firebaselist.remove(item.$key);
-    }
-
+  public remove(item: Subcategory): Promise<void> {
+    return this.firebaselist.remove(item.$key);
+  }
 }
