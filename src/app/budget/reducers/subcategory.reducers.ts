@@ -64,5 +64,9 @@ export function getSubcategorySelectors(
       selectedState,
       (state: SubcategoryState) => state.isLoading
     ),
+    getSubcategoriesLoaded: createSelector(
+      selectedState,
+      (state: SubcategoryState) => state.subcategories.length > 0
+    )
   };
 }

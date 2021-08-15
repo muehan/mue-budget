@@ -61,5 +61,9 @@ export function getCategorySelectors(
       selectedState,
       (state: CategoryState) => state.isLoading
     ),
+    getCategoriesLoaded: createSelector(
+      selectedState,
+      (state: CategoryState) => state.categories.length > 0
+    )
   };
 }
