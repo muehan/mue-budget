@@ -44,7 +44,6 @@ const reducer = createReducer(
       state.items.find((x) => x.$key !== action.payload.key) ||
       state.items.find((x) => x.$key !== action.payload.key) === undefined
     ) {
-      console.log("add item");
       state.items = state.items.concat(action.payload.val());
     }
     return {
@@ -79,12 +78,12 @@ export function getTransactionSelectors(
 ) {
   return {
     getAll: createSelector(selectedState, (state: TransactionState) =>
-      state.items.sort(
+      state.items.slice().sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       )
     ),
     getLastFew: createSelector(selectedState, (state: TransactionState) =>
-      state.lastFewitems.sort(
+      state.lastFewitems.slice().sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       )
     ),

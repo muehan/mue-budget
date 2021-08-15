@@ -10,7 +10,9 @@ import { map } from "rxjs/operators";
 export class CategoryService {
   private firebaselist: AngularFireList<Category>;
 
-  constructor(private firebase: AngularFireDatabase) {
+  constructor(private firebase: AngularFireDatabase) {}
+
+  public init() {
     this.firebaselist = this.firebase.list("category");
   }
 
@@ -25,7 +27,6 @@ export class CategoryService {
   }
 
   public add(newItem: Category): Observable<any> {
-    console.log(newItem);
     this.firebaselist.push(newItem);
 
     return of();

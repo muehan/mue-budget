@@ -1,19 +1,35 @@
 import { Injectable } from "@angular/core";
-import { Effect, Actions, ofType, createEffect } from "@ngrx/effects";
-import { SubcategoryActions } from '../actions';
-import { switchMap, map, catchError } from "rxjs/operators";
+import { Actions, ofType, createEffect } from "@ngrx/effects";
+import { SubcategoryActions } from "../actions";
+import { switchMap, map, catchError, tap } from "rxjs/operators";
 import { of } from "rxjs";
-import { SubcategoryService } from '../transaction/services/subcategory.service';
-import { AddCategoriesSuccess, AddCategoriesFailed, EditCategoriesSuccess, EditCategoriesFailed } from "../actions/categories-actions";
-import { GetSubcategoriesSuccess, GetSubcategoriesFailed, AddSubcategoriesFailed, AddSubcategoriesSuccess, DeleteSubcategoriesFailed, DeleteSubcategoriesSuccess, EditSubcategoriesFailed, EditSubcategoriesSuccess } from "../actions/subcategories-actions";
+import { SubcategoryService } from "../transaction/services/subcategory.service";
+import {
+  GetSubcategoriesSuccess,
+  GetSubcategoriesFailed,
+  AddSubcategoriesFailed,
+  AddSubcategoriesSuccess,
+  DeleteSubcategoriesFailed,
+  DeleteSubcategoriesSuccess,
+  EditSubcategoriesFailed,
+  EditSubcategoriesSuccess,
+} from "../actions/subcategories-actions";
 
 @Injectable()
 export class SubcategoryEffects {
-
   constructor(
     private actions$: Actions,
-    private subcategoryService: SubcategoryService,
-  ) { }
+    private subcategoryService: SubcategoryService
+  ) {}
+
+  subCategoriesInitialize$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(SubcategoryActions.SubcategoriesInitialize),
+        tap((_) => this.subcategoryService.init())
+      ),
+    { dispatch: false }
+  );
 
   getSubcategories$ = createEffect(() => {
     return this.actions$.pipe(
@@ -62,5 +78,4 @@ export class SubcategoryEffects {
       )
     );
   });
-
 }

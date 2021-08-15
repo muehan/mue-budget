@@ -10,7 +10,9 @@ import { Subcategory } from "../model/subcategory";
 export class SubcategoryService {
   private firebaselist: AngularFireList<Subcategory>;
 
-  constructor(private firebase: AngularFireDatabase) {
+  constructor(private firebase: AngularFireDatabase) {}
+
+  public init() {
     this.firebaselist = this.firebase.list("subSubcategory");
   }
 

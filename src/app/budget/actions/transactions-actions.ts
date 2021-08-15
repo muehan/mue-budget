@@ -2,6 +2,8 @@ import { createAction, props } from "@ngrx/store";
 import { Transaction } from '../transaction/model/transaction';
 import { DatabaseSnapshot } from '@angular/fire/database';
 
+export const TransactionInitialize = createAction('[Transactions] Init');
+
 export const GetTransactionChanges = createAction('[Transactions] Get');
 export const GetTransactionChangesFailed = createAction('[Transactions] Get Failed');
 

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Effect, Actions, ofType, createEffect } from "@ngrx/effects";
-import { SubcategoryActions, TransactionActions } from "../actions";
-import { switchMap, map, catchError } from "rxjs/operators";
+import { Actions, ofType, createEffect } from "@ngrx/effects";
+import { TransactionActions } from "../actions";
+import { switchMap, map, catchError, tap } from "rxjs/operators";
 import { of } from "rxjs";
 import { TransactionService } from "../transaction/services/transaction.service";
 import {
@@ -27,6 +27,15 @@ export class TransactionEffects {
     private actions$: Actions,
     private transactionService: TransactionService
   ) {}
+
+  transactionInitialize$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TransactionActions.TransactionInitialize),
+        tap((_) => this.transactionService.init())
+      ),
+    { dispatch: false }
+  );
 
   getTransactions$ = createEffect(() => {
     return this.actions$.pipe(
@@ -71,7 +80,9 @@ export class TransactionEffects {
       ofType(TransactionActions.LoadLastFewTransactions),
       switchMap((_) =>
         this.transactionService.getLastFew().pipe(
-          map((response) => LoadLastFewTransactionsSuccess({payload: response})),
+          map((response) =>
+            LoadLastFewTransactionsSuccess({ payload: response })
+          ),
           catchError((error) =>
             of(LoadLastFewTransactionsFailed({ payload: error }))
           )
@@ -96,12 +107,10 @@ export class TransactionEffects {
     return this.actions$.pipe(
       ofType(TransactionActions.DeleteTransactions),
       switchMap((data) =>
-        this.transactionService.add(data.payload).pipe(
-          map((response) => DeleteTransactionsSuccess()),
-          catchError((error) =>
-            of(DeleteTransactionsFailed({ payload: error }))
-          )
-        )
+        this.transactionService
+          .remove(data.payload)
+          .then((_) => DeleteTransactionsSuccess())
+          .catch((error) => DeleteTransactionsFailed({ payload: error }))
       )
     );
   });
@@ -110,12 +119,10 @@ export class TransactionEffects {
     return this.actions$.pipe(
       ofType(TransactionActions.EditTransactions),
       switchMap((data) =>
-        this.transactionService.add(data.payload).pipe(
-          map((response) => EditTransactionsSuccess()),
-          catchError((error) =>
-            of(EditTransactionsFailed({ payload: error }))
-          )
-        )
+        this.transactionService
+          .edit(data.payload)
+          .then((_) => EditTransactionsSuccess())
+          .catch((error) => EditTransactionsFailed({ payload: error }))
       )
     );
   });

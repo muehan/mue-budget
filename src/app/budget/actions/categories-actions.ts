@@ -1,6 +1,8 @@
 import { createAction, props } from "@ngrx/store";
 import { Category } from "../transaction/model/categroy";
 
+export const CategoriesInitialize = createAction('[Categories] Init');
+
 export const GetCategories = createAction('[Categories] Get');
 export const GetCategoriesSuccess = createAction('[Categories] Get Success', props<{payload: Category[]}>());
 export const GetCategoriesFailed = createAction('[Categories] Get Failed', props<{payload: any}>());

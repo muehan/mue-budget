@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Effect, Actions, ofType, createEffect } from "@ngrx/effects";
 import { CategoryActions } from "../actions";
 import { CategoryService } from "../transaction/services/category.service";
-import { switchMap, map, catchError } from "rxjs/operators";
+import { switchMap, map, catchError, tap } from "rxjs/operators";
 import { of } from "rxjs";
 import {
   AddCategoriesFailed,
@@ -19,6 +19,15 @@ export class CategoryEffects {
     private actions$: Actions,
     private categoryService: CategoryService
   ) {}
+
+  categoriesInitialize$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CategoryActions.CategoriesInitialize),
+        tap((_) => this.categoryService.init())
+      ),
+    { dispatch: false }
+  );
 
   getCategories$ = createEffect(() => {
     return this.actions$.pipe(

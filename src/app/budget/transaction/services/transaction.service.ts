@@ -1,66 +1,70 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList, SnapshotAction } from "@angular/fire/database";
+import {
+  AngularFireDatabase,
+  AngularFireList,
+  SnapshotAction,
+} from "@angular/fire/database";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
-import { Transaction } from '../model/transaction';
+import { Transaction } from "../model/transaction";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: "root",
 })
 export class TransactionService {
+  private firebaselist: AngularFireList<Transaction>;
+  private firebaselistReduced: AngularFireList<Transaction>;
 
-    private firebaselist: AngularFireList<Transaction>;
-    private firebaselistReduced: AngularFireList<Transaction>;
+  constructor(private firebase: AngularFireDatabase) {}
 
-    constructor(
-        private firebase: AngularFireDatabase,
-    ) {
-        this.firebaselist = this.firebase.list('transactions');
-        this.firebaselistReduced = this.firebase.list('transactions', ref => ref.limitToLast(20));
-    }
+  public init() {
+    this.firebaselist = this.firebase.list("transactions");
+    this.firebaselistReduced = this.firebase.list("transactions", (ref) =>
+      ref.limitToLast(20)
+    );
+  }
 
-    public getChanges(): Observable<SnapshotAction<Transaction>> {
-        return this.firebaselist
-            .stateChanges();
-    }
+  public getChanges(): Observable<SnapshotAction<Transaction>> {
+    return this.firebaselist.stateChanges();
+  }
 
-    public getAll(): Observable<Transaction[]> {
-        return this.firebaselist
-            .snapshotChanges()
-            .pipe(
-                map(changes => changes
-                    .map(c => {
-                        return { $key: c.key, ...c.payload.val() }
-                    })))
-    }
+  public getAll(): Observable<Transaction[]> {
+    return this.firebaselist.snapshotChanges().pipe(
+      map((changes) =>
+        changes.map((c) => {
+          return { $key: c.key, ...c.payload.val() };
+        })
+      )
+    );
+  }
 
-    public getLastFew(): Observable<Transaction[]> {
-        return this.firebaselistReduced
-        .snapshotChanges()
-        .pipe(
-            map(
-                changes =>
-                    changes
-                        .map(c => {
-                            return { $key: c.key, ...c.payload.val() }
-                        })))
-    }
+  public getLastFew(): Observable<Transaction[]> {
+    return this.firebaselistReduced.snapshotChanges().pipe(
+      map((changes) =>
+        changes.map((c) => {
+          return { $key: c.key, ...c.payload.val() };
+        })
+      )
+    );
+  }
 
-    public add(newItem: Transaction): Observable<any> {
-        // console.log(newItem);
-        this.firebaselist.push(newItem);
+  public add(newItem: Transaction): Observable<any> {
+    this.firebaselist.push(newItem);
 
-        return of();
-    }
+    return of();
+  }
 
-    public edit(item: Transaction): Promise<void> {
-        let key = item.$key;
-        delete item.$key;
-        return this.firebaselist.update(key, item);
-    }
+  public edit(item: Transaction): Promise<void> {
+    return this.firebaselist.update(item.$key, {
+      category: item.category,
+      subCategory: item.subCategory,
+    //   description: item.description,
+      value: item.value,
+      date: item.date,
+    });
+  }
 
-    public remove(item: Transaction): Promise<void> {
-        return this.firebaselist.remove(item.$key);
-    }
-
+  public remove(item: Transaction): Promise<void> {
+    return this.firebaselist.remove(item.$key);
+  }
 }
