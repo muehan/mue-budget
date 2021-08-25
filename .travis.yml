@@ -15,3 +15,4 @@ after_success:
   - if [ "$TRAVIS_BRANCH" = "master" ]; then firebase deploy --token $FIREBASE_TOKEN --non-interactive; fi
   - if [ "$TRAVIS_BRANCH" = "development" ]; then firebase use development; fi
   - if [ "$TRAVIS_BRANCH" = "development" ]; then firebase deploy --token $FIREBASE_TOKEN --non-interactive; fi
+
