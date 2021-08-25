@@ -4,5 +4,5 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 | Environment | Status |
 | --- | --- |
-| Production | [![Build Status](https://travis-ci.org/muehan/mue-budget.svg?branch=master)](https://travis-ci.org/muehan/mue-shoplist)   |
-| Development | [![Build Status](https://travis-ci.org/muehan/mue-budget.svg?branch=development)](https://travis-ci.org/muehan/mue-shoplist) |
+| Production | [![Build Status](https://app.travis-ci.com/muehan/mue-budget.svg?branch=master)](https://app.travis-ci.com/muehan/mue-budget)   |
+| Development | [![Build Status](https://app.travis-ci.com/muehan/mue-budget.svg?branch=development)](https://app.travis-ci.com/muehan/mue-budget) |
