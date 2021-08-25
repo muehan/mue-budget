@@ -4,9 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../transaction/model/transaction';
 import { getAllTransactions, getAllCategories, getAllSubcategories, getTransactionIsLoading } from '../../../reducers';
-import { TransactionActions, CategoryActions, SubcategoryActions } from '../../../actions';
 import { Category } from '../../../transaction/model/categroy';
 import { Subcategory } from '../../../transaction/model/subcategory';
+import { GetSubcategories } from '../../../actions/subcategories-actions';
+import { GetCategories } from '../../../actions/categories-actions';
 
 @Component({
   selector: 'mue-performance',
@@ -24,8 +25,8 @@ export class PerformanceComponent implements OnInit {
     private store: Store<AppState>,
   ) {
     // this.store.dispatch(new TransactionActions.GetTransactions());
-    this.store.dispatch(new CategoryActions.GetCategories());
-    this.store.dispatch(new SubcategoryActions.GetSubcategories());
+    this.store.dispatch(GetCategories());
+    this.store.dispatch(GetSubcategories());
   }
 
   ngOnInit() {
