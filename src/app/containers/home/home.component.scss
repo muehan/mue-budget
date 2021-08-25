@@ -1,6 +1,6 @@
 .mue-cart {
     background-color: tomato;
-    opacity: 0.8;
+    opacity: 0.5;
     width: 100%;
     margin: 10px;
     font-weight: bold;
@@ -25,12 +25,6 @@
     margin: 10px;
 }
 
-.row {
-    width: 100%;
-    // border: 1px solid blue;
-    display: flex;
-}
-
 .flex-container {
     height: 100%;
     padding: 0;
@@ -40,6 +34,7 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-wrap: wrap;
+    // align-items: center;
+    justify-content: flex-start;
 }
