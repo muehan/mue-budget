@@ -92,7 +92,7 @@ export class TransactionsComponent implements OnInit {
   public getCategoryColor(categroyName: string) {
     let category = this.categories.find((x) => x.name === categroyName);
 
-    return category ? category.color : "#FFFFFF";
+    return category ? `${category.color}70` : "#FFFFFF";
   }
 
   public expand() {
