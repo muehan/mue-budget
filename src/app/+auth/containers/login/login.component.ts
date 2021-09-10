@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/state';
-import { AuthActions } from '../../actions';
 import { getLoggingInProgress, getIsAuthenticated, getLoginErrors } from '../../reducers';
-import { filter } from 'rxjs/internal/operators/filter';
 import { Observable } from 'rxjs';
+import { Login } from '../../actions/auth-actions';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'mue-login',
@@ -46,28 +46,9 @@ export class LoginComponent implements OnInit {
 
     localStorage.setItem('mail', mail);
 
-    this.store.dispatch(new AuthActions.Login({
+    this.store.dispatch(Login({
       mail: mail,
       password: password,
     }));
-
-    // this.waitUntilLoginComplete()
-    //   .subscribe(_ => {
-    //     this.router.navigate(['list']);
-    //   })
   }
-
-  // private waitUntilLoginComplete(): Observable<boolean> {
-  //   return this.store.select(getLoggingInProgress).pipe(
-  //     withLatestFrom(this.store.select(getLoginErrors)),
-  //     filter(([inProgress]) => !inProgress),
-  //     switchMap(([, errors]) => {
-  //       if (!errors) {
-  //         return of(undefined);
-  //       } else {
-  //         return throwError(errors);
-  //       }
-  //     })
-  //   );
-  // }
 }

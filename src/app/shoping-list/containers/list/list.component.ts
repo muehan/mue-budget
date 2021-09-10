@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { ShoppingItem } from '../../models/shopping-item';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ListService } from '../../services/list.service';
 import { AddItemDialogComponent } from '../../dialogs/add-item/add-item.component';
 

@@ -11,14 +11,14 @@ const routes: Routes = [
   {
     path: '', component: MainTemplateComponent, children: [
       { path: 'home', component: HomeComponent },
-      { path: '', loadChildren: './budget/budget.module#BudgetModule' },
-      { path: '', loadChildren: './shoping-list/shoping-list.module#ShopingListModule' },
+      { path: '', loadChildren: () => import('./budget/budget.module').then(m => m.BudgetModule) },
+      { path: '', loadChildren: () => import('./shoping-list/shoping-list.module').then(m => m.ShopingListModule) },
     ], canActivate: [AuthGuardService]
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -1,33 +1,25 @@
 <div class="flex-container">
-    <div class="row">
-        <div class="mue-cart" routerLink="/budget">
-            <div class="cart-content">
-                <!-- <i class="material-icons cart-content-icon">
-                    attach_money
-                </i> -->
-                <p class="cart-content-text">Budget</p>
-            </div>
-        </div>
 
-        <div class="mue-cart" (click)="addTransaction()">
-            <div class="cart-content">
-                <!-- <i class="material-icons">
-                add
-            </i> -->
-                <p class="cart-content-text">Add</p>
-            </div>
-        </div>
-    </div>
+    <mue-menu-item link="/budget"
+                   title="History"
+                   subtitle="Budget"
+                   description="See all Transactions"
+                   color="#753BBD">
+    </mue-menu-item>
+
+    <mue-menu-item (click)="addTransaction()"
+                   title="Add"
+                   subtitle="Budget"
+                   description="All Transactions"
+                   color="#753BBD">
+    </mue-menu-item>
+
 </div>
 <div class="flex-container">
-    <div class="row">
-        <div class="mue-cart" routerLink="/shopinglist">
-            <div class="cart-content">
-                <!-- <i class="material-icons cart-content-icon">
-                attach_money
-            </i> -->
-                <p class="cart-content-text">Shoping</p>
-            </div>
-        </div>
-    </div>
+    <mue-menu-item link="/shopinglist"
+                   title="Shoping"
+                   subtitle="Haushalt"
+                   description="See shopinglist"
+                   color="#ed330e">
+    </mue-menu-item>
 </div>

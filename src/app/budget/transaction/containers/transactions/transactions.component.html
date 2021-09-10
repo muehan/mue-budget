@@ -1,29 +1,52 @@
-<mat-list>
-    <mat-list-item *ngFor="let transaction of transactions$ | async" [ngStyle]="{'background-color': getCategoryColor(transaction.category)}">
-        <span style="min-width: 80px;">{{ transaction.value }}.- </span>
+<mat-list style="padding-top: 0;">
+    <mat-list-item *ngFor="let transaction of transactions$ | async"
+                   [ngStyle]="{'background-color': getCategoryColor(transaction.category)}"
+                   class="mue-list-item">
+        <!-- <span style="min-width: 80px;">{{ transaction.value }}.- </span>
         <span style="min-width: 140px;">{{ transaction.subCategory }}</span>
-        <span>{{transaction.category}}</span>
+        <span>{{transaction.category}}</span> -->
+
+        <div style="display: flex;">
+
+            <div class="value-box">
+                <div class="value-box-inner" mat-line>{{transaction.value}}</div>
+            </div>
+
+            <div>
+                <div mat-line>{{transaction.subCategory}}</div>
+                <div mat-line style="font-size: 10px;">{{transaction.category}}</div>
+            </div>
+        </div>
 
         <div class="position-right">
             <mat-menu #appMenu="matMenu">
 
-                <button mat-menu-item color="accent" (click)="edit(transaction)">
-                  <mat-icon aria-label="icon-button with a delete icon">edit</mat-icon> Edit
+                <button mat-menu-item
+                        color="accent"
+                        (click)="edit(transaction)">
+                    <mat-icon aria-label="icon-button with a delete icon">edit</mat-icon> Edit
                 </button>
 
-                <button mat-menu-item color="warn" (click)="remove(transaction)">
-                  <mat-icon aria-label="icon-button with a delete icon">delete</mat-icon> Delete
+                <button mat-menu-item
+                        color="warn"
+                        (click)="remove(transaction)">
+                    <mat-icon aria-label="icon-button with a delete icon">delete</mat-icon> Delete
                 </button>
             </mat-menu>
 
-            <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <button mat-icon-button
+                    [matMenuTriggerFor]="appMenu">
                 <mat-icon>more_vert</mat-icon>
             </button>
         </div>
     </mat-list-item>
     <mat-list-item *ngIf="!expanted">
-        <span class="load-button" (click)="expand()">load all</span>
+        <span class="load-button"
+              (click)="expand()">load all</span>
     </mat-list-item>
 </mat-list>
 
-<button mat-fab class="create-button" color="primary" (click)="create()">Add</button>
+<button mat-fab
+        class="create-button"
+        color="primary"
+        (click)="create()">Add</button>

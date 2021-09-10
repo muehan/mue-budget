@@ -7,12 +7,14 @@ import { getTransactionSelectors } from './transaction.reducers';
 export const {
   getAll: getAllCategories,
   getIsLoading: getCategoryIsLoading,
+  getCategoriesLoaded: getCategoriesLoaded,
 } = getCategorySelectors(getCategoryState);
 
 /* Subcategories */
 export const {
   getAll: getAllSubcategories,
   getIsLoading: getSubcategoryIsLoading,
+  getSubcategoriesLoaded: getSubcategoriesLoaded,
 } = getSubcategorySelectors(getSubcategoryState);
 
 /* Transactions */

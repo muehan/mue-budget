@@ -1,68 +1,81 @@
-
-
 import { Injectable } from "@angular/core";
-import { Effect, Actions, ofType } from "@ngrx/effects";
-import { SubcategoryActions } from '../actions';
-import { switchMap, map, catchError } from "rxjs/operators";
+import { Actions, ofType, createEffect } from "@ngrx/effects";
+import { SubcategoryActions } from "../actions";
+import { switchMap, map, catchError, tap } from "rxjs/operators";
 import { of } from "rxjs";
-import { SubcategoryService } from '../transaction/services/subcategory.service';
+import { SubcategoryService } from "../transaction/services/subcategory.service";
+import {
+  GetSubcategoriesSuccess,
+  GetSubcategoriesFailed,
+  AddSubcategoriesFailed,
+  AddSubcategoriesSuccess,
+  DeleteSubcategoriesFailed,
+  DeleteSubcategoriesSuccess,
+  EditSubcategoriesFailed,
+  EditSubcategoriesSuccess,
+} from "../actions/subcategories-actions";
 
 @Injectable()
 export class SubcategoryEffects {
-
   constructor(
-    private actions: Actions,
-    private subcategoryService: SubcategoryService,
-  ) { }
+    private actions$: Actions,
+    private subcategoryService: SubcategoryService
+  ) {}
 
-  @Effect()
-  getSubcategories$ = this.actions
-    .pipe(
-      ofType<SubcategoryActions.GetSubcategories>(SubcategoryActions.ActionTypes.GetSubcategories),
-      switchMap((_) => {
-        return this.subcategoryService.getAll()
-          .pipe(
-            map((Subcategories) => {
-              return new SubcategoryActions.GetSubcategoriesSuccess(Subcategories);
-            }),
-            catchError((error) => {
-              return of(new SubcategoryActions.GetSubcategoriesFailed(error));
-            })
-          );
-      })
-    )
+  subCategoriesInitialize$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(SubcategoryActions.SubcategoriesInitialize),
+        tap((_) => this.subcategoryService.init())
+      ),
+    { dispatch: false }
+  );
 
-  @Effect()
-  addSubCategory$ = this.actions
-    .pipe(
-      ofType<SubcategoryActions.AddSubcategories>(SubcategoryActions.ActionTypes.AddSubcategories),
-      map(action => action.payload),
-      switchMap(x => this.subcategoryService.add(x)
-        .pipe(
-          map(x => new SubcategoryActions.AddSubcategoriesSuccess()),
-          catchError(error => of(new SubcategoryActions.AddSubcategoriesFailed(error)))
-        ))
-    )
-
-  @Effect()
-  deleteSubCategory$ = this.actions
-    .pipe(
-      ofType<SubcategoryActions.DeleteSubcategories>(SubcategoryActions.ActionTypes.DeleteSubcategories),
-      map(action => action.payload),
-      switchMap(x => this.subcategoryService.remove(x)
-        .then(x => new SubcategoryActions.DeleteSubcategoriesSuccess())
-        .catch(x => new SubcategoryActions.DeleteSubcategoriesFailed(x))
+  getSubcategories$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SubcategoryActions.GetSubcategories),
+      switchMap((data) =>
+        this.subcategoryService.getAll().pipe(
+          map((response) => GetSubcategoriesSuccess({ payload: response })),
+          catchError((error) => of(GetSubcategoriesFailed({ payload: error })))
+        )
       )
-    )
+    );
+  });
 
-  @Effect()
-  editSubCategory$ = this.actions
-    .pipe(
-      ofType<SubcategoryActions.EditSubcategories>(SubcategoryActions.ActionTypes.EditSubcategories),
-      map(action => action.payload),
-      switchMap(x => this.subcategoryService.edit(x)
-        .then(x => new SubcategoryActions.EditSubcategoriesSuccess())
-        .catch(x => new SubcategoryActions.EditSubcategoriesFailed(x))
+  addSubCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SubcategoryActions.AddSubcategories),
+      switchMap((data) =>
+        this.subcategoryService.add(data.payload).pipe(
+          map((response) => AddSubcategoriesSuccess()),
+          catchError((error) => of(AddSubcategoriesFailed({ payload: error })))
+        )
       )
-    )
+    );
+  });
+
+  deleteSubCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SubcategoryActions.DeleteSubcategories),
+      switchMap((data) =>
+        this.subcategoryService
+          .remove(data.payload)
+          .then((_) => DeleteSubcategoriesSuccess())
+          .catch((error) => DeleteSubcategoriesFailed({ payload: error }))
+      )
+    );
+  });
+
+  editSubCategory$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(SubcategoryActions.EditSubcategories),
+      switchMap((data) =>
+        this.subcategoryService
+          .edit(data.payload)
+          .then((_) => EditSubcategoriesSuccess())
+          .catch((error) => EditSubcategoriesFailed({ payload: error }))
+      )
+    );
+  });
 }

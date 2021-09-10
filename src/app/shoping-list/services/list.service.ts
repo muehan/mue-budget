@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ShoppingItem } from '../models/shopping-item';
 import { AngularFireDatabase } from '@angular/fire/database';
-import { AuthService } from 'src/app/+auth/services/auth.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -12,7 +11,6 @@ export class ListService {
 
   private items$: Observable<ShoppingItem[]>;
   private itemArray: Array<ShoppingItem>;
-  private initialized: Boolean = false;
   private itemsSubscription: Subscription;
 
   constructor(
@@ -30,7 +28,6 @@ export class ListService {
         map(x => x.sort(compareFn))
       );
     this.itemsSubscription = this.items$.subscribe(x => this.itemArray = x);
-    this.initialized = true;
   }
 
   public unSubscribe() {

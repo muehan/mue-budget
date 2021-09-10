@@ -19,11 +19,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BudgetModule } from './budget/budget.module';
 import { HomeComponent } from './containers/home/home.component';
 import { MainTemplateComponent } from './containers/main-template/main-template.component';
+import { MenuItemComponent } from './containers/meni-item/menu-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    MenuItemComponent,
     MainTemplateComponent,
   ],
   imports: [
