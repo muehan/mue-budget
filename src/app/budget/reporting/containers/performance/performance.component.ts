@@ -8,6 +8,7 @@ import { Category } from '../../../transaction/model/categroy';
 import { Subcategory } from '../../../transaction/model/subcategory';
 import { GetSubcategories } from '../../../actions/subcategories-actions';
 import { GetCategories } from '../../../actions/categories-actions';
+import { GetAllTransactions } from 'src/app/budget/actions/transactions-actions';
 
 @Component({
   selector: 'mue-performance',
@@ -24,7 +25,7 @@ export class PerformanceComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
   ) {
-    // this.store.dispatch(new TransactionActions.GetTransactions());
+    this.store.dispatch(GetAllTransactions());
     this.store.dispatch(GetCategories());
     this.store.dispatch(GetSubcategories());
   }
