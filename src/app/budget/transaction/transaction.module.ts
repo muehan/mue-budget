@@ -13,29 +13,21 @@ import { AddTransactionComponent } from './dialogs/add-transaction/add-transacti
 import { EditTransactionComponent } from './dialogs/edit-transaction/edit-transaction.component';
 
 @NgModule({
-  declarations: [
-    TransactionsComponent,
-    CategoryComponent,
-    SubcategoryComponent,
-    AddCategoryComponent,
-    EditCategoryComponent,
-    AddSubcategoryComponent,
-    EditSubcategoryComponent,
-    AddTransactionComponent,
-    EditTransactionComponent,
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    TransactionRoutingModule,
-  ],
-  entryComponents: [
-    AddCategoryComponent,
-    EditCategoryComponent,
-    AddSubcategoryComponent,
-    EditSubcategoryComponent,
-    AddTransactionComponent,
-    EditTransactionComponent,
-  ]
+    declarations: [
+        TransactionsComponent,
+        CategoryComponent,
+        SubcategoryComponent,
+        AddCategoryComponent,
+        EditCategoryComponent,
+        AddSubcategoryComponent,
+        EditSubcategoryComponent,
+        AddTransactionComponent,
+        EditTransactionComponent,
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        TransactionRoutingModule,
+    ]
 })
 export class TransactionModule { }
