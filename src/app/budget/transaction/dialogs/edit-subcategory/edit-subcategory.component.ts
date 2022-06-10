@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category } from '../../model/categroy';
 import { Subcategory } from '../../model/subcategory';
@@ -21,7 +21,7 @@ export class EditSubcategoryComponent implements OnInit {
 
   public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
 
-  public subCategoryFormGroup: FormGroup;
+  public subCategoryFormGroup: UntypedFormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<EditSubcategoryComponent>,
@@ -30,9 +30,9 @@ export class EditSubcategoryComponent implements OnInit {
     { }
 
   ngOnInit() {
-    this.subCategoryFormGroup = new FormGroup({
-      'subcategoryName': new FormControl(this.data.subCategory.name, [Validators.required]),
-      'categoryName': new FormControl(this.data.subCategory.categoryName, [Validators.required]),
+    this.subCategoryFormGroup = new UntypedFormGroup({
+      'subcategoryName': new UntypedFormControl(this.data.subCategory.name, [Validators.required]),
+      'categoryName': new UntypedFormControl(this.data.subCategory.categoryName, [Validators.required]),
     });
   }
 

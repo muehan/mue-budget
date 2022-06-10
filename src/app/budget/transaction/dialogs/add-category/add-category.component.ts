@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -9,8 +9,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddCategoryComponent implements OnInit {
 
-  public category = new FormControl('');
-  public color = new FormControl('');
+  public category = new UntypedFormControl('');
+  public color = new UntypedFormControl('');
 
   private selectedColor: string;
 

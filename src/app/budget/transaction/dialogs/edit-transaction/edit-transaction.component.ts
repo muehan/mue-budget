@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
@@ -20,7 +20,7 @@ export interface IEditTransactionData {
 })
 export class EditTransactionComponent implements OnInit {
 
-  public transactionFormGroup: FormGroup;
+  public transactionFormGroup: UntypedFormGroup;
   public subcategeoriesFilterd$: Observable<Subcategory[]> = this.data.subcategeories$.pipe(
     map(x => {
       return x.filter(sub => sub.categoryName == this.data.transaction.category);
@@ -32,11 +32,11 @@ export class EditTransactionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: IEditTransactionData) { }
 
   ngOnInit() {
-    this.transactionFormGroup = new FormGroup({
-      'valueForm': new FormControl(this.data.transaction.value, [Validators.required]),
-      'categoryNameForm': new FormControl(this.data.transaction.category, [Validators.required]),
-      'subcategoryName': new FormControl(this.data.transaction.subCategory, [Validators.required]),
-      'dateForm': new FormControl(new Date(this.data.transaction.date), [Validators.required]),
+    this.transactionFormGroup = new UntypedFormGroup({
+      'valueForm': new UntypedFormControl(this.data.transaction.value, [Validators.required]),
+      'categoryNameForm': new UntypedFormControl(this.data.transaction.category, [Validators.required]),
+      'subcategoryName': new UntypedFormControl(this.data.transaction.subCategory, [Validators.required]),
+      'dateForm': new UntypedFormControl(new Date(this.data.transaction.date), [Validators.required]),
     });
   }
 
