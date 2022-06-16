@@ -17,8 +17,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MccColorPickerModule} from 'material-community-components/color-picker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
+// import { AngularFireModule } from '@angular/fire';
+// import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 
 import { environment } from '../../environments/environment';
 
@@ -49,8 +50,9 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     MatCardModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    // AngularFireModule.initializeApp(environment.firebaseConfig),
+    // AngularFireDatabaseModule,
   ],
   exports: [
     CommonModule,
@@ -72,8 +74,8 @@ import { RouterModule } from '@angular/router';
     MccColorPickerModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFireModule,
-    AngularFireDatabaseModule,
+    // AngularFireModule,
+    // AngularFireDatabaseModule,
   ],
   providers: [
     MatDatepickerModule,
