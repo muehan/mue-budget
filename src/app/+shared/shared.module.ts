@@ -24,6 +24,9 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { environment } from '../../environments/environment';
 
 import { RouterModule } from '@angular/router';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [
@@ -50,9 +53,10 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     MatCardModule,
     ReactiveFormsModule,
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-    // AngularFireModule.initializeApp(environment.firebaseConfig),
-    // AngularFireDatabaseModule,
+    // provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
   ],
   exports: [
     CommonModule,

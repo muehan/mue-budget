@@ -73,6 +73,11 @@ export class ListService {
   }
 
   private getnextOrderPosition(): number {
+
+    if(!this.itemArray){
+      return 0;
+    }
+
     let highestNumber = Math.max(...this.itemArray.map(x => x.orderPosition));
     console.log(highestNumber);
     if (highestNumber <= 0 ||
