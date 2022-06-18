@@ -1,6 +1,6 @@
+import { DatabaseSnapshot } from "@angular/fire/compat/database";
 import { createAction, props } from "@ngrx/store";
 import { Transaction } from '../transaction/model/transaction';
-import { DatabaseSnapshot } from '@angular/fire/database';
 
 export const TransactionInitialize = createAction('[Transactions] Init');
 

@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import firebase from "firebase/app";
+import firebase from 'firebase/compat/app';
 import { BehaviorSubject, Observable } from "rxjs";
-import { AngularFireAuth } from "@angular/fire/auth";
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/store/state";
 import { Router } from "@angular/router";
 import { Initialize, LoginFailer, LoginSuccess } from "../actions/auth-actions";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 
 @Injectable({
   providedIn: "root",

@@ -1,9 +1,5 @@
 import { Injectable } from "@angular/core";
-import {
-  AngularFireDatabase,
-  AngularFireList,
-  SnapshotAction,
-} from "@angular/fire/database";
+import { AngularFireDatabase, AngularFireList, SnapshotAction } from '@angular/fire/compat/database';
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { Transaction } from "../model/transaction";

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList } from "@angular/fire/database";
+import { AngularFireDatabase, AngularFireList } from "@angular/fire/compat/database";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { Subcategory } from "../model/subcategory";
@@ -17,12 +17,14 @@ export class SubcategoryService {
   }
 
   public getAll(): Observable<Subcategory[]> {
-    return this.firebaselist.snapshotChanges().pipe(
-      map((changes) =>
-        changes.map((c) => {
-          return { $key: c.key, ...c.payload.val() };
-        })
-      )
+    return this.firebaselist
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => {
+            return { $key: c.key, ...c.payload.val() };
+          })
+        )
     );
   }
 

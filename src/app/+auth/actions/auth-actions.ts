@@ -1,5 +1,5 @@
 import { FireBaseLoginModel } from "../models/firebase.models";
-import firebase from "firebase/app";
+import firebase from 'firebase/compat/app';
 import { createAction, props } from "@ngrx/store";
 
 export const Login = createAction(

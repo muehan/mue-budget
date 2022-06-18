@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList } from "@angular/fire/database";
 import { Category } from "../model/categroy";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
+import { AngularFireList, AngularFireDatabase } from "@angular/fire/compat/database";
 
 @Injectable({
   providedIn: "root",
