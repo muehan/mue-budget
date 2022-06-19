@@ -26,11 +26,10 @@ export class TransactionService {
       switchMap((count) =>
         db
           .list<Transaction>("/transactions", (ref) =>
-            count ? ref.limitToLast(count).orderByChild("date") : ref.orderByChild("date")
+            count ? ref.limitToLast(count) : ref
           )
           .snapshotChanges()
       ),
-      map((arr) => arr.reverse())
     );
   }
 
@@ -41,7 +40,10 @@ export class TransactionService {
         transactions.map((c) => {
           return { $key: c.key, ...c.payload.val() };
         })
-      )
+      ),
+      map(arr => arr.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      ))
     );
   }
 
