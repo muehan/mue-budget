@@ -1,19 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { AppState } from "src/app/store/state";
 import { Observable } from "rxjs";
 import { Category } from "../../model/categroy";
-import { getAllCategories } from "../../../reducers";
-import { CategoryActions } from "../../../actions";
 import { MatDialog } from "@angular/material/dialog";
 import { AddCategoryComponent } from "../../dialogs/add-category/add-category.component";
 import { EditCategoryComponent } from "../../dialogs/edit-category/edit-category.component";
-import {
-  AddCategorie,
-  DeleteCategorie,
-  EditCategories,
-  GetCategories,
-} from "../../../actions/categories-actions";
+import { CategoryService } from "../../services/category.service";
 
 @Component({
   selector: "mue-category",
@@ -21,12 +12,12 @@ import {
   styleUrls: ["./category.component.scss"],
 })
 export class CategoryComponent implements OnInit {
-  public categories$: Observable<Category[]> =
-    this.store.select(getAllCategories);
+  public categories$: Observable<Category[]> = this.categoryService.getAll();
 
-  constructor(private store: Store<AppState>, public dialog: MatDialog) {
-    this.store.dispatch(GetCategories());
-  }
+  constructor(
+    public categoryService: CategoryService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {}
 
@@ -39,13 +30,13 @@ export class CategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.dispatch(AddCategorie({ payload: result }));
+        this.categoryService.add(result);
       }
     });
   }
 
   public remove(item: Category) {
-    this.store.dispatch(DeleteCategorie({ payload: item }));
+    this.categoryService.remove(item);
   }
 
   public edit(item: Category) {
@@ -58,7 +49,7 @@ export class CategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.dispatch(EditCategories({ payload: result }));
+        this.categoryService.edit(result);
       }
     });
   }

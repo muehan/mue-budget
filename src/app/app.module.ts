@@ -12,9 +12,6 @@ import { AuthEffects } from './+auth/effects/auth.effects';
 import { StoreModule } from '@ngrx/store';
 import { APP_REDUCERS } from './store/state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { CategoryEffects } from './budget/effects/category.effects';
-import { SubcategoryEffects } from './budget/effects/subcategory.effects';
-import { TransactionEffects } from './budget/effects/transaction.effects';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BudgetModule } from './budget/budget.module';
 import { HomeComponent } from './containers/home/home.component';
@@ -36,7 +33,7 @@ import { MenuItemComponent } from './containers/meni-item/menu-item.component';
     SharedModule,
     AuthModule,
     BudgetModule,
-    EffectsModule.forRoot([AuthEffects, CategoryEffects, SubcategoryEffects, TransactionEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreModule.forRoot(APP_REDUCERS),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states

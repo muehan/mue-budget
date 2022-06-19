@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, Validators, UntypedFormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AppState } from 'src/app/store/state';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
-import { getAllCategories } from '../../../reducers';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'mue-add-subcategory',
@@ -19,11 +17,11 @@ export class AddSubcategoryComponent implements OnInit {
     'categoryName': new UntypedFormControl('', [Validators.required]),
   });
 
-  public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
+  public categeories$: Observable<Category[]> = this.categoryService.getAll();
 
   constructor(
     public dialogRef: MatDialogRef<AddSubcategoryComponent>,
-    private store: Store<AppState>,
+    public categoryService: CategoryService,
   ) { }
 
   ngOnInit() { }

@@ -8,16 +8,11 @@ import { Subcategory } from "../model/subcategory";
   providedIn: "root",
 })
 export class SubcategoryService {
-  private firebaselist: AngularFireList<Subcategory>;
-
+ 
   constructor(private firebase: AngularFireDatabase) {}
 
-  public init() {
-    this.firebaselist = this.firebase.list("subSubcategory");
-  }
-
   public getAll(): Observable<Subcategory[]> {
-    return this.firebaselist
+    return this.firebase.list<Subcategory>("subSubcategory")
       .snapshotChanges()
       .pipe(
         map((changes) =>
@@ -29,19 +24,19 @@ export class SubcategoryService {
   }
 
   public add(newItem: Subcategory): Observable<any> {
-    this.firebaselist.push(newItem);
+    this.firebase.list<Subcategory>("subSubcategory").push(newItem);
 
     return of();
   }
 
   public edit(item: Subcategory): Promise<void> {
-    return this.firebaselist.update(item.$key, {
+    return this.firebase.list<Subcategory>("subSubcategory").update(item.$key, {
       categoryName: item.categoryName,
       name: item.name,
     });
   }
 
   public remove(item: Subcategory): Promise<void> {
-    return this.firebaselist.remove(item.$key);
+    return this.firebase.list<Subcategory>("subSubcategory").remove(item.$key);
   }
 }

@@ -3,15 +3,9 @@ import { MatDialog } from "@angular/material/dialog";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../store/state";
 import { AddTransactionComponent } from "../../budget/transaction/dialogs/add-transaction/add-transaction.component";
-import { AddTransactions } from "../../budget/actions/transactions-actions";
 import { Observable } from "rxjs";
-import {
-  getCategoriesLoaded,
-  getSubcategoriesLoaded,
-} from "../../budget/reducers";
 import { tap } from "rxjs/operators";
-import { GetCategories } from "../../budget/actions/categories-actions";
-import { GetSubcategories } from "../../budget/actions/subcategories-actions";
+import { TransactionService } from "src/app/budget/transaction/services/transaction.service";
 
 @Component({
   selector: "mue-home",
@@ -19,41 +13,19 @@ import { GetSubcategories } from "../../budget/actions/subcategories-actions";
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  public categoriesLoaded$: Observable<boolean> =
-    this.store.select(getCategoriesLoaded);
 
-  public subcategoriesLoaded$: Observable<boolean> = this.store.select(
-    getSubcategoriesLoaded
-  );
+  constructor(
+    public transactionService: TransactionService,
+    public dialog: MatDialog) {}
 
-  constructor(private store: Store<AppState>, public dialog: MatDialog) {}
-
-  ngOnInit() {}
+  ngOnInit(
+    
+  ) {}
 
   ngOnDestroy() {}
 
   public addTransaction() {
-    this.categoriesLoaded$
-      .pipe(
-        tap((x) => {
-          if (!x) {
-            this.store.dispatch(GetCategories());
-          }
-        })
-      )
-      .subscribe()
-      .unsubscribe();
-
-    this.subcategoriesLoaded$
-      .pipe(
-        tap((x) => {
-          if (!x) {
-            this.store.dispatch(GetSubcategories());
-          }
-        })
-      )
-      .subscribe()
-      .unsubscribe();
+    
 
     let dialogRef = this.dialog.open(AddTransactionComponent, {
       height: "350px",
@@ -63,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.dispatch(AddTransactions({ payload: result }));
+        this.transactionService.add(result);
       }
     });
   }
