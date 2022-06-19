@@ -3,9 +3,9 @@ import { Observable } from 'rxjs';
 import { Transaction } from '../../../transaction/model/transaction';
 import { Category } from '../../../transaction/model/categroy';
 import { Subcategory } from '../../../transaction/model/subcategory';
-import { TransactionService } from 'src/app/budget/transaction/services/transaction.service';
 import { CategoryService } from 'src/app/budget/transaction/services/category.service';
 import { SubcategoryService } from 'src/app/budget/transaction/services/subcategory.service';
+import { TransactionReportingService } from '../../services/transactionReporting.service';
 
 @Component({
   selector: 'mue-performance',
@@ -14,12 +14,12 @@ import { SubcategoryService } from 'src/app/budget/transaction/services/subcateg
 })
 export class PerformanceComponent implements OnInit {
 
-  public transactions$: Observable<Transaction[]> = this.transactionService.getAll();
-  public categories$: Observable<Category[]> = this.categoryService.getAll();
-  public subcategories$: Observable<Subcategory[]> = this.subcategoryService.getAll();
+  // public transactions$: Observable<Transaction[]> = this.transactionReportingService.getTransactions(+new Date(), +new Date());
+  // public categories$: Observable<Category[]> = this.categoryService.getAll();
+  // public subcategories$: Observable<Subcategory[]> = this.subcategoryService.getAll();
 
   constructor(
-    public transactionService: TransactionService,
+    public transactionReportingService: TransactionReportingService,
     public categoryService: CategoryService,
     public subcategoryService: SubcategoryService,
   ) {

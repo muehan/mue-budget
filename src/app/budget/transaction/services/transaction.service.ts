@@ -47,19 +47,6 @@ export class TransactionService {
     );
   }
 
-  getAll(): Observable<Transaction[]> {
-    return this.db
-      .list<Transaction>("transactions")
-      .snapshotChanges()
-      .pipe(
-        map((transactions) =>
-          transactions.map((c) => {
-            return { $key: c.key, ...c.payload.val() };
-          })
-        )
-      );
-  }
-
   public LoadMoreTransactions(
     skip: number,
     load: number

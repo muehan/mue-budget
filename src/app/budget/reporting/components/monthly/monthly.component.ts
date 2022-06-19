@@ -1,28 +1,22 @@
 import { Observable } from "rxjs/internal/Observable";
-import { Component, OnInit, Input } from "@angular/core";
-import { filter, switchMap, map } from "rxjs/operators";
-import { Transaction } from '../../../transaction/model/transaction';
-import { Category } from '../../../transaction/model/categroy';
-import { Subcategory } from '../../../transaction/model/subcategory';
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import { switchMap, map } from "rxjs/operators";
+import { Transaction } from "../../../transaction/model/transaction";
+import { Subcategory } from "../../../transaction/model/subcategory";
+import {
+  AngularFireAction,
+  AngularFireDatabase,
+} from "@angular/fire/compat/database";
+import { BehaviorSubject } from "rxjs";
+import firebase from "firebase/compat/app";
 
 @Component({
   selector: "mue-monthly",
   templateUrl: "./monthly.component.html",
-  styleUrls: ["./monthly.component.scss"]
+  styleUrls: ["./monthly.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonthlyComponent implements OnInit {
-  @Input()
-  public transactions$: Observable<Transaction[]>;
-
-  @Input()
-  public isTransactionLoading$: Observable<boolean>;
-
-  @Input()
-  public categories$: Observable<Category[]>;
-
-  @Input()
-  public subcategories$: Observable<Subcategory[]>;
-
   public currentDate = new Date();
   public selectedDate = new Date();
   public transactionFromSelectedMonth$: Observable<Transaction[]>;
@@ -30,6 +24,9 @@ export class MonthlyComponent implements OnInit {
     Transaction[]
   >;
   public totalExpenses$: Observable<number>;
+
+  items$: Observable<AngularFireAction<firebase.database.DataSnapshot>[]>;
+  filter$: BehaviorSubject<{ from: number; to: number } | null>;
 
   public get selectedYear(): number {
     return this.selectedDate.getFullYear();
@@ -39,120 +36,144 @@ export class MonthlyComponent implements OnInit {
     return this.selectedDate.getMonth() + 1;
   }
 
-  constructor() {}
+  constructor(private db: AngularFireDatabase) {
+    let from = new Date(this.selectedYear, this.selectedMonth - 1, 1);
+    let to = new Date(this.selectedYear, this.selectedMonth, 1);
 
-  ngOnInit() {
-    this.transactionFromSelectedMonth$ = this.isTransactionLoading$.pipe(
-      filter(x => !x),
-      switchMap(_ =>
-        this.transactions$.pipe(
-          map(x =>
-            x.filter(
-              t =>
-                new Date(t.date).getFullYear() ==
-                  this.selectedDate.getFullYear() &&
-                new Date(t.date).getMonth() == this.selectedDate.getMonth()
-            )
-          )
-        )
-      )
-    );
+    let fromTS = +from;
+    let toTS = +to;
 
-    this.transactionFromSelectedYearWithoutCurrentMonth$ = this.isTransactionLoading$.pipe(
-      filter(x => !x),
-      switchMap(_ =>
-        this.transactions$.pipe(
-          map(x =>
-            x.filter(
-              transation => {
-                if(this.selectedDate.getFullYear() == new Date().getFullYear()){
-                  return new Date(transation.date).getFullYear() == this.selectedDate.getFullYear() &&
-                  new Date(transation.date).getMonth() <= this.currentDate.getMonth() - 1
-                } else {
-                  return new Date(transation.date).getFullYear() == this.selectedDate.getFullYear()
-                }
-              }
-            )
+    this.filter$ = new BehaviorSubject({ from: fromTS, to: toTS });
+
+    this.items$ = this.filter$.pipe(
+      switchMap((filter) =>
+        db
+          .list<Transaction>("/transactions", (ref) =>
+            ref.orderByChild("date").startAt(filter.from).endAt(filter.to)
           )
-        )
+          .snapshotChanges()
       )
     );
   }
 
-  public getTotalExpenses(): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      filter(x => x.length > 0),
-      map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
+  ngOnInit() {
+    this.transactionFromSelectedMonth$ = this.items$.pipe(
+      map((transactions) =>
+        transactions.map((c) => {
+          return { $key: c.key, ...c.payload.val() };
+        })
+      )
+    );
+
+    this.totalExpenses$ = this.transactionFromSelectedMonth$.pipe(
+      map((x) => {
+        if(x.length <= 0){
+          return 0;
+        }
+        return x
+          .map((t) => {
+            return t.value;
+          })
+          .reduce((prev, next) => prev + next);
+      })
     );
   }
 
   public getExpensesByCategory(categoryName: string): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      filter(x => x.length > 0),
-      map(x => x.filter(t => t.category === categoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          return x.map(t => t.value).reduce((prev, next) => prev + next);
-        } else {
-          return 0;
-        }
-      })
-    );
+    // return this.transactionFromSelectedMonth$.pipe(
+    //   filter((x) => x.length > 0),
+    //   map((x) => x.filter((t) => t.category === categoryName)),
+    //   map((x) => {
+    //     if (x.length !== 0) {
+    //       return x.map((t) => t.value).reduce((prev, next) => prev + next);
+    //     } else {
+    //       return 0;
+    //     }
+    //   })
+    // );
+
+    return null;
   }
 
   public getExpensesBySubCategory(subcategoryName: string): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      filter(x => x.length > 0),
-      map(x => x.filter(t => t.subCategory === subcategoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          return x.map(t => t.value).reduce((prev, next) => prev + next);
-        } else {
-          return 0;
-        }
-      })
-    );
+    // return this.transactionFromSelectedMonth$.pipe(
+    //   filter((x) => x.length > 0),
+    //   map((x) => x.filter((t) => t.subCategory === subcategoryName)),
+    //   map((x) => {
+    //     if (x.length !== 0) {
+    //       return x.map((t) => t.value).reduce((prev, next) => prev + next);
+    //     } else {
+    //       return 0;
+    //     }
+    //   })
+    // );
+
+    return null;
   }
 
   public getAverageExpensesBySubCategory(
     subcategoryName: string
   ): Observable<number> {
-    return this.transactionFromSelectedYearWithoutCurrentMonth$.pipe(
-      filter(x => x.length > 0),
-      map(x => x.filter(t => t.subCategory === subcategoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          if(this.selectedDate.getFullYear() == new Date().getFullYear()){
-            return (
-              x.map(t => t.value).reduce((prev, next) => prev + next) /
-              this.currentDate.getMonth()
-            );
-          } else {
-            return (
-              x.map(t => t.value).reduce((prev, next) => prev + next) / 12
-            );
-          }
-          // getMonth returns month 0-11
-        } else {
-          return 0;
-        }
-      })
-    );
+    // return this.transactionFromSelectedYearWithoutCurrentMonth$.pipe(
+    //   filter((x) => x.length > 0),
+    //   map((x) => x.filter((t) => t.subCategory === subcategoryName)),
+    //   map((x) => {
+    //     if (x.length !== 0) {
+    //       if (this.selectedDate.getFullYear() == new Date().getFullYear()) {
+    //         return (
+    //           x.map((t) => t.value).reduce((prev, next) => prev + next) /
+    //           this.currentDate.getMonth()
+    //         );
+    //       } else {
+    //         return (
+    //           x.map((t) => t.value).reduce((prev, next) => prev + next) / 12
+    //         );
+    //       }
+    //       // getMonth returns month 0-11
+    //     } else {
+    //       return 0;
+    //     }
+    //   })
+    // );
+
+    return null;
   }
 
   public subcategoriesByCategory(
     categoryname: string
   ): Observable<Subcategory[]> {
-    return this.subcategories$.pipe(
-      map(c => c.filter(x => x.categoryName == categoryname))
-    );
+    // return this.subcategories$.pipe(
+    //   map((c) => c.filter((x) => x.categoryName == categoryname))
+    // );
+
+    return null;
   }
 
   public nextMonth(): void {
     this.selectedDate.setMonth(this.selectedDate.getMonth() + 1);
+
+    let from = new Date(this.selectedYear, this.selectedMonth - 1, 1);
+    let to = new Date(this.selectedYear, this.selectedMonth, 1);
+
+    let fromTS = +from;
+    let toTS = +to;
+
+    console.log(`from ${fromTS} to ${toTS}`);
+
+    this.filter$.next({ from: fromTS, to: toTS });
   }
 
   public previousMonth(): void {
     this.selectedDate.setMonth(this.selectedDate.getMonth() - 1);
+
+    let from = new Date(this.selectedYear, this.selectedMonth - 1, 1);
+    let to = new Date(this.selectedYear, this.selectedMonth, 1);
+
+    let fromTS = +from;
+    let toTS = +to;
+
+    console.log(`from ${fromTS} to ${toTS}`);
+
+    this.filter$.next({ from: fromTS, to: toTS });
   }
 }
