@@ -1,28 +1,36 @@
-<mat-card style="margin-top: 5px;" ng-if="!isTransactionLoading$">
+<mat-card style="margin-top: 5px;"
+          ng-if="!isTransactionLoading$">
     <mat-card-header>
         <mat-card-title>Monthly expenses</mat-card-title>
         <mat-card-subtitle>current year: {{ selectedYear }}</mat-card-subtitle>
         <mat-card-subtitle>current month: {{ selectedMonth }}</mat-card-subtitle>
         <button mat-icon-button>
-            <mat-icon aria-label="next month button" (click)="previousMonth()">arrow_back_ios</mat-icon>
+            <mat-icon aria-label="next month button"
+                      (click)="previousMonth()">arrow_back_ios</mat-icon>
         </button>
         <button mat-icon-button>
-            <mat-icon aria-label="next month button" (click)="nextMonth()">arrow_forward_ios</mat-icon>
+            <mat-icon aria-label="next month button"
+                      (click)="nextMonth()">arrow_forward_ios</mat-icon>
         </button>
     </mat-card-header>
 
+    <!-- {{ getExpensesByCategory2("Haushalt") | async | number:'1.0-2' }} -->
+
     <mat-card-content>
         <div style="font-weight: bold; margin-bottom: 10px;">Total: {{ totalExpenses$ | async | number:'1.0-2' }}</div>
-        <!-- <div *ngFor="let category of categories$ | async">
+       
+        <div *ngFor="let category of categories$ | async">
             {{ category.name }}:
-            {{ getExpensesByCategory(category.name) | async | number:'1.0-2' }}
-            <mat-list class="sub-class">
+            {{ getExpensesByCategory(category.name) | number:'1.0-2' }}
+            <!--    <mat-list class="sub-class">
                 <mat-list-item *ngFor="let subcategory of subcategoriesByCategory(category.name) | async">
                     <span *ngIf="subcategory">{{subcategory.name}}</span>
                     <span *ngIf="subcategory">: {{ getExpensesBySubCategory(subcategory.name) | async | number:'1.0-2'}}</span>
                     <span *ngIf="subcategory">| ({{ getAverageExpensesBySubCategory(subcategory.name) | async | number:'1.0-2' }})</span>
                 </mat-list-item>
-            </mat-list>
-        </div> -->
+            </mat-list>-->
+        </div>
     </mat-card-content>
 </mat-card>
+
+<!-- <div style="display: hidden;">{{ trigger() }}</div> -->
