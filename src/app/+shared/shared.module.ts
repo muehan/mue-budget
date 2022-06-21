@@ -19,7 +19,6 @@ import { MccColorPickerModule} from 'material-community-components/color-picker'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 
 import { environment } from '../../environments/environment';
 
@@ -30,7 +29,6 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [
-  
   ],
   imports: [
     CommonModule,

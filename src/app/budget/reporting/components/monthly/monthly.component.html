@@ -22,13 +22,13 @@
         <div *ngFor="let category of categories$ | async">
             {{ category.name }}:
             {{ getExpensesByCategory(category.name) | number:'1.0-2' }}
-            <!--    <mat-list class="sub-class">
-                <mat-list-item *ngFor="let subcategory of subcategoriesByCategory(category.name) | async">
+            <mat-list class="sub-class">
+            <mat-list-item *ngFor="let subcategory of subCategories | async | filterByCategory: category.name">
                     <span *ngIf="subcategory">{{subcategory.name}}</span>
-                    <span *ngIf="subcategory">: {{ getExpensesBySubCategory(subcategory.name) | async | number:'1.0-2'}}</span>
-                    <span *ngIf="subcategory">| ({{ getAverageExpensesBySubCategory(subcategory.name) | async | number:'1.0-2' }})</span>
+                    <!-- <span *ngIf="subcategory">: {{ getExpensesBySubCategory(subcategory.name) | async | number:'1.0-2'}}</span>
+                    <span *ngIf="subcategory">| ({{ getAverageExpensesBySubCategory(subcategory.name) | async | number:'1.0-2' }})</span> -->
                 </mat-list-item>
-            </mat-list>-->
+            </mat-list>
         </div>
     </mat-card-content>
 </mat-card>

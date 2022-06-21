@@ -4,11 +4,13 @@ import { SharedModule } from '../../+shared/shared.module';
 import { ReportingRoutingModule } from './reporting-routes.modules';
 import { PerformanceComponent } from './containers/performance/performance.component';
 import { MonthlyComponent } from './components/monthly/monthly.component';
+import { FilterByCategoryPipe } from '../pipes/filter-by-category.pipe';
 
 @NgModule({
   declarations: [
     PerformanceComponent,
     MonthlyComponent,
+    FilterByCategoryPipe,
   ],
   imports: [
     CommonModule,

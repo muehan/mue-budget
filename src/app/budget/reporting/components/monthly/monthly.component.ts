@@ -15,6 +15,7 @@ import {
 import { BehaviorSubject, Subject } from "rxjs";
 import firebase from "firebase/compat/app";
 import { CategoryService } from "src/app/budget/transaction/services/category.service";
+import { SubcategoryService } from "src/app/budget/transaction/services/subcategory.service";
 
 export interface Dictionary<T> {
   [Key: string]: T;
@@ -36,6 +37,7 @@ export class MonthlyComponent implements OnInit {
   >;
   public totalExpenses$: Observable<number>;
   public categories$ = this.categoryService.getAll();
+  public subCategories = this.subcategoryService.getAll();
 
   public items$: Observable<
     AngularFireAction<firebase.database.DataSnapshot>[]
@@ -59,11 +61,12 @@ export class MonthlyComponent implements OnInit {
   constructor(
     public db: AngularFireDatabase,
     public categoryService: CategoryService,
+    public subcategoryService: SubcategoryService,
     public changeDetectorRef: ChangeDetectorRef
   ) {
     this.items$ = this.dateFilter$.pipe(
       switchMap((filter) => {
-        console.log("reload list");
+        // console.log("reload list");
         return this.db
           .list<Transaction>("transactions", (ref) =>
             ref.orderByChild("date").startAt(filter.from).endAt(filter.to)
@@ -108,7 +111,7 @@ export class MonthlyComponent implements OnInit {
           }
         });
 
-        console.log(this.categoryDict);
+        // console.log(this.categoryDict);
 
         return this.categoryDict;
       })
@@ -169,11 +172,16 @@ export class MonthlyComponent implements OnInit {
   }
 
   public subcategoriesByCategory(
-    categoryname: string
+    categoryName: string
   ): Observable<Subcategory[]> {
-    // return this.subcategories$.pipe(
-    //   map((c) => c.filter((x) => x.categoryName == categoryname))
-    // );
+    
+    return this.subcategoryService.getAll()
+    .pipe(
+      map((c) => c.filter((x) => {
+        console.log(categoryName)
+        return x.categoryName == categoryName}
+        ))
+    );
 
     return null;
   }
@@ -187,7 +195,7 @@ export class MonthlyComponent implements OnInit {
     let fromTS = +from;
     let toTS = +to;
 
-    console.log(`from ${fromTS} to ${toTS}`);
+    // console.log(`from ${fromTS} to ${toTS}`);
 
     this.dateFilter$.next({ from: fromTS, to: toTS });
   }
@@ -201,7 +209,7 @@ export class MonthlyComponent implements OnInit {
     let fromTS = +from;
     let toTS = +to;
 
-    console.log(`from ${fromTS} to ${toTS}`);
+    // console.log(`from ${fromTS} to ${toTS}`);
 
     this.dateFilter$.next({ from: fromTS, to: toTS });
   }
