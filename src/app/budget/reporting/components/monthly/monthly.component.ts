@@ -27,7 +27,6 @@ export interface Dictionary<T> {
   styleUrls: ["./monthly.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class MonthlyComponent implements OnInit {
   public currentDate = new Date();
   public selectedDate = new Date();
@@ -42,6 +41,7 @@ export class MonthlyComponent implements OnInit {
   public items$: Observable<
     AngularFireAction<firebase.database.DataSnapshot>[]
   >;
+
   public dateFilter$: BehaviorSubject<{ from: number; to: number } | null> =
     new BehaviorSubject({
       from: +new Date(new Date().getFullYear(), new Date().getMonth(), 1),
@@ -49,6 +49,7 @@ export class MonthlyComponent implements OnInit {
     });
 
   public categoryDict: Dictionary<number> = {};
+  public subcategoryDict: Dictionary<number> = {};
 
   public get selectedYear(): number {
     return this.selectedDate.getFullYear();
@@ -99,48 +100,62 @@ export class MonthlyComponent implements OnInit {
       })
     );
 
-    this.transactionFromSelectedMonth$.pipe(
-      map((array) => {
-        this.categoryDict = {};
-        array.map((transaction) => {
-          if (this.categoryDict[transaction.category]) {
-            this.categoryDict[transaction.category] =
-            this.categoryDict[transaction.category] + transaction.value;
-          } else {
-            this.categoryDict[transaction.category] = transaction.value;
-          }
-        });
+    this.transactionFromSelectedMonth$
+      .pipe(
+        map((array) => {
+          this.categoryDict = {};
+          this.subcategoryDict = {};
 
-        // console.log(this.categoryDict);
+          array.map((transaction) => {
+            if (this.categoryDict[transaction.category]) {
+              this.categoryDict[transaction.category] =
+                this.categoryDict[transaction.category] + transaction.value;
+            } else {
+              this.categoryDict[transaction.category] = transaction.value;
+            }
 
-        return this.categoryDict;
-      })
-    )
-    .subscribe(x => {
-      this.changeDetectorRef.detectChanges();
-    });
+            if (
+              this.subcategoryDict[
+                transaction.category + transaction.subCategory
+              ]
+            ) {
+              this.subcategoryDict[
+                transaction.category + transaction.subCategory
+              ] =
+                this.subcategoryDict[
+                  transaction.category + transaction.subCategory
+                ] + transaction.value;
+            } else {
+              this.subcategoryDict[
+                transaction.category + transaction.subCategory
+              ] = transaction.value;
+            }
+          });
+
+          // console.log(this.categoryDict);
+
+          return this.categoryDict;
+        })
+      )
+      .subscribe((x) => {
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
   public getExpensesByCategory(categoryName: string): number {
-    // console.log(`get by category: ${categoryName} => ${this.categoryDict[categoryName]}`);
 
-    return this.categoryDict[categoryName] == undefined ? 0 : this.categoryDict[categoryName];
+    return this.categoryDict[categoryName] == undefined
+      ? 0
+      : this.categoryDict[categoryName];
   }
 
-  public getExpensesBySubCategory(subcategoryName: string): Observable<number> {
-    // return this.transactionFromSelectedMonth$.pipe(
-    //   filter((x) => x.length > 0),
-    //   map((x) => x.filter((t) => t.subCategory === subcategoryName)),
-    //   map((x) => {
-    //     if (x.length !== 0) {
-    //       return x.map((t) => t.value).reduce((prev, next) => prev + next);
-    //     } else {
-    //       return 0;
-    //     }
-    //   })
-    // );
-
-    return null;
+  public getExpensesBySubCategory(
+    categoryName: string,
+    subcategoryName: string
+  ): number {
+    return this.subcategoryDict[categoryName + subcategoryName] == undefined
+    ? 0
+    : this.subcategoryDict[categoryName + subcategoryName];
   }
 
   public getAverageExpensesBySubCategory(
@@ -174,13 +189,13 @@ export class MonthlyComponent implements OnInit {
   public subcategoriesByCategory(
     categoryName: string
   ): Observable<Subcategory[]> {
-    
-    return this.subcategoryService.getAll()
-    .pipe(
-      map((c) => c.filter((x) => {
-        console.log(categoryName)
-        return x.categoryName == categoryName}
-        ))
+    return this.subcategoryService.getAll().pipe(
+      map((c) =>
+        c.filter((x) => {
+          console.log(categoryName);
+          return x.categoryName == categoryName;
+        })
+      )
     );
 
     return null;
