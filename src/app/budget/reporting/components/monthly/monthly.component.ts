@@ -6,7 +6,7 @@ import {
   ChangeDetectorRef,
   OnDestroy,
 } from "@angular/core";
-import { switchMap, map, filter } from "rxjs/operators";
+import { switchMap, map, filter, distinctUntilChanged } from "rxjs/operators";
 import { Transaction } from "../../../transaction/model/transaction";
 import { Subcategory } from "../../../transaction/model/subcategory";
 import {
@@ -85,15 +85,32 @@ export class MonthlyComponent implements OnInit, OnDestroy {
     );
 
     this.itemsYear$ = this.dateFilter$.pipe(
+      distinctUntilChanged(
+        (prev, curr) =>
+          new Date(prev.from).getFullYear() ===
+          new Date(curr.from).getFullYear()
+      ),
       switchMap((filter) => {
         let fromDate = new Date(filter.from);
 
-        let fromYear = new Date(fromDate.getFullYear(), 1, 1);
+        // 01.Jan of given Year
+        let fromYear = new Date(fromDate.getFullYear(), 0, 1);
+
+        // end of last month in the current year
         let toLastMonth = new Date(
           fromDate.getFullYear(),
           new Date().getMonth(),
           1
         );
+        
+        // if current year is not the filtered year
+        if (new Date(filter.from).getFullYear() !== new Date().getFullYear()) {
+          toLastMonth = new Date(
+            fromDate.getFullYear() + 1,
+            0,
+            1
+          );
+        }
 
         return this.db
           .list<Transaction>("transactions", (ref) =>
@@ -243,10 +260,10 @@ export class MonthlyComponent implements OnInit, OnDestroy {
           new Date(
             this.selectedDate.getFullYear(),
             this.selectedDate.getFullYear() === new Date().getFullYear()
-              ? this.selectedDate.getMonth()
+              ? new Date().getMonth() -1
               : 11,
             1
-          ).getMonth();
+          ).getMonth() + 1;
   }
 
   public subcategoriesByCategory(
