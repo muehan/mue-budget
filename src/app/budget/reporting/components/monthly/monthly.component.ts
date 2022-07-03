@@ -263,14 +263,7 @@ export class MonthlyComponent implements OnInit, OnDestroy {
     return this.subCategoryYearDict[categoryName + subcategoryName] == undefined
       ? 0
       : this.subCategoryYearDict[categoryName + subcategoryName] /
-          new Date(
-            this.selectedDate.getFullYear(),
-            this.selectedDate.getFullYear() === new Date().getFullYear()
-              ? new Date().getMonth() - 1
-              : 11,
-            1
-          ).getMonth() +
-          1;
+          this.getMonth();
   }
 
   public subcategoriesByCategory(
@@ -305,5 +298,16 @@ export class MonthlyComponent implements OnInit, OnDestroy {
 
   private subtractOneDay(date: Date): Date {
     return new Date(date.getTime() - 1 * 24 * 60 * 60 * 1000);
+  }
+
+  private getMonth(): number {
+    let month = new Date(
+      this.selectedDate.getFullYear(),
+      this.selectedDate.getFullYear() === new Date().getFullYear()
+        ? new Date().getMonth() -1
+        : 11,
+      1
+    ).getMonth() + 1
+    return month;
   }
 }
