@@ -50,7 +50,7 @@ export class MonthlyComponent implements OnInit, OnDestroy {
   public dateFilter$: BehaviorSubject<{ from: number; to: number } | null> =
     new BehaviorSubject({
       from: +new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-      to: +new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1),
+      to: +(this.subtractOneDay(new Date(this.selectedYear, this.selectedMonth, 1))),
     });
 
   public monthSubscription: Subscription = null;
@@ -102,15 +102,16 @@ export class MonthlyComponent implements OnInit, OnDestroy {
           new Date().getMonth(),
           1
         );
-        
+
         // if current year is not the filtered year
         if (new Date(filter.from).getFullYear() !== new Date().getFullYear()) {
-          toLastMonth = new Date(
-            fromDate.getFullYear() + 1,
-            0,
-            1
-          );
+          toLastMonth = new Date(fromDate.getFullYear() + 1, 0, 1);
         }
+
+        toLastMonth = this.subtractOneDay(toLastMonth);
+
+        console.log(fromYear);
+        console.log(toLastMonth);
 
         return this.db
           .list<Transaction>("transactions", (ref) =>
@@ -254,16 +255,22 @@ export class MonthlyComponent implements OnInit, OnDestroy {
     categoryName: string,
     subcategoryName: string
   ): number {
+
+    if(categoryName+subcategoryName === "HaushaltEinkaufen"){
+      console.log(`${categoryName + subcategoryName} : ${this.subCategoryYearDict[categoryName + subcategoryName]}`);
+    }
+
     return this.subCategoryYearDict[categoryName + subcategoryName] == undefined
       ? 0
       : this.subCategoryYearDict[categoryName + subcategoryName] /
           new Date(
             this.selectedDate.getFullYear(),
             this.selectedDate.getFullYear() === new Date().getFullYear()
-              ? new Date().getMonth() -1
+              ? new Date().getMonth() - 1
               : 11,
             1
-          ).getMonth() + 1;
+          ).getMonth() +
+          1;
   }
 
   public subcategoriesByCategory(
@@ -283,7 +290,7 @@ export class MonthlyComponent implements OnInit, OnDestroy {
 
     this.dateFilter$.next({
       from: +new Date(this.selectedYear, this.selectedMonth - 1, 1),
-      to: +new Date(this.selectedYear, this.selectedMonth, 1),
+      to: +(this.subtractOneDay(new Date(this.selectedYear, this.selectedMonth, 1))),
     });
   }
 
@@ -292,7 +299,11 @@ export class MonthlyComponent implements OnInit, OnDestroy {
 
     this.dateFilter$.next({
       from: +new Date(this.selectedYear, this.selectedMonth - 1, 1),
-      to: +new Date(this.selectedYear, this.selectedMonth, 1),
+      to: +(this.subtractOneDay(new Date(this.selectedYear, this.selectedMonth, 1))),
     });
+  }
+
+  private subtractOneDay(date: Date): Date {
+    return new Date(date.getTime() - 1 * 24 * 60 * 60 * 1000);
   }
 }
