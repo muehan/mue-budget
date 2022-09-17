@@ -17,6 +17,7 @@ import { BudgetModule } from './budget/budget.module';
 import { HomeComponent } from './containers/home/home.component';
 import { MainTemplateComponent } from './containers/main-template/main-template.component';
 import { MenuItemComponent } from './containers/meni-item/menu-item.component';
+import { MueFooterComponent } from './containers/mue-footer/mue-footer.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MenuItemComponent } from './containers/meni-item/menu-item.component';
     HomeComponent,
     MenuItemComponent,
     MainTemplateComponent,
+    MueFooterComponent,
   ],
   imports: [
     BrowserModule,
