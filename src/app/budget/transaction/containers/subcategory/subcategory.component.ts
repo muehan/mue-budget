@@ -1,19 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { Subcategory } from "../../model/subcategory";
-import { getAllSubcategories } from "../../../reducers";
-import { Store } from "@ngrx/store";
-import { AppState } from "src/app/store/state";
 import { MatDialog } from "@angular/material/dialog";
 import { AddSubcategoryComponent } from "../../dialogs/add-subcategory/add-subcategory.component";
 import { EditSubcategoryComponent } from "../../dialogs/edit-subcategory/edit-subcategory.component";
-import {
-  AddSubcategories,
-  DeleteSubcategories,
-  EditSubcategories,
-  GetSubcategories,
-} from "src/app/budget/actions/subcategories-actions";
-import { GetCategories } from "src/app/budget/actions/categories-actions";
+import { CategoryService } from "../../services/category.service";
+import { SubcategoryService } from "../../services/subcategory.service";
 
 @Component({
   selector: "mue-subcategory",
@@ -21,12 +13,12 @@ import { GetCategories } from "src/app/budget/actions/categories-actions";
   styleUrls: ["./subcategory.component.scss"],
 })
 export class SubcategoryComponent implements OnInit {
-  public subcategories$: Observable<Subcategory[]> =
-    this.store.select(getAllSubcategories);
+  public subcategories$: Observable<Subcategory[]> = this.subcategoryService.getAll();
 
-  constructor(private store: Store<AppState>, private dialog: MatDialog) {
-    this.store.dispatch(GetSubcategories());
-    this.store.dispatch(GetCategories());
+  constructor(
+    public categoryService: CategoryService,
+    public subcategoryService: SubcategoryService,
+    private dialog: MatDialog) {
   }
 
   ngOnInit() {}
@@ -40,13 +32,13 @@ export class SubcategoryComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(result);
       if (result) {
-        this.store.dispatch(AddSubcategories({ payload: result }));
+        this.subcategoryService.add(result);
       }
     });
   }
 
   public remove(item: Subcategory) {
-    this.store.dispatch(DeleteSubcategories({ payload: item }));
+    this.subcategoryService.remove(item);
   }
 
   public edit(item: Subcategory) {
@@ -58,7 +50,7 @@ export class SubcategoryComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.dispatch(EditSubcategories({ payload: result }));
+        this.subcategoryService.edit(result);
       }
     });
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { UntypedFormControl } from "@angular/forms";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Category } from "../../model/categroy";
 
@@ -13,7 +13,7 @@ export interface IEditCatalogData {
   styleUrls: ["./edit-category.component.scss"],
 })
 export class EditCategoryComponent implements OnInit {
-  public categoryForm = new FormControl(this.data.category.name);
+  public categoryForm = new UntypedFormControl(this.data.category.name);
 
   private category: Category;
   private selectedColor: string;

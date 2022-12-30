@@ -1,55 +1,58 @@
-import { Component, OnInit } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { AppState } from "src/app/store/state";
-import { Observable } from "rxjs";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Transaction } from "../../model/transaction";
-import {
-  getAllTransactions,
-  getAllCategories,
-  getAllSubcategories,
-  getLastFewTransactions,
-} from "../../../reducers";
 import { MatDialog } from "@angular/material/dialog";
 import { AddTransactionComponent } from "../../dialogs/add-transaction/add-transaction.component";
 import { EditTransactionComponent } from "../../dialogs/edit-transaction/edit-transaction.component";
 import { Category } from "../../model/categroy";
-import { take } from "rxjs/operators";
 import { Subcategory } from "../../model/subcategory";
-import {
-  AddTransactions,
-  DeleteTransactions,
-  EditTransactions,
-  LoadLastFewTransactions,
-} from "src/app/budget/actions/transactions-actions";
-import { GetCategories } from "../../../actions/categories-actions";
-import { GetSubcategories } from "../../../actions/subcategories-actions";
+import { TransactionService } from "../../services/transaction.service";
+import { CategoryService } from "../../services/category.service";
+import { SubcategoryService } from "../../services/subcategory.service";
 
 @Component({
   selector: "mue-transactions",
   templateUrl: "./transactions.component.html",
   styleUrls: ["./transactions.component.scss"],
 })
-export class TransactionsComponent implements OnInit {
-  public transactions$: Observable<Transaction[]> = this.store.select(
-    getLastFewTransactions
-  );
-  public categories$: Observable<Category[]> =
-    this.store.select(getAllCategories);
-  public subcategeories$: Observable<Subcategory[]> =
-    this.store.select(getAllSubcategories);
-  public categories: Category[] = new Array<Category>();
-  public expanted: boolean = false;
+export class TransactionsComponent implements OnInit, OnDestroy {
+  
+  private categorySubscription: Subscription = null;
+  private count$: BehaviorSubject<number> = new BehaviorSubject(20);
+  
+  public transactions$: Observable<Transaction[]> = null;
 
-  constructor(private store: Store<AppState>, public dialog: MatDialog) {}
+  public categories$: Observable<Category[]> = this.categoryService.getAll();
+  
+  public subcategeories$: Observable<Subcategory[]> =
+    this.subCategoryService.getAll();
+
+  public categories: Category[] = new Array<Category>();
+
+  constructor(
+    public dialog: MatDialog,
+    public transactionService: TransactionService,
+    public categoryService: CategoryService,
+    public subCategoryService: SubcategoryService
+  ) {}
 
   ngOnInit() {
-    this.store.dispatch(LoadLastFewTransactions());
-    this.store.dispatch(GetCategories());
-    this.store.dispatch(GetSubcategories());
-    
-    this.categories$
-      .pipe(take(2))
-      .subscribe((cats) => (this.categories = cats));
+    console.log("ngOnInit");
+
+    this.categorySubscription = this.categories$
+      .subscribe(x => {
+        this.categories = x
+      });
+
+      this.count$.subscribe(x => {
+        this.transactions$ =  this.transactionService.getTransactions(x);
+      });
+  }
+
+  ngOnDestroy(): void {
+    if(this.categorySubscription){
+      this.categorySubscription.unsubscribe();
+    }
   }
 
   public create() {
@@ -61,13 +64,13 @@ export class TransactionsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.dispatch(AddTransactions({ payload: result }));
+        this.transactionService.add(result);
       }
     });
   }
 
   public remove(item: Transaction) {
-    this.store.dispatch(DeleteTransactions({ payload: item }));
+    this.transactionService.remove(item);
   }
 
   public edit(item: Transaction) {
@@ -84,21 +87,20 @@ export class TransactionsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.store.dispatch(EditTransactions({ payload: result }));
+        this.transactionService.edit(result);
       }
     });
   }
 
   public getCategoryColor(categroyName: string) {
+
     let category = this.categories.find((x) => x.name === categroyName);
 
     return category ? `${category.color}70` : "#FFFFFF";
   }
 
   public expand() {
-    if (!this.expanted) {
-      this.expanted = true;
-      this.transactions$ = this.store.select(getAllTransactions);
-    }
+    let count = this.count$.value + 20;
+    this.count$.next(count);
   }
 }

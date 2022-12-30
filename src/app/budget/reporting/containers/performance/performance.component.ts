@@ -1,14 +1,11 @@
-import { AppState } from '../../../../store/state';
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../transaction/model/transaction';
-import { getAllTransactions, getAllCategories, getAllSubcategories, getTransactionIsLoading } from '../../../reducers';
 import { Category } from '../../../transaction/model/categroy';
 import { Subcategory } from '../../../transaction/model/subcategory';
-import { GetSubcategories } from '../../../actions/subcategories-actions';
-import { GetCategories } from '../../../actions/categories-actions';
-import { GetAllTransactions } from 'src/app/budget/actions/transactions-actions';
+import { CategoryService } from 'src/app/budget/transaction/services/category.service';
+import { SubcategoryService } from 'src/app/budget/transaction/services/subcategory.service';
+import { TransactionReportingService } from '../../services/transactionReporting.service';
 
 @Component({
   selector: 'mue-performance',
@@ -17,17 +14,15 @@ import { GetAllTransactions } from 'src/app/budget/actions/transactions-actions'
 })
 export class PerformanceComponent implements OnInit {
 
-  public transactions$: Observable<Transaction[]> = this.store.select(getAllTransactions);
-  public categories$: Observable<Category[]> = this.store.select(getAllCategories);
-  public subcategories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
-  public isLoading$: Observable<boolean> = this.store.select(getTransactionIsLoading);
+  // public transactions$: Observable<Transaction[]> = this.transactionReportingService.getTransactions(+new Date(), +new Date());
+  // public categories$: Observable<Category[]> = this.categoryService.getAll();
+  // public subcategories$: Observable<Subcategory[]> = this.subcategoryService.getAll();
 
   constructor(
-    private store: Store<AppState>,
+    public transactionReportingService: TransactionReportingService,
+    public categoryService: CategoryService,
+    public subcategoryService: SubcategoryService,
   ) {
-    this.store.dispatch(GetAllTransactions());
-    this.store.dispatch(GetCategories());
-    this.store.dispatch(GetSubcategories());
   }
 
   ngOnInit() {

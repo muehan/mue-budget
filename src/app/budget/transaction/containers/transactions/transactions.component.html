@@ -14,7 +14,7 @@
 
             <div>
                 <div mat-line>{{transaction.subCategory}}</div>
-                <div mat-line style="font-size: 10px;">{{transaction.category}}</div>
+                <div mat-line style="font-size: 10px;">{{transaction.category}} - {{transaction.date | date}}</div>
             </div>
         </div>
 
@@ -40,9 +40,9 @@
             </button>
         </div>
     </mat-list-item>
-    <mat-list-item *ngIf="!expanted">
+    <mat-list-item>
         <span class="load-button"
-              (click)="expand()">load all</span>
+              (click)="expand()">load more</span>
     </mat-list-item>
 </mat-list>
 

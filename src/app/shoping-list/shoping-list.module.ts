@@ -6,17 +6,14 @@ import { SharedModule } from '../+shared/shared.module';
 import { AddItemDialogComponent } from './dialogs/add-item/add-item.component';
 
 @NgModule({
-  declarations: [
-    ListComponent,
-    AddItemDialogComponent,
-  ],
-  imports: [
-    SharedModule,
-    CommonModule,
-    ShopingListRoutingModule,
-  ],
-  entryComponents: [
-    AddItemDialogComponent,
-  ]
+    declarations: [
+        ListComponent,
+        AddItemDialogComponent,
+    ],
+    imports: [
+        SharedModule,
+        CommonModule,
+        ShopingListRoutingModule,
+    ]
 })
 export class ShopingListModule { }

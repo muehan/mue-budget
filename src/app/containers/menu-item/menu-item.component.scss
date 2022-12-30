@@ -9,6 +9,7 @@
   flex-direction: column;
   max-width: 20.75em;
   min-height: 20.75em;
+  min-width: 270px;
   overflow: hidden;
   border-radius: 0.5em;
   text-decoration: none;
@@ -20,7 +21,7 @@
 
   h3 {
     color: #2e3c40;
-    font-size: 3.5em;
+    font-size: 3em;
     font-weight: 600;
     line-height: 1;
     padding-bottom: 0.5em;

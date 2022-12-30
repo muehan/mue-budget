@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList } from "@angular/fire/database";
+import { AngularFireDatabase, AngularFireList } from "@angular/fire/compat/database";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { Subcategory } from "../model/subcategory";
@@ -8,38 +8,35 @@ import { Subcategory } from "../model/subcategory";
   providedIn: "root",
 })
 export class SubcategoryService {
-  private firebaselist: AngularFireList<Subcategory>;
-
+ 
   constructor(private firebase: AngularFireDatabase) {}
 
-  public init() {
-    this.firebaselist = this.firebase.list("subSubcategory");
-  }
-
   public getAll(): Observable<Subcategory[]> {
-    return this.firebaselist.snapshotChanges().pipe(
-      map((changes) =>
-        changes.map((c) => {
-          return { $key: c.key, ...c.payload.val() };
-        })
-      )
+    return this.firebase.list<Subcategory>("subSubcategory")
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => {
+            return { $key: c.key, ...c.payload.val() };
+          })
+        )
     );
   }
 
   public add(newItem: Subcategory): Observable<any> {
-    this.firebaselist.push(newItem);
+    this.firebase.list<Subcategory>("subSubcategory").push(newItem);
 
     return of();
   }
 
   public edit(item: Subcategory): Promise<void> {
-    return this.firebaselist.update(item.$key, {
+    return this.firebase.list<Subcategory>("subSubcategory").update(item.$key, {
       categoryName: item.categoryName,
       name: item.name,
     });
   }
 
   public remove(item: Subcategory): Promise<void> {
-    return this.firebaselist.remove(item.$key);
+    return this.firebase.list<Subcategory>("subSubcategory").remove(item.$key);
   }
 }

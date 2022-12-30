@@ -1,12 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Category } from '../../model/categroy';
 import { Subcategory } from '../../model/subcategory';
 import { Observable } from 'rxjs';
-import { getAllCategories } from '../../../reducers';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/state';
+import { CategoryService } from '../../services/category.service';
 
 export interface IEditSubcategoryData {
   subCategory: Subcategory;
@@ -19,20 +17,20 @@ export interface IEditSubcategoryData {
 })
 export class EditSubcategoryComponent implements OnInit {
 
-  public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
+  public categeories$: Observable<Category[]> = this.categoryService.getAll();
 
-  public subCategoryFormGroup: FormGroup;
+  public subCategoryFormGroup: UntypedFormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<EditSubcategoryComponent>,
-    private store: Store<AppState>,
+    public categoryService: CategoryService,
     @Inject(MAT_DIALOG_DATA) public data: IEditSubcategoryData)
     { }
 
   ngOnInit() {
-    this.subCategoryFormGroup = new FormGroup({
-      'subcategoryName': new FormControl(this.data.subCategory.name, [Validators.required]),
-      'categoryName': new FormControl(this.data.subCategory.categoryName, [Validators.required]),
+    this.subCategoryFormGroup = new UntypedFormGroup({
+      'subcategoryName': new UntypedFormControl(this.data.subCategory.name, [Validators.required]),
+      'categoryName': new UntypedFormControl(this.data.subCategory.categoryName, [Validators.required]),
     });
   }
 

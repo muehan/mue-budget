@@ -1,13 +1,12 @@
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Category } from '../../model/categroy';
-import { getAllCategories, getAllSubcategories } from '../../../reducers';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/store/state';
 import { Subcategory } from '../../model/subcategory';
+import { CategoryService } from '../../services/category.service';
+import { SubcategoryService } from '../../services/subcategory.service';
 
 @Component({
   selector: 'mue-add-transaction',
@@ -16,20 +15,21 @@ import { Subcategory } from '../../model/subcategory';
 })
 export class AddTransactionComponent implements OnInit {
 
-  public transactionFormGroup: FormGroup = new FormGroup({
-    'valueForm': new FormControl('', [Validators.required]),
-    'categoryName': new FormControl('', [Validators.required]),
-    'subcategoryName': new FormControl('', [Validators.required]),
-    'dateForm': new FormControl(new Date(), [Validators.required]),
+  public transactionFormGroup: UntypedFormGroup = new UntypedFormGroup({
+    'valueForm': new UntypedFormControl('', [Validators.required]),
+    'categoryName': new UntypedFormControl('', [Validators.required]),
+    'subcategoryName': new UntypedFormControl('', [Validators.required]),
+    'dateForm': new UntypedFormControl(new Date(), [Validators.required]),
   });
 
-  public categeories$: Observable<Category[]> = this.store.select(getAllCategories);
-  public subcategeories$: Observable<Subcategory[]> = this.store.select(getAllSubcategories);
+  public categeories$: Observable<Category[]> = this.categoryService.getAll();
+  public subcategeories$: Observable<Subcategory[]> = this.subcategoryService.getAll();
   public subcategeoriesFilterd$: Observable<Subcategory[]> = this.subcategeories$;
 
   constructor(
     public dialogRef: MatDialogRef<AddTransactionComponent>,
-    private store: Store<AppState>,) { }
+    public categoryService: CategoryService,
+    public subcategoryService: SubcategoryService) { }
 
   ngOnInit() {
   }

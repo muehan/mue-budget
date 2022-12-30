@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/state';
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   public error$: Observable<any> = this.store.select(getLoginErrors);
   public isLogIn$: Observable<boolean> = this.store.select(getLoggingInProgress);
-  public loginFormGroup: FormGroup;
+  public loginFormGroup: UntypedFormGroup;
 
   constructor(
     private store: Store<AppState>,
@@ -25,9 +25,9 @@ export class LoginComponent implements OnInit {
   ) {
     let storedMail = localStorage.getItem('mail');
 
-    this.loginFormGroup = new FormGroup({
-      mail: new FormControl(storedMail, [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+    this.loginFormGroup = new UntypedFormGroup({
+      mail: new UntypedFormControl(storedMail, [Validators.required]),
+      password: new UntypedFormControl('', [Validators.required]),
     });
 
     this.store.select(getIsAuthenticated)

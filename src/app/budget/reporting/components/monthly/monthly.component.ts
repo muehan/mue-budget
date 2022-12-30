@@ -1,28 +1,34 @@
 import { Observable } from "rxjs/internal/Observable";
-import { Component, OnInit, Input } from "@angular/core";
-import { filter, switchMap, map } from "rxjs/operators";
-import { Transaction } from '../../../transaction/model/transaction';
-import { Category } from '../../../transaction/model/categroy';
-import { Subcategory } from '../../../transaction/model/subcategory';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnDestroy,
+} from "@angular/core";
+import { switchMap, map, filter, distinctUntilChanged } from "rxjs/operators";
+import { Transaction } from "../../../transaction/model/transaction";
+import { Subcategory } from "../../../transaction/model/subcategory";
+import {
+  AngularFireAction,
+  AngularFireDatabase,
+} from "@angular/fire/compat/database";
+import { BehaviorSubject, Subject, Subscription } from "rxjs";
+import firebase from "firebase/compat/app";
+import { CategoryService } from "src/app/budget/transaction/services/category.service";
+import { SubcategoryService } from "src/app/budget/transaction/services/subcategory.service";
+
+export interface Dictionary<T> {
+  [Key: string]: T;
+}
 
 @Component({
   selector: "mue-monthly",
   templateUrl: "./monthly.component.html",
-  styleUrls: ["./monthly.component.scss"]
+  styleUrls: ["./monthly.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MonthlyComponent implements OnInit {
-  @Input()
-  public transactions$: Observable<Transaction[]>;
-
-  @Input()
-  public isTransactionLoading$: Observable<boolean>;
-
-  @Input()
-  public categories$: Observable<Category[]>;
-
-  @Input()
-  public subcategories$: Observable<Subcategory[]>;
-
+export class MonthlyComponent implements OnInit, OnDestroy {
   public currentDate = new Date();
   public selectedDate = new Date();
   public transactionFromSelectedMonth$: Observable<Transaction[]>;
@@ -30,6 +36,29 @@ export class MonthlyComponent implements OnInit {
     Transaction[]
   >;
   public totalExpenses$: Observable<number>;
+  public categories$ = this.categoryService.getAll();
+  public subCategories = this.subcategoryService.getAll();
+
+  public itemsMonth$: Observable<
+    AngularFireAction<firebase.database.DataSnapshot>[]
+  >;
+
+  public itemsYear$: Observable<
+    AngularFireAction<firebase.database.DataSnapshot>[]
+  >;
+
+  public dateFilter$: BehaviorSubject<{ from: number; to: number } | null> =
+    new BehaviorSubject({
+      from: +new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+      to: +(this.subtractOneDay(new Date(this.selectedYear, this.selectedMonth, 1))),
+    });
+
+  public monthSubscription: Subscription = null;
+  public yearSubscription: Subscription = null;
+
+  public categoryDict: Dictionary<number> = {};
+  public subCategoryDict: Dictionary<number> = {};
+  public subCategoryYearDict: Dictionary<number> = {};
 
   public get selectedYear(): number {
     return this.selectedDate.getFullYear();
@@ -39,120 +68,246 @@ export class MonthlyComponent implements OnInit {
     return this.selectedDate.getMonth() + 1;
   }
 
-  constructor() {}
+  constructor(
+    public db: AngularFireDatabase,
+    public categoryService: CategoryService,
+    public subcategoryService: SubcategoryService,
+    public changeDetectorRef: ChangeDetectorRef
+  ) {
+    this.itemsMonth$ = this.dateFilter$.pipe(
+      switchMap((filter) => {
+        return this.db
+          .list<Transaction>("transactions", (ref) =>
+            ref.orderByChild("date").startAt(filter.from).endAt(filter.to)
+          )
+          .snapshotChanges();
+      })
+    );
+
+    this.itemsYear$ = this.dateFilter$.pipe(
+      distinctUntilChanged(
+        (prev, curr) =>
+          new Date(prev.from).getFullYear() ===
+          new Date(curr.from).getFullYear()
+      ),
+      switchMap((filter) => {
+        let fromDate = new Date(filter.from);
+
+        // 01.Jan of given Year
+        let fromYear = new Date(fromDate.getFullYear(), 0, 1);
+
+        // end of last month in the current year
+        let toLastMonth = new Date(
+          fromDate.getFullYear(),
+          new Date().getMonth(),
+          1
+        );
+
+        // if current year is not the filtered year
+        if (new Date(filter.from).getFullYear() !== new Date().getFullYear()) {
+          toLastMonth = new Date(fromDate.getFullYear() + 1, 0, 1);
+        }
+
+        toLastMonth = this.subtractOneDay(toLastMonth);
+
+        console.log(fromYear);
+        console.log(toLastMonth);
+
+        return this.db
+          .list<Transaction>("transactions", (ref) =>
+            ref
+              .orderByChild("date")
+              .startAt(+fromYear)
+              .endAt(+toLastMonth)
+          )
+          .snapshotChanges();
+      })
+    );
+  }
 
   ngOnInit() {
-    this.transactionFromSelectedMonth$ = this.isTransactionLoading$.pipe(
-      filter(x => !x),
-      switchMap(_ =>
-        this.transactions$.pipe(
-          map(x =>
-            x.filter(
-              t =>
-                new Date(t.date).getFullYear() ==
-                  this.selectedDate.getFullYear() &&
-                new Date(t.date).getMonth() == this.selectedDate.getMonth()
-            )
-          )
-        )
+    this.transactionFromSelectedMonth$ = this.itemsMonth$.pipe(
+      map((transactions) =>
+        transactions.map((c) => {
+          return { $key: c.key, ...c.payload.val() };
+        })
       )
     );
 
-    this.transactionFromSelectedYearWithoutCurrentMonth$ = this.isTransactionLoading$.pipe(
-      filter(x => !x),
-      switchMap(_ =>
-        this.transactions$.pipe(
-          map(x =>
-            x.filter(
-              transation => {
-                if(this.selectedDate.getFullYear() == new Date().getFullYear()){
-                  return new Date(transation.date).getFullYear() == this.selectedDate.getFullYear() &&
-                  new Date(transation.date).getMonth() <= this.currentDate.getMonth() - 1
-                } else {
-                  return new Date(transation.date).getFullYear() == this.selectedDate.getFullYear()
-                }
-              }
-            )
-          )
-        )
+    this.transactionFromSelectedYearWithoutCurrentMonth$ = this.itemsYear$.pipe(
+      map((transactions) =>
+        transactions.map((c) => {
+          return { $key: c.key, ...c.payload.val() };
+        })
       )
     );
-  }
 
-  public getTotalExpenses(): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      filter(x => x.length > 0),
-      map(x => x.map(t => t.value).reduce((prev, next) => prev + next))
-    );
-  }
-
-  public getExpensesByCategory(categoryName: string): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      filter(x => x.length > 0),
-      map(x => x.filter(t => t.category === categoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          return x.map(t => t.value).reduce((prev, next) => prev + next);
-        } else {
+    this.totalExpenses$ = this.transactionFromSelectedMonth$.pipe(
+      map((x) => {
+        if (x.length <= 0) {
           return 0;
         }
+        return x
+          .map((t) => {
+            return t.value;
+          })
+          .reduce((prev, next) => prev + next);
       })
     );
+
+    this.monthSubscription = this.transactionFromSelectedMonth$
+      .pipe(
+        map((array) => {
+          this.categoryDict = {};
+          this.subCategoryDict = {};
+
+          array.map((transaction) => {
+            if (this.categoryDict[transaction.category]) {
+              this.categoryDict[transaction.category] =
+                this.categoryDict[transaction.category] + transaction.value;
+            } else {
+              this.categoryDict[transaction.category] = transaction.value;
+            }
+
+            if (
+              this.subCategoryDict[
+                transaction.category + transaction.subCategory
+              ]
+            ) {
+              this.subCategoryDict[
+                transaction.category + transaction.subCategory
+              ] =
+                this.subCategoryDict[
+                  transaction.category + transaction.subCategory
+                ] + transaction.value;
+            } else {
+              this.subCategoryDict[
+                transaction.category + transaction.subCategory
+              ] = transaction.value;
+            }
+          });
+
+          return this.categoryDict;
+        })
+      )
+      .subscribe((x) => {
+        this.changeDetectorRef.detectChanges();
+      });
+
+    this.yearSubscription = this.transactionFromSelectedYearWithoutCurrentMonth$
+      .pipe(
+        map((array) => {
+          this.subCategoryYearDict = {};
+
+          array.map((transaction) => {
+            if (
+              this.subCategoryYearDict[
+                transaction.category + transaction.subCategory
+              ]
+            ) {
+              this.subCategoryYearDict[
+                transaction.category + transaction.subCategory
+              ] =
+                this.subCategoryYearDict[
+                  transaction.category + transaction.subCategory
+                ] + transaction.value;
+            } else {
+              this.subCategoryYearDict[
+                transaction.category + transaction.subCategory
+              ] = transaction.value;
+            }
+          });
+
+          return this.subCategoryYearDict;
+        })
+      )
+      .subscribe((x) => {
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
-  public getExpensesBySubCategory(subcategoryName: string): Observable<number> {
-    return this.transactionFromSelectedMonth$.pipe(
-      filter(x => x.length > 0),
-      map(x => x.filter(t => t.subCategory === subcategoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          return x.map(t => t.value).reduce((prev, next) => prev + next);
-        } else {
-          return 0;
-        }
-      })
-    );
+  ngOnDestroy(): void {
+    if (this.monthSubscription) {
+      this.monthSubscription.unsubscribe();
+    }
+
+    if (this.yearSubscription) {
+      this.yearSubscription.unsubscribe();
+    }
+  }
+
+  public getExpensesByCategory(categoryName: string): number {
+    return this.categoryDict[categoryName] == undefined
+      ? 0
+      : this.categoryDict[categoryName];
+  }
+
+  public getExpensesBySubCategory(
+    categoryName: string,
+    subcategoryName: string
+  ): number {
+    return this.subCategoryDict[categoryName + subcategoryName] == undefined
+      ? 0
+      : this.subCategoryDict[categoryName + subcategoryName];
   }
 
   public getAverageExpensesBySubCategory(
+    categoryName: string,
     subcategoryName: string
-  ): Observable<number> {
-    return this.transactionFromSelectedYearWithoutCurrentMonth$.pipe(
-      filter(x => x.length > 0),
-      map(x => x.filter(t => t.subCategory === subcategoryName)),
-      map(x => {
-        if (x.length !== 0) {
-          if(this.selectedDate.getFullYear() == new Date().getFullYear()){
-            return (
-              x.map(t => t.value).reduce((prev, next) => prev + next) /
-              this.currentDate.getMonth()
-            );
-          } else {
-            return (
-              x.map(t => t.value).reduce((prev, next) => prev + next) / 12
-            );
-          }
-          // getMonth returns month 0-11
-        } else {
-          return 0;
-        }
-      })
-    );
+  ): number {
+
+    if(categoryName+subcategoryName === "HaushaltEinkaufen"){
+      console.log(`${categoryName + subcategoryName} : ${this.subCategoryYearDict[categoryName + subcategoryName]}`);
+    }
+
+    return this.subCategoryYearDict[categoryName + subcategoryName] == undefined
+      ? 0
+      : this.subCategoryYearDict[categoryName + subcategoryName] /
+          this.getMonth();
   }
 
   public subcategoriesByCategory(
-    categoryname: string
+    categoryName: string
   ): Observable<Subcategory[]> {
-    return this.subcategories$.pipe(
-      map(c => c.filter(x => x.categoryName == categoryname))
+    return this.subcategoryService.getAll().pipe(
+      map((c) =>
+        c.filter((x) => {
+          return x.categoryName == categoryName;
+        })
+      )
     );
   }
 
   public nextMonth(): void {
     this.selectedDate.setMonth(this.selectedDate.getMonth() + 1);
+
+    this.dateFilter$.next({
+      from: +new Date(this.selectedYear, this.selectedMonth - 1, 1),
+      to: +(this.subtractOneDay(new Date(this.selectedYear, this.selectedMonth, 1))),
+    });
   }
 
   public previousMonth(): void {
     this.selectedDate.setMonth(this.selectedDate.getMonth() - 1);
+
+    this.dateFilter$.next({
+      from: +new Date(this.selectedYear, this.selectedMonth - 1, 1),
+      to: +(this.subtractOneDay(new Date(this.selectedYear, this.selectedMonth, 1))),
+    });
+  }
+
+  private subtractOneDay(date: Date): Date {
+    return new Date(date.getTime() - 1 * 24 * 60 * 60 * 1000);
+  }
+
+  private getMonth(): number {
+    let month = new Date(
+      this.selectedDate.getFullYear(),
+      this.selectedDate.getFullYear() === new Date().getFullYear()
+        ? new Date().getMonth() -1
+        : 11,
+      1
+    ).getMonth() + 1
+    return month;
   }
 }

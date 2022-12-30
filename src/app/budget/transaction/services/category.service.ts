@@ -1,45 +1,53 @@
 import { Injectable } from "@angular/core";
-import { AngularFireDatabase, AngularFireList } from "@angular/fire/database";
 import { Category } from "../model/categroy";
-import { Observable, of } from "rxjs";
+import { BehaviorSubject, Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
+import { AngularFireList, AngularFireDatabase } from "@angular/fire/compat/database";
 
 @Injectable({
   providedIn: "root",
 })
 export class CategoryService {
-  private firebaselist: AngularFireList<Category>;
 
-  constructor(private firebase: AngularFireDatabase) {}
+  private categories$: BehaviorSubject<Category[]> = new BehaviorSubject<
+    Category[]
+  >([]);
 
-  public init() {
-    this.firebaselist = this.firebase.list("category");
+  constructor(private firebase: AngularFireDatabase) {
+
+    this.firebase
+      .list<Category>("category")
+      .snapshotChanges()
+      .pipe(
+        map((transactions) =>
+          transactions.map((c) => {
+            return { $key: c.key, ...c.payload.val() };
+          })
+        )
+      )
+      .subscribe(this.categories$);
+
   }
 
   public getAll(): Observable<Category[]> {
-    return this.firebaselist.snapshotChanges().pipe(
-      map((changes) =>
-        changes.map((c) => {
-          return { $key: c.key, ...c.payload.val() };
-        })
-      )
-    );
+    console.log("get all categories");
+    return this.categories$.asObservable();
   }
 
   public add(newItem: Category): Observable<any> {
-    this.firebaselist.push(newItem);
+    this.firebase.list("category").push(newItem);
 
     return of();
   }
 
   public edit(item: Category): Promise<void> {
-    return this.firebaselist.update(item.$key, {
+    return this.firebase.list("category").update(item.$key, {
       color: item.color,
       name: item.name,
     });
   }
 
   public remove(item: Category): Promise<void> {
-    return this.firebaselist.remove(item.$key);
+    return this.firebase.list("category").remove(item.$key);
   }
 }

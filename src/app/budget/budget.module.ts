@@ -5,8 +5,7 @@ import { BudgetRoutingModule } from './budget-routing.module';
 import { SharedModule } from '../+shared/shared.module';
 
 @NgModule({
-  declarations: [
-    
+  declarations: [    
   ],
   imports: [
     SharedModule,

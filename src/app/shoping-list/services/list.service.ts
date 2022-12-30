@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ShoppingItem } from '../models/shopping-item';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -73,6 +73,11 @@ export class ListService {
   }
 
   private getnextOrderPosition(): number {
+
+    if(!this.itemArray){
+      return 0;
+    }
+
     let highestNumber = Math.max(...this.itemArray.map(x => x.orderPosition));
     console.log(highestNumber);
     if (highestNumber <= 0 ||
