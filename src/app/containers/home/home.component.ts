@@ -1,10 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { Store } from "@ngrx/store";
-import { AppState } from "../../store/state";
 import { AddTransactionComponent } from "../../budget/transaction/dialogs/add-transaction/add-transaction.component";
-import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
 import { TransactionService } from "src/app/budget/transaction/services/transaction.service";
 
 @Component({

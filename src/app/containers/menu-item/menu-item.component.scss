@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+.data-card {
+  display: flex;
+  flex-direction: column;
+  max-width: 20.75em;
+  min-height: 20.75em;
+  min-width: 270px;
+  overflow: hidden;
+  border-radius: 0.5em;
+  text-decoration: none;
+  background: white;
+  margin: 1em;
+  padding: 2.75em 2.5em;
+  box-shadow: 0 1.5em 2.5em -0.5em rgba(#000000, 0.1);
+  border: 0.5px solid #bfbcb4;
+
+  h3 {
+    color: #2e3c40;
+    font-size: 3em;
+    font-weight: 600;
+    line-height: 1;
+    padding-bottom: 0.5em;
+    margin: 0 0 0.142857143em;
+    border-bottom: 2px solid;
+    transition: color 0.45s ease, border 0.45s ease;
+  }
+
+  h4 {
+    color: #627084;
+    text-transform: uppercase;
+    font-size: 1.125em;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    margin: 0 0 1.777777778em;
+    transition: color 0.45s ease;
+  }
+
+  p {
+    opacity: 0;
+    color: #ffffff;
+    font-weight: 600;
+    line-height: 1.8;
+    margin: 0 0 1.25em;
+    transform: translateY(-1em);
+    transition: opacity 0.45s ease, transform 0.5s ease;
+  }
+
+  .link-text {
+    display: block;
+    color: #753bbd;
+    font-size: 1.125em;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: auto 0 0;
+    transition: color 0.45s ease;
+
+    svg {
+      margin-left: 0.5em;
+      transition: transform 0.6s ease;
+
+      path {
+        transition: fill 0.45s ease;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .data-card {
+    min-width: 11em;
+    min-height: 10em;
+    margin: 0.5em;
+    padding: 1.75em 1.5em;
+
+    h3 {
+      font-size: 1.7em;
+      font-weight: 500;
+      padding-bottom: 0.5em;
+      margin: 0 0 0.142857143em;
+    }
+  
+    h4 {
+      font-size: 1em;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin: 0 0 1.777777778em;
+    }
+  
+    p {
+      color: #ffffff;
+      font-weight: 600;
+      line-height: 1.8;
+      margin: 0 0 1.25em;
+    }
+  
+    .link-text {
+      font-size: 0.7em;
+      font-weight: 600;
+      line-height: 1.2;
+      margin: auto 0 0;
+
+      svg {
+        margin-left: 0.5em;
+        transition: transform 0.6s ease;
+        height: 8px;
+        width: 14px;
+  
+        path {
+          transition: fill 0.45s ease;
+        }
+      }
+    }
+  }
+}
