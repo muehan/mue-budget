@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { versionInfo } from '../../../version-info';
 
 @Component({
   selector: 'mue-footer',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MueFooterComponent implements OnInit {
 
-  constructor() { }
+  public hash: string = versionInfo.hash;
+  public version: string = versionInfo.tag;
+
+  constructor() {
+    console.log(versionInfo);
+  }
 
   ngOnInit(): void {
   }
