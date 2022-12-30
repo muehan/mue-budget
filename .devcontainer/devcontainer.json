@@ -23,7 +23,12 @@
 	// "remoteUser": "root"
 	"customizations": {
 		"vscode": {
-		  "extensions": ["dbaeumer.vscode-eslint"]
+		  "extensions": [
+			"dbaeumer.vscode-eslint",
+			"johnpapa.angular2",
+			"alexiv.vscode-angular2-files",
+			"esbenp.prettier-vscode"
+			]
 		}
 	  },
 	  "forwardPorts": [3000]
