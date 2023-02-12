@@ -33,7 +33,7 @@
     "@ngrx/store-devtools": "^13.2.0",
     "core-js": "^3.6.2",
     "firebase": "^9.8.3",
-    "firebase-tools": "^11.1.0",
+    "firebase-tools": "^11.22.0",
     "mat-color-picker": "^1.4.3",
     "material-community-components": "~11.0.0",
     "rxjs": "^7.4.0",
